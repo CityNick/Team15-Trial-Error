@@ -17,7 +17,7 @@ public class Application extends javafx.application.Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         activeStage = stage;
-        activeStage.setTitle("AirVia Login Page");
+        activeStage.setTitle("AirVia Systems");
         activeStage.setScene(scene);
         activeStage.show();
     }
@@ -25,7 +25,11 @@ public class Application extends javafx.application.Application {
         launch();
     }
 
-    public static void changeToScene(String fxml){
+    public static void changeToScene(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource(fxml));
+        Scene scene = new Scene(fxmlLoader.load());
+        activeStage.setScene(scene);
+        activeStage.show();
     }
 
     public static StaffAccount getActiveUser(){return activeUser;}

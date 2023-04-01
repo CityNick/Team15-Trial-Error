@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="900.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team15.controllers.Controller">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="900.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team15.controllers.LoginController">
    <Pane prefHeight="600.0" prefWidth="900.0">
       <children>
          <ImageView fitHeight="611.0" fitWidth="900.0" layoutY="-5.0" pickOnBounds="true">
@@ -18,20 +18,20 @@
                <Image url="@../Images/Login.png" />
             </image>
          </ImageView>
-         <TextField fx:id="staffID_field" layoutX="598.0" layoutY="291.0" prefHeight="33.0" prefWidth="213.0" promptText="Enter StaffID">
+         <TextField fx:id="staffIDField" layoutX="598.0" layoutY="291.0" prefHeight="33.0" prefWidth="213.0" promptText="Enter StaffID">
             <font>
                <Font name="System Italic" size="14.0" />
             </font>
          </TextField>
-         <PasswordField fx:id="password_field" layoutX="598.0" layoutY="344.0" prefHeight="33.0" prefWidth="213.0" promptText="Enter Password">
+         <PasswordField fx:id="passwordField" layoutX="598.0" layoutY="344.0" prefHeight="33.0" prefWidth="213.0" promptText="Enter Password">
             <font>
                <Font name="System Italic" size="14.0" />
             </font>
          </PasswordField>
          <Button fx:id="login_button" layoutX="648.0" layoutY="404.0" mnemonicParsing="false" onAction="#on_login_pressed" prefHeight="33.0" prefWidth="80.0" text="Login" />
-         <Label alignment="CENTER" layoutX="516.0" layoutY="445.0" prefHeight="35.0" prefWidth="345.0" text="Error: Login or Username not found" textFill="#d71010">
+         <Label fx:id="errorField" alignment="CENTER" layoutX="516.0" layoutY="445.0" prefHeight="35.0" prefWidth="345.0" textFill="#9c0a0a">
             <font>
-               <Font size="18.0" />
+               <Font name="System Bold Italic" size="18.0" />
             </font>
          </Label>
       </children>

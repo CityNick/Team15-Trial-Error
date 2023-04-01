@@ -1,12 +1,13 @@
 package team15;
 
 import team15.models.StaffAccount;
+
 import java.sql.*;
 
 public class StaffAccountSQL {
 
 
-    public static boolean checkAccount(long StaffID, String Password) {
+    public static boolean checkAccountLogin(long StaffID, String Password) {
 
         try (Connection connection = DatabaseConnector.connect()) {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM StaffAccount WHERE StaffID = ? AND Password = ?");
