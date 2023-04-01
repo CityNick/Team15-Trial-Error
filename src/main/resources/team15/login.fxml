@@ -13,8 +13,6 @@
 <VBox alignment="CENTER" prefHeight="600.0" prefWidth="900.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team15.controllers.Controller">
    <Pane prefHeight="600.0" prefWidth="900.0">
       <children>
-      
-          <Label fx:id="welcomeText" />
          <ImageView fitHeight="611.0" fitWidth="900.0" layoutY="-5.0" pickOnBounds="true">
             <image>
                <Image url="@../Images/Login.png" />
@@ -31,6 +29,11 @@
             </font>
          </PasswordField>
          <Button fx:id="login_button" layoutX="648.0" layoutY="404.0" mnemonicParsing="false" onAction="#on_login_pressed" prefHeight="33.0" prefWidth="80.0" text="Login" />
+         <Label alignment="CENTER" layoutX="516.0" layoutY="445.0" prefHeight="35.0" prefWidth="345.0" text="Error: Login or Username not found" textFill="#d71010">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
       </children>
    </Pane>
 </VBox>

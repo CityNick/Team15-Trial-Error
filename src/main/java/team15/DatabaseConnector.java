@@ -2,7 +2,6 @@ package team15;
 import java.sql.*;
 
 public class DatabaseConnector {
-
     public static Connection connection = null;
 
     public static Connection connect(){
