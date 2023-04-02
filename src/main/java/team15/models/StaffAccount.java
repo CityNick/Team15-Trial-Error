@@ -9,8 +9,8 @@ public class StaffAccount {
   private String firstName;
   private String lastName;
   private String role;
-  private long travelAgentTravelAgentCode;
-  private long officeManagerSupervisorId;
+  private long TravelAgentCode;
+  private long SupervisorID;
 
   public StaffAccount(ResultSet rs){
     try {
@@ -19,8 +19,8 @@ public class StaffAccount {
       this.firstName = rs.getString("FirstName");
       this.lastName = rs.getString("LastName");
       this.role = rs.getString("Role");
-      this.travelAgentTravelAgentCode = rs.getLong("TravelAgentTravelAgentCode");
-      this.officeManagerSupervisorId = rs.getLong("OfficeManagerSupervisorID");
+      this.TravelAgentCode = rs.getLong("TravelAgentCode");
+      this.SupervisorID = rs.getLong("SupervisorID");
     }
     catch(Exception e){
       e.printStackTrace();
@@ -67,19 +67,19 @@ public class StaffAccount {
   }
 
 
-  public long getTravelAgentTravelAgentCode() {
-    return travelAgentTravelAgentCode;
+  public long getTravelAgentCode() {
+    return TravelAgentCode;
   }
-  public void setTravelAgentTravelAgentCode(long travelAgentTravelAgentCode) {
-    this.travelAgentTravelAgentCode = travelAgentTravelAgentCode;
+  public void setTravelAgentCode(long travelAgentCode) {
+    this.TravelAgentCode = travelAgentCode;
   }
 
 
-  public long getOfficeManagerSupervisorId() {
-    return officeManagerSupervisorId;
+  public long getSupervisorID() {
+    return SupervisorID;
   }
-  public void setOfficeManagerSupervisorId(long officeManagerSupervisorId) {
-    this.officeManagerSupervisorId = officeManagerSupervisorId;
+  public void setSupervisorID(long supervisorID) {
+    this.SupervisorID = supervisorID;
   }
 
 }

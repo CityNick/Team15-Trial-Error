@@ -22,9 +22,9 @@ public class LoginController implements Initializable {
     @FXML
     private Label errorField;
 
+    // ====================== Login =========================== //
     @FXML
     public void on_login_pressed() throws IOException {
-        System.out.println("pressed login");
 
         // ---------- Login Successful ---------- //
         if (StaffAccountSQL.checkAccountLogin(Long.parseLong(staffIDField.getText()),passwordField.getText())){
@@ -33,7 +33,7 @@ public class LoginController implements Initializable {
             switch (Application.getActiveUser().getRole()){
                 // - Administrator - //
                 case "Administrator":
-                    Application.changeToScene("AdminBackup.fxml");
+                    Application.changeToScene("Admin.fxml");
                     break;
 
                 // - Travel Advisor - //

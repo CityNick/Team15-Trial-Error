@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@../CssStyles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team15.controllers.AdminController">
+   <children>
+      <Pane prefHeight="600.0" prefWidth="900.0">
+         <children>
+            <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../Images/BG.png" />
+               </image>
+            </ImageView>
+            <TabPane layoutX="75.0" layoutY="129.0" prefHeight="434.0" prefWidth="771.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="backupButton" text="Backup">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="406.0" prefWidth="678.0">
+                           <children>
+                              <Label layoutX="317.0" layoutY="102.0" prefHeight="25.0" prefWidth="128.0" text="Enter save file name:" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="saveButton" layoutX="347.0" layoutY="184.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="63.0" text="Save">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Button>
+                              <TextField fx:id="saveFileName" alignment="CENTER" layoutX="293.0" layoutY="134.0" prefHeight="26.0" prefWidth="170.0" promptText="Save file name..." />
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                <Tab fx:id="restoreButton" text="Restore">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="openFileButton" layoutX="303.0" layoutY="139.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="147.0" text="Open file...">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="332.0" layoutY="102.0" prefHeight="25.0" prefWidth="96.0" text="Select save file:" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab fx:id="maintainBlanksButton" text="Maintain Blanks">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="291.0" layoutY="18.0" prefHeight="25.0" prefWidth="170.0" text="View Travel Agent Blanks" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="searchTA" alignment="CENTER" layoutX="602.0" layoutY="16.0" prefHeight="26.0" prefWidth="127.0" promptText="Search TA" />
+                              <Button fx:id="plusButton" layoutX="633.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="+">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="minusButton" layoutX="668.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="-" />
+                              <TableView layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
+                                <columns>
+                                  <TableColumn prefWidth="75.0" text="C1" />
+                                  <TableColumn prefWidth="75.0" text="C2" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab fx:id="viewContractsButton" text="View Contracts">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="322.0" layoutY="18.0" prefHeight="25.0" prefWidth="109.0" text="View Contracts" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="searchTA2" alignment="CENTER" layoutX="602.0" layoutY="16.0" prefHeight="26.0" prefWidth="127.0" promptText="Search TA" />
+                              <Button fx:id="plusButton2" layoutX="633.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="+">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="minusButton2" layoutX="668.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="-" />
+                              <TableView layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
+                                 <columns>
+                                    <TableColumn prefWidth="75.0" text="C1" />
+                                    <TableColumn prefWidth="75.0" text="C2" />
+                                 </columns>
+                              </TableView>
+                           </children></AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab fx:id="viewStaffButton" text="View Staff">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="406.0" prefWidth="830.0">
+                           <children>
+                              <Label layoutX="313.0" layoutY="18.0" prefHeight="25.0" prefWidth="125.0" text="View Staff Details" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="searchStaff" alignment="CENTER" layoutX="602.0" layoutY="16.0" prefHeight="26.0" prefWidth="127.0" promptText="Search Staff" />
+                              <Button fx:id="plusButton3" layoutX="633.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="+">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="minusButton3" layoutX="668.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="-" />
+                              <TableView layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
+                                 <columns>
+                                    <TableColumn prefWidth="75.0" text="C1" />
+                                    <TableColumn prefWidth="75.0" text="C2" />
+                                 </columns>
+                              </TableView>
+                           </children></AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+            <Button fx:id="logoutButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#logoutPressed" prefWidth="68.0" text="Logout" />
+         </children>
+      </Pane>
+   </children>
+</VBox>
