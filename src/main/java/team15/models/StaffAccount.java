@@ -4,23 +4,23 @@ import java.sql.ResultSet;
 
 public class StaffAccount {
 
-  private long staffID;
-  private String password;
-  private String firstName;
-  private String lastName;
-  private String role;
+  private long StaffID;
+  private String Password;
+  private String FirstName;
+  private String LastName;
+  private String Role;
   private long TravelAgentCode;
   private long SupervisorID;
 
   public StaffAccount(ResultSet rs){
     try {
-      this.staffID = rs.getLong("StaffID");
-      this.password = rs.getString("Password");
-      this.firstName = rs.getString("FirstName");
-      this.lastName = rs.getString("LastName");
-      this.role = rs.getString("Role");
-      this.TravelAgentCode = rs.getLong("TravelAgentCode");
-      this.SupervisorID = rs.getLong("SupervisorID");
+      this.StaffID = rs.getInt("StaffID");
+      this.Password = rs.getString("Password");
+      this.FirstName = rs.getString("FirstName");
+      this.LastName = rs.getString("LastName");
+      this.Role = rs.getString("Role");
+      this.TravelAgentCode = rs.getInt("TravelAgentCode");
+      this.SupervisorID = rs.getInt("SupervisorID");
     }
     catch(Exception e){
       e.printStackTrace();
@@ -28,42 +28,40 @@ public class StaffAccount {
   }
 
   public long getStaffID() {
-    return staffID;
+    return StaffID;
   }
   public void setStaffID(long staffID) {
-    this.staffID = staffID;
+    this.StaffID = staffID;
   }
 
 
   public String getPassword() {
-    return password;
+    return Password;
   }
   public void setPassword(String password) {
-    this.password = password;
+    this.Password = password;
   }
 
 
   public String getFirstName() {
-    return firstName;
+    return FirstName;
   }
   public void setFirstName(String firstName) {
-    this.firstName = firstName;
+    this.FirstName = firstName;
   }
 
 
-  public String getLastName() {
-    return lastName;
-  }
+  public String getLastName() {return LastName;}
   public void setLastName(String lastName) {
-    this.lastName = lastName;
+    this.LastName = lastName;
   }
 
 
   public String getRole() {
-    return role;
+    return Role;
   }
   public void setRole(String role) {
-    this.role = role;
+    this.Role = role;
   }
 
 

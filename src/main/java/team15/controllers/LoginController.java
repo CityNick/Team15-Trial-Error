@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import team15.Application;
-import team15.StaffAccountSQL;
+import team15.SQLHelpers.StaffAccountSQL;
 
 import java.io.IOException;
 import java.net.URL;
