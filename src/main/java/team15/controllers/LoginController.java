@@ -38,12 +38,12 @@ public class LoginController implements Initializable {
 
                 // - Travel Advisor - //
                 case "Travel Advisor":
-                    // Application.changeToScene("Travel Advisor")
+                    Application.changeToScene("TravelAdvisor.fxml");
                     break;
 
                 // - Office Manager - //
-                case "Office Manager":
-                    // Application.changeToScene("Office Manager')
+                case "Manager":
+                    Application.changeToScene("OfficeManager.fxml");
                     break;
 
             }

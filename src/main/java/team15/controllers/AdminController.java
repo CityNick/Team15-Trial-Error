@@ -45,34 +45,7 @@ public class AdminController {
 
     @FXML
     public void searchTravelAgentBlanks(){
-        try (Connection connection = DatabaseConnector.connect()) {
-            System.out.println(searchTravelAgentBlanksField.getText());
 
-            if (StaffAccountSQL.checkStaffAccount(searchTravelAgentBlanksField.getText())) {
-                System.out.println("set found");
-
-                // ----- Retrieve rs from StaffSQLAccount ----- //
-                ResultSet rs = StaffAccountSQL.getResultSet(searchTravelAgentBlanksField.getText(), connection);
-
-                // ----- convert rs to list ----- //
-                ArrayList<StaffAccount> data = new ArrayList<>();
-                if (!(rs == null)) {
-                    while (rs.next()) {
-                        data.add(new StaffAccount(rs));
-                        // ---- turn list into observable list ----- //
-                        ObservableList dataList = FXCollections.observableArrayList(data);
-
-                        // ---- display table view ---- //
-                        SQLToTable.fillTableView(travelAgentBlanksTableView, rs);
-                        travelAgentBlanksTableView.setItems(dataList);
-                    }
-                }
-            } else {
-                System.out.println("set not found");
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
     }
 
 
@@ -110,6 +83,7 @@ public class AdminController {
                     }
                 }
             } else {
+                staffTableView.getItems().clear();
                 System.out.println("set not found");
             }
         } catch (Exception e) {
