@@ -1,67 +1,85 @@
 package team15.models;
 
 
+import java.sql.ResultSet;
+
 public class CustomerAccount {
 
-  private long customerId;
-  private String firstName;
-  private String lastName;
-  private double expenditure;
-  private String status;
-  private String discountType;
+  private long CustomerID;
+  private String FirstName;
+  private String LastName;
+  private double Expenditure;
+  private String Status;
+  private String DiscountType;
 
 
-  public long getCustomerId() {
-    return customerId;
+  public void CustomerAccount(ResultSet rs){
+    try {
+      this.CustomerID= rs.getLong("CustomerID");
+      this.FirstName = rs.getString("FirstName");
+      this.LastName = rs.getString("LastName");
+      this.Expenditure = rs.getDouble("Expenditure");
+      this.Status = rs.getString ("Status");
+      this.DiscountType = rs.getString("DiscountType");
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
   }
 
-  public void setCustomerId(long customerId) {
-    this.customerId = customerId;
+
+
+  public long getCustomerID() {
+    return CustomerID;
+  }
+
+  public void setCustomerID(long customerID) {
+    this.CustomerID = customerID;
   }
 
 
   public String getFirstName() {
-    return firstName;
+    return FirstName;
   }
 
   public void setFirstName(String firstName) {
-    this.firstName = firstName;
+    this.FirstName = firstName;
   }
 
 
   public String getLastName() {
-    return lastName;
+    return LastName;
   }
 
   public void setLastName(String lastName) {
-    this.lastName = lastName;
+    this.LastName = lastName;
   }
 
 
   public double getExpenditure() {
-    return expenditure;
+    return Expenditure;
   }
 
   public void setExpenditure(double expenditure) {
-    this.expenditure = expenditure;
+    this.Expenditure = expenditure;
   }
 
 
   public String getStatus() {
-    return status;
+    return Status;
   }
 
   public void setStatus(String status) {
-    this.status = status;
+    this.Status = status;
   }
 
 
   public String getDiscountType() {
-    return discountType;
+    return DiscountType;
   }
 
   public void setDiscountType(String discountType) {
-    this.discountType = discountType;
+    this.DiscountType = discountType;
   }
 
 }

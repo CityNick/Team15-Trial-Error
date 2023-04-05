@@ -1,47 +1,60 @@
 package team15.models;
 
 
+import java.sql.ResultSet;
+
 public class RefundRecord {
 
-  private long salesRecordRecordId;
-  private java.sql.Date date;
-  private java.sql.Time time;
-  private double commissionToRefund;
+  private long SalesRecordRecordID;
+  private java.sql.Date Date;
+  private java.sql.Time Time;
+  private double CommissionToRefund;
 
-
-  public long getSalesRecordRecordId() {
-    return salesRecordRecordId;
+  public void RefundRecord(ResultSet rs){
+    try {
+      this.SalesRecordRecordID = rs.getLong("SalesRecordRecordID");
+      this.Date = rs.getDate("Date");
+      this.Time = rs.getTime("Time");
+      this.CommissionToRefund = rs.getDouble("CommissionToRefund");
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
   }
 
-  public void setSalesRecordRecordId(long salesRecordRecordId) {
-    this.salesRecordRecordId = salesRecordRecordId;
+  public long getSalesRecordRecordID() {
+    return SalesRecordRecordID;
+  }
+
+  public void setSalesRecordRecordID(long salesRecordRecordID) {
+    this.SalesRecordRecordID = salesRecordRecordID;
   }
 
 
   public java.sql.Date getDate() {
-    return date;
+    return Date;
   }
 
   public void setDate(java.sql.Date date) {
-    this.date = date;
+    this.Date = date;
   }
 
 
   public java.sql.Time getTime() {
-    return time;
+    return Time;
   }
 
   public void setTime(java.sql.Time time) {
-    this.time = time;
+    this.Time = time;
   }
 
 
   public double getCommissionToRefund() {
-    return commissionToRefund;
+    return CommissionToRefund;
   }
 
   public void setCommissionToRefund(double commissionToRefund) {
-    this.commissionToRefund = commissionToRefund;
+    this.CommissionToRefund = commissionToRefund;
   }
 
 }

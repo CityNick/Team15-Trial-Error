@@ -1,187 +1,214 @@
 package team15.models;
 
 
+import java.sql.ResultSet;
+
 public class SalesRecord {
 
-  private long recordId;
-  private long blankBlankId;
-  private long customerAccountCustomerId;
-  private long staffAccountStaffId;
-  private java.sql.Date date;
-  private java.sql.Time time;
-  private double localPrice;
-  private long discount;
-  private double usdPrice;
-  private double usdConversionRate;
-  private double commission;
-  private double taxRate;
-  private String paymentType;
-  private String bank;
-  private long accountNumber;
-  private long sortcode;
-  private String customerFirstName;
-  private String customerLastName;
+  private long RecordID;
+  private long BlankID;
+  private long CustomerID;
+  private long StaffID;
+  private java.sql.Date Date;
+  private java.sql.Time Time;
+  private double LocalPrice;
+  private double Discount;
+  private double USDPrice;
+  private double USDConversionRate;
+  private double Comission;
+  private double TaxRate;
+  private String PaymentType;
+  private String Bank;
+  private long AccountNumber;
+  private long SortCode;
+  private String CustomerFirstName;
+  private String CustomerLastName;
 
-
-  public long getRecordId() {
-    return recordId;
+  public void SalesRecord(ResultSet rs){
+    try {
+      this.RecordID = rs.getLong("RecordID");
+      this.BlankID = rs.getLong("BlankID");
+      this.CustomerID = rs.getLong("CustomerID");
+      this.StaffID = rs.getLong("StaffID");
+      this.Date = rs.getDate("Date");
+      this.Time = rs.getTime("Time");
+      this.LocalPrice = rs.getDouble("LocalPrice");
+      this.Discount = rs.getDouble("Discount");
+      this.USDPrice = rs.getDouble("USDPrice");
+      this.USDConversionRate = rs.getDouble("USDConversionRate");
+      this.Comission = rs.getDouble("Comission");
+      this.TaxRate = rs.getDouble("TaxRate");
+      this.PaymentType = rs.getString("PaymentType");
+      this.Bank = rs.getString("Bank");
+      this.AccountNumber = rs.getLong("AccountNumber");
+      this.SortCode = rs.getLong("SortCode");
+      this.CustomerFirstName = rs.getString("CustomerFirstName");
+      this.CustomerLastName = rs.getString("CustomerLastName");
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
   }
 
-  public void setRecordId(long recordId) {
-    this.recordId = recordId;
+  public long getRecordID() {
+    return RecordID;
+  }
+
+  public void setRecordID(long recordID) {
+    this.RecordID = recordID;
   }
 
 
-  public long getBlankBlankId() {
-    return blankBlankId;
+  public long getBlankID() {
+    return BlankID;
   }
 
-  public void setBlankBlankId(long blankBlankId) {
-    this.blankBlankId = blankBlankId;
-  }
-
-
-  public long getCustomerAccountCustomerId() {
-    return customerAccountCustomerId;
-  }
-
-  public void setCustomerAccountCustomerId(long customerAccountCustomerId) {
-    this.customerAccountCustomerId = customerAccountCustomerId;
+  public void setBlankID(long blankID) {
+    this.BlankID = blankID;
   }
 
 
-  public long getStaffAccountStaffId() {
-    return staffAccountStaffId;
+  public long getCustomerID() {
+    return CustomerID;
   }
 
-  public void setStaffAccountStaffId(long staffAccountStaffId) {
-    this.staffAccountStaffId = staffAccountStaffId;
+  public void setCustomerID(long customerID) {
+    this.CustomerID = customerID;
+  }
+
+
+  public long getStaffID() {
+    return StaffID;
+  }
+
+  public void setStaffID(long staffID) {
+    this.StaffID = staffID;
   }
 
 
   public java.sql.Date getDate() {
-    return date;
+    return Date;
   }
 
   public void setDate(java.sql.Date date) {
-    this.date = date;
+    this.Date = date;
   }
 
 
   public java.sql.Time getTime() {
-    return time;
+    return Time;
   }
 
   public void setTime(java.sql.Time time) {
-    this.time = time;
+    this.Time = time;
   }
 
 
   public double getLocalPrice() {
-    return localPrice;
+    return LocalPrice;
   }
 
   public void setLocalPrice(double localPrice) {
-    this.localPrice = localPrice;
+    this.LocalPrice = localPrice;
   }
 
 
-  public long getDiscount() {
-    return discount;
+  public double getDiscount() {
+    return Discount;
   }
 
   public void setDiscount(long discount) {
-    this.discount = discount;
+    this.Discount = discount;
   }
 
 
-  public double getUsdPrice() {
-    return usdPrice;
+  public double getUSDPrice() {
+    return USDPrice;
   }
 
-  public void setUsdPrice(double usdPrice) {
-    this.usdPrice = usdPrice;
-  }
-
-
-  public double getUsdConversionRate() {
-    return usdConversionRate;
-  }
-
-  public void setUsdConversionRate(double usdConversionRate) {
-    this.usdConversionRate = usdConversionRate;
+  public void setUSDPrice(double USDPrice) {
+    this.USDPrice = USDPrice;
   }
 
 
-  public double getCommission() {
-    return commission;
+  public double getUSDConversionRate() {
+    return USDConversionRate;
   }
 
-  public void setCommission(double commission) {
-    this.commission = commission;
+  public void setUSDConversionRate(double USDConversionRate) {
+    this.USDConversionRate = USDConversionRate;
+  }
+
+
+  public double getComission() {
+    return Comission;
+  }
+
+  public void setComission(double comission) {
+    this.Comission = comission;
   }
 
 
   public double getTaxRate() {
-    return taxRate;
+    return TaxRate;
   }
 
   public void setTaxRate(double taxRate) {
-    this.taxRate = taxRate;
+    this.TaxRate = taxRate;
   }
 
 
   public String getPaymentType() {
-    return paymentType;
+    return PaymentType;
   }
 
   public void setPaymentType(String paymentType) {
-    this.paymentType = paymentType;
+    this.PaymentType = paymentType;
   }
 
 
   public String getBank() {
-    return bank;
+    return Bank;
   }
 
   public void setBank(String bank) {
-    this.bank = bank;
+    this.Bank = bank;
   }
 
 
   public long getAccountNumber() {
-    return accountNumber;
+    return AccountNumber;
   }
 
   public void setAccountNumber(long accountNumber) {
-    this.accountNumber = accountNumber;
+    this.AccountNumber = accountNumber;
   }
 
 
-  public long getSortcode() {
-    return sortcode;
+  public long getSortCode() {
+    return SortCode;
   }
 
-  public void setSortcode(long sortcode) {
-    this.sortcode = sortcode;
+  public void setSortCode(long sortCode) {
+    this.SortCode = sortCode;
   }
 
 
   public String getCustomerFirstName() {
-    return customerFirstName;
+    return CustomerFirstName;
   }
 
   public void setCustomerFirstName(String customerFirstName) {
-    this.customerFirstName = customerFirstName;
+    this.CustomerFirstName = customerFirstName;
   }
 
 
   public String getCustomerLastName() {
-    return customerLastName;
+    return CustomerLastName;
   }
 
   public void setCustomerLastName(String customerLastName) {
-    this.customerLastName = customerLastName;
+    this.CustomerLastName = customerLastName;
   }
 
 }

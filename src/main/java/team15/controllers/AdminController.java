@@ -21,7 +21,11 @@ public class AdminController {
     @FXML
     private TextField searchStaffField;
     @FXML
+    private TextField searchTravelAgentBlanksField;
+    @FXML
     private TableView staffTableView;
+    @FXML
+    private TableView travelAgentBlanksTableView;
 
     // ============================ LOGOUT ===============================//
     // ----- Logout Button IS Pressed ----- //
@@ -29,6 +33,46 @@ public class AdminController {
     public void logoutPressed() throws IOException {
         Application.changeToScene("login.fxml");     // - returns to login page
         Application.setActiveUser(null);                  // - deletes current active user
+    }
+
+    // ========================== MAINTAIN BLANKS ======================= //
+
+    // ----- Open Maintain Blanks Tab ------ //
+    @FXML
+    public void openMaintainBlanks(){
+
+    }
+
+    @FXML
+    public void searchTravelAgentBlanks(){
+        try (Connection connection = DatabaseConnector.connect()) {
+            System.out.println(searchTravelAgentBlanksField.getText());
+
+            if (StaffAccountSQL.checkStaffAccount(searchTravelAgentBlanksField.getText())) {
+                System.out.println("set found");
+
+                // ----- Retrieve rs from StaffSQLAccount ----- //
+                ResultSet rs = StaffAccountSQL.getResultSet(searchTravelAgentBlanksField.getText(), connection);
+
+                // ----- convert rs to list ----- //
+                ArrayList<StaffAccount> data = new ArrayList<>();
+                if (!(rs == null)) {
+                    while (rs.next()) {
+                        data.add(new StaffAccount(rs));
+                        // ---- turn list into observable list ----- //
+                        ObservableList dataList = FXCollections.observableArrayList(data);
+
+                        // ---- display table view ---- //
+                        SQLToTable.fillTableView(travelAgentBlanksTableView, rs);
+                        travelAgentBlanksTableView.setItems(dataList);
+                    }
+                }
+            } else {
+                System.out.println("set not found");
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
 
@@ -72,6 +116,8 @@ public class AdminController {
             System.out.println(e.toString());
         }
     }
+
+
 
 
 }

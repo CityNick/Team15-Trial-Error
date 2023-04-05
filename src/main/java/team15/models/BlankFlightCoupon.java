@@ -1,27 +1,37 @@
 package team15.models;
 
 
+import java.sql.ResultSet;
+
 public class BlankFlightCoupon {
 
-  private long blankBlankId;
-  private long flightFlightId;
+  private long BlankID;
+  private long FlightID;
 
-
-  public long getBlankBlankId() {
-    return blankBlankId;
+  public void BlankFlightCoupon(ResultSet rs){
+    try {
+      this.BlankID= rs.getLong("StaffID");
+      this.FlightID = rs.getLong("Password");
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
   }
 
-  public void setBlankBlankId(long blankBlankId) {
-    this.blankBlankId = blankBlankId;
+
+  public long getBlankID() {
+    return BlankID;
+  }
+  public void setBlankID(long blankID) {
+    this.BlankID = blankID;
   }
 
 
   public long getFlightFlightId() {
-    return flightFlightId;
+    return FlightID;
   }
-
   public void setFlightFlightId(long flightFlightId) {
-    this.flightFlightId = flightFlightId;
+    this.FlightID = flightFlightId;
   }
 
 }

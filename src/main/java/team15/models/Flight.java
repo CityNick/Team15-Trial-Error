@@ -1,57 +1,71 @@
 package team15.models;
 
 
+import java.sql.ResultSet;
+
 public class Flight {
 
-  private long flightId;
-  private String startingAirport;
-  private String destinationAirport;
-  private java.sql.Date date;
-  private java.sql.Time time;
+  private long FlightID;
+  private String StartingAirport;
+  private String DestinationAirport;
+  private java.sql.Date Date;
+  private java.sql.Time Time;
 
-
-  public long getFlightId() {
-    return flightId;
+  public void Flight(ResultSet rs){
+    try {
+      this.FlightID= rs.getLong("FlightID");
+      this.StartingAirport = rs.getString("StartingAirport");
+      this.DestinationAirport = rs.getString("DestinationAirport");
+      this.Date = rs.getDate("Date");
+      this.Time = rs.getTime ("Time");
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
   }
 
-  public void setFlightId(long flightId) {
-    this.flightId = flightId;
+  public long getFlightID() {
+    return FlightID;
+  }
+
+  public void setFlightID(long flightID) {
+    this.FlightID = flightID;
   }
 
 
   public String getStartingAirport() {
-    return startingAirport;
+    return StartingAirport;
   }
 
   public void setStartingAirport(String startingAirport) {
-    this.startingAirport = startingAirport;
+    this.StartingAirport = startingAirport;
   }
 
 
   public String getDestinationAirport() {
-    return destinationAirport;
+    return DestinationAirport;
   }
 
   public void setDestinationAirport(String destinationAirport) {
-    this.destinationAirport = destinationAirport;
+    this.DestinationAirport = destinationAirport;
   }
 
 
   public java.sql.Date getDate() {
-    return date;
+    return Date;
   }
 
   public void setDate(java.sql.Date date) {
-    this.date = date;
+    this.Date = date;
   }
 
 
   public java.sql.Time getTime() {
-    return time;
+    return Time;
   }
 
   public void setTime(java.sql.Time time) {
-    this.time = time;
+    this.Time = time;
   }
 
 }

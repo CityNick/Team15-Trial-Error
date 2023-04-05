@@ -1,37 +1,49 @@
 package team15.models;
 
 
+import java.sql.ResultSet;
+
 public class TravelAgent {
 
-  private long travelAgentCode;
-  private String address;
-  private String postCode;
+  private long TravelAgentCode;
+  private String Address;
+  private String PostCode;
 
+  public void TravelAgent(ResultSet rs){
+    try {
+      this.TravelAgentCode = rs.getLong("TravelAgentCode");
+      this.Address = rs.getString("Address");
+      this.PostCode = rs.getString("PostCode");
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
+  }
 
   public long getTravelAgentCode() {
-    return travelAgentCode;
+    return TravelAgentCode;
   }
 
   public void setTravelAgentCode(long travelAgentCode) {
-    this.travelAgentCode = travelAgentCode;
+    this.TravelAgentCode = travelAgentCode;
   }
 
 
   public String getAddress() {
-    return address;
+    return Address;
   }
 
   public void setAddress(String address) {
-    this.address = address;
+    this.Address = address;
   }
 
 
   public String getPostCode() {
-    return postCode;
+    return PostCode;
   }
 
   public void setPostCode(String postCode) {
-    this.postCode = postCode;
+    this.PostCode = postCode;
   }
 
 }
