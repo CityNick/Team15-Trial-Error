@@ -167,4 +167,18 @@ public class StaffAccountSQLHelper {
 
     }
 
+    public static void deleteStaff(int staffID) {
+        try (Connection connection = DatabaseConnector.connect()) {
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM StaffAccount WHERE StaffID = ?");
+            stmt.setInt(1, staffID);
+
+            stmt.executeUpdate();
+            System.out.println("Deleted staff: "+ staffID);
+
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+
+        }
+    }
 }

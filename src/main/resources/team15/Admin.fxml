@@ -121,7 +121,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="minusButton3" layoutX="668.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="-" />
+                              <Button fx:id="minusButton3" layoutX="668.0" layoutY="337.0" mnemonicParsing="false" onAction="#deleteStaff" prefHeight="26.0" prefWidth="29.0" text="-" />
                               <TableView fx:id="staffTableView" layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
                                  <columns>
                                     <TableColumn prefWidth="75.0" text="Staff ID" />

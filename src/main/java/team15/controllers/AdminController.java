@@ -28,6 +28,8 @@ import java.util.ResourceBundle;
 
 
 public class AdminController implements Initializable {
+
+    private int selectedStaffID = 0;
     @FXML
     private TextField searchStaffField;
     @FXML
@@ -55,26 +57,7 @@ public class AdminController implements Initializable {
     // ----- Open Maintain Blanks Tab ------ //
     @FXML
     public void openMaintainBlanks(){
-        try (Connection connection = DatabaseConnector.connect()) {
-
-            ResultSet rs = BlankSQLHelper.getTravelAgentBlankResultSet(searchTravelAgentBlanksField.getText(), connection);
-
-            // ----- convert rs to list ----- //
-            ArrayList<Blank> data = new ArrayList<>();
-            if (!(rs == null)) {
-                while (rs.next()) {
-                    data.add(new Blank(rs));
-                    // ---- turn list into observable list ----- //
-                    ObservableList dataList = FXCollections.observableArrayList(data);
-
-                    // ---- display table view ---- //
-                    SQLToTable.fillTableView(travelAgentBlanksTableView, rs);
-                    travelAgentBlanksTableView.setItems(dataList);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
+        updateBlanksTable();
     }
 
     // ----- User enters a Travel Agent Code ----- //
@@ -117,6 +100,7 @@ public class AdminController implements Initializable {
     public void manageStockPressed() throws IOException {
         // ----- Uses Popup manager to create a Popup ----- //
         PopupManager.displayPopup("BlankStockPopup.fxml");
+        updateBlanksTable();
     }
 
 
@@ -125,60 +109,13 @@ public class AdminController implements Initializable {
     // ----- Open View Contracts Tab ------ //
     @FXML
     public void openViewContracts(){
-        try (Connection connection = DatabaseConnector.connect()) {
-
-            ResultSet rs = TravelAgentContractSQLHelper.getTravelAgentContractResultSet(searchTravelAgentContractField.getText(), connection);
-
-            // ----- convert rs to list ----- //
-            ArrayList<TravelAgentContract> data = new ArrayList<>();
-            if (!(rs == null)) {
-                while (rs.next()) {
-                    data.add(new TravelAgentContract(rs));
-                    // ---- turn list into observable list ----- //
-                    ObservableList dataList = FXCollections.observableArrayList(data);
-
-                    // ---- display table view ---- //
-                    SQLToTable.fillTableView(travelAgentContractTableView, rs);
-                    travelAgentContractTableView.setItems(dataList);
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
+        updateContractTable();
     }
 
     // ----- User enters a value into the search bar ----- //
     @FXML
     public void searchContractEdited(){
-        try (Connection connection = DatabaseConnector.connect()) {
-            System.out.println(searchTravelAgentContractField.getText());
-
-            if (StaffAccountSQLHelper.checkStaffAccount(searchTravelAgentContractField.getText())) {
-                System.out.println("set found");
-
-                // ----- Retrieve rs from StaffSQLAccount ----- //
-                ResultSet rs = TravelAgentContractSQLHelper.getTravelAgentContractResultSet(searchTravelAgentContractField.getText(), connection);
-
-                // ----- convert rs to list ----- //
-                ArrayList<TravelAgentContract> data = new ArrayList<>();
-                if (!(rs == null)) {
-                    while (rs.next()) {
-                        data.add(new TravelAgentContract(rs));
-                        // ---- turn list into observable list ----- //
-                        ObservableList dataList = FXCollections.observableArrayList(data);
-
-                        // ---- display table view ---- //
-                        SQLToTable.fillTableView(travelAgentContractTableView, rs);
-                        travelAgentContractTableView.setItems(dataList);
-                    }
-                }
-            } else {
-                travelAgentContractTableView.getItems().clear();
-                System.out.println("set not found");
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
+        updateContractTable();
     }
 
 
@@ -187,12 +124,59 @@ public class AdminController implements Initializable {
     // ----- Opened View Staff Tab ----- //
     @FXML
     public void openStaffTab(){
-        searchStaffEdited();
+        updateStaffTable();
     }
 
     // ----- User enters a value into the search bar ----- //
     @FXML
     public void searchStaffEdited() {
+        updateStaffTable();
+    }
+
+    // ----- User presses + button to create a new staff Member ----- //
+    @FXML
+    public void createStaff() throws IOException {
+        PopupManager.displayPopup("ViewStaffPopup.fxml");
+    }
+
+    @FXML
+    public void deleteStaff(){
+        if (selectedStaffID != 0){
+            StaffAccountSQLHelper.deleteStaff(selectedStaffID);
+            //updateTable();
+            selectedStaffID = 0;
+        }
+    }
+
+
+
+
+    public void updateBlanksTable(){
+        travelAgentBlanksTableView.getItems().clear();
+        try (Connection connection = DatabaseConnector.connect()) {
+
+            ResultSet rs = BlankSQLHelper.getTravelAgentBlankResultSet(searchTravelAgentBlanksField.getText(), connection);
+
+            // ----- convert rs to list ----- //
+            ArrayList<Blank> data = new ArrayList<>();
+            if (!(rs == null)) {
+                while (rs.next()) {
+                    data.add(new Blank(rs));
+                    // ---- turn list into observable list ----- //
+                    ObservableList dataList = FXCollections.observableArrayList(data);
+
+                    // ---- display table view ---- //
+                    SQLToTable.fillTableView(travelAgentBlanksTableView, rs);
+                    travelAgentBlanksTableView.setItems(dataList);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+    }
+
+    public void updateStaffTable(){
         try (Connection connection = DatabaseConnector.connect()) {
             System.out.println(searchStaffField.getText());
 
@@ -224,10 +208,36 @@ public class AdminController implements Initializable {
         }
     }
 
-    // ----- User presses + button to create a new staff Member ----- //
-    @FXML
-    public void createStaff() throws IOException {
-        PopupManager.displayPopup("ViewStaffPopup.fxml");
+    public void updateContractTable(){
+        try (Connection connection = DatabaseConnector.connect()) {
+            System.out.println(searchTravelAgentContractField.getText());
+
+            if (TravelAgentContractSQLHelper.checkTravelAgentContract(searchTravelAgentContractField.getText())) {
+                System.out.println("set found");
+
+                // ----- Retrieve rs from TravelAgentSQL ----- //
+                ResultSet rs = TravelAgentContractSQLHelper.getTravelAgentContractResultSet(searchTravelAgentContractField.getText(), connection);
+
+                // ----- convert rs to list ----- //
+                ArrayList<TravelAgentContract> data = new ArrayList<>();
+                if (!(rs == null)) {
+                    while (rs.next()) {
+                        data.add(new TravelAgentContract(rs));
+                        // ---- turn list into observable list ----- //
+                        ObservableList dataList = FXCollections.observableArrayList(data);
+
+                        // ---- display table view ---- //
+                        SQLToTable.fillTableView(travelAgentContractTableView, rs);
+                        travelAgentContractTableView.setItems(dataList);
+                    }
+                }
+            } else {
+                travelAgentContractTableView.getItems().clear();
+                System.out.println("set not found");
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
 
@@ -261,6 +271,22 @@ public class AdminController implements Initializable {
             }
         });
 
+        staffTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+                //Check whether item is selected and set value of selected item to Label
+                if(staffTableView.getSelectionModel().getSelectedItem() != null)
+                {
+                    StaffAccount staff = (StaffAccount) staffTableView.getSelectionModel().getSelectedItem();
+                    selectedStaffID = staff.getStaffID();
+                    System.out.println("Selected StaffID: " + selectedStaffID);
+                }
+                else{
+                    selectedStaffID = 0;
+                    System.out.println("Selected StaffID: " + selectedStaffID);
+                }
+            }
+        });
     }
 
 
