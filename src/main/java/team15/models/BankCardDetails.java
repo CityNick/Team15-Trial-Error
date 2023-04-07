@@ -21,7 +21,6 @@ public class BankCardDetails {
   public String getBank() {
     return bank;
   }
-
   public void setBank(String bank) {
     this.bank = bank;
   }
@@ -30,7 +29,6 @@ public class BankCardDetails {
   public long getAccountNumber() {
     return accountNumber;
   }
-
   public void setAccountNumber(long accountNumber) {
     this.accountNumber = accountNumber;
   }
@@ -39,7 +37,6 @@ public class BankCardDetails {
   public long getSortCode() {
     return sortCode;
   }
-
   public void setSortCode(long sortCode) {
     this.sortCode = sortCode;
   }

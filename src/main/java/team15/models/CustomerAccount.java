@@ -32,7 +32,6 @@ public class CustomerAccount {
   public long getCustomerID() {
     return CustomerID;
   }
-
   public void setCustomerID(long customerID) {
     this.CustomerID = customerID;
   }
@@ -41,7 +40,6 @@ public class CustomerAccount {
   public String getFirstName() {
     return FirstName;
   }
-
   public void setFirstName(String firstName) {
     this.FirstName = firstName;
   }
@@ -50,7 +48,6 @@ public class CustomerAccount {
   public String getLastName() {
     return LastName;
   }
-
   public void setLastName(String lastName) {
     this.LastName = lastName;
   }
@@ -59,7 +56,6 @@ public class CustomerAccount {
   public double getExpenditure() {
     return Expenditure;
   }
-
   public void setExpenditure(double expenditure) {
     this.Expenditure = expenditure;
   }
@@ -68,7 +64,6 @@ public class CustomerAccount {
   public String getStatus() {
     return Status;
   }
-
   public void setStatus(String status) {
     this.Status = status;
   }
@@ -77,7 +72,6 @@ public class CustomerAccount {
   public String getDiscountType() {
     return DiscountType;
   }
-
   public void setDiscountType(String discountType) {
     this.DiscountType = discountType;
   }

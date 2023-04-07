@@ -52,6 +52,7 @@ public class Application extends javafx.application.Application {
     public static void changeToScene(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource(fxml));
         Scene scene = new Scene(fxmlLoader.load());
+        activeStage.setResizable(false);
         activeStage.setScene(scene);
         activeStage.show();
     }
@@ -61,6 +62,6 @@ public class Application extends javafx.application.Application {
     public static StaffAccount getActiveUser(){return activeUser;}
     public static void setActiveUser(StaffAccount user) {activeUser = user;}
 
-
+    public static Stage getActiveStage(){return activeStage;}
 
 }

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="502.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team15.controllers.BlankStockPopupController">
+   <children>
+      <Pane prefHeight="481.0" prefWidth="533.0">
+         <children>
+            <ImageView fitHeight="413.0" fitWidth="505.0" layoutX="-2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/PopupBG.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="156.0" layoutY="73.0" prefHeight="25.0" prefWidth="144.0" text="Travel Agent Code:" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="travelAgentCodeDisplay" layoutX="304.0" layoutY="73.0" text="N/A" textFill="#a61e1e">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="169.0" layoutY="128.0" text="444:" textFill="WHITE" />
+            <Label fx:id="fieldFor444" layoutX="205.0" layoutY="128.0" text="[stock]" textFill="WHITE" />
+            <Button fx:id="exitButton" layoutX="222.0" layoutY="338.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="63.0" text="Exit">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <TextField fx:id="travelAgentCodeField" alignment="BOTTOM_LEFT" layoutX="346.0" layoutY="30.0" onAction="#TravelAgentCodeFieldEdited" prefHeight="26.0" prefWidth="127.0" promptText="Travel Agent Code" />
+            <Label layoutX="195.0" layoutY="97.0" text="Unsold blank stock:" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="changeTo444" layoutX="247.0" layoutY="128.0" text="+0" textFill="WHITE" />
+            <Button fx:id="makeChangesButton" layoutX="181.0" layoutY="301.0" mnemonicParsing="false" onAction="#makeChangesPressed" prefHeight="23.0" prefWidth="144.0" text="Make Changes">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Button>
+            <Button layoutX="290.0" layoutY="125.0" mnemonicParsing="false" onAction="#addTo444" prefHeight="21.0" prefWidth="22.0" text="+">
+               <font>
+                  <Font size="11.0" />
+               </font></Button>
+            <Button layoutX="314.0" layoutY="125.0" mnemonicParsing="false" onAction="#sub444" prefHeight="21.0" prefWidth="22.0" text="-">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button layoutX="290.0" layoutY="148.0" mnemonicParsing="false" onAction="#addTo420" prefHeight="21.0" prefWidth="22.0" text="+">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button layoutX="314.0" layoutY="148.0" mnemonicParsing="false" onAction="#sub420" prefHeight="21.0" prefWidth="22.0" text="-">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button layoutX="290.0" layoutY="171.0" mnemonicParsing="false" onAction="#addTo440" prefHeight="21.0" prefWidth="22.0" text="+">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button layoutX="314.0" layoutY="171.0" mnemonicParsing="false" onAction="#sub440" prefHeight="21.0" prefWidth="22.0" text="-">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button layoutX="290.0" layoutY="194.0" mnemonicParsing="false" onAction="#addTo451" prefHeight="21.0" prefWidth="22.0" text="+">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button layoutX="314.0" layoutY="194.0" mnemonicParsing="false" onAction="#sub451" prefHeight="21.0" prefWidth="22.0" text="-">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button layoutX="290.0" layoutY="217.0" mnemonicParsing="false" onAction="#addTo452" prefHeight="21.0" prefWidth="22.0" text="+">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button layoutX="314.0" layoutY="217.0" mnemonicParsing="false" onAction="#sub452" prefHeight="21.0" prefWidth="22.0" text="-">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button layoutX="290.0" layoutY="240.0" mnemonicParsing="false" onAction="#addTo201" prefHeight="21.0" prefWidth="22.0" text="+">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button layoutX="314.0" layoutY="240.0" mnemonicParsing="false" onAction="#sub201" prefHeight="21.0" prefWidth="22.0" text="-">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button layoutX="290.0" layoutY="263.0" mnemonicParsing="false" onAction="#addTo101" prefHeight="21.0" prefWidth="22.0" text="+">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button layoutX="314.0" layoutY="263.0" mnemonicParsing="false" onAction="#sub101" prefHeight="21.0" prefWidth="22.0" text="-">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Label layoutX="169.0" layoutY="151.0" text="420:" textFill="WHITE" />
+            <Label fx:id="fieldFor420" layoutX="205.0" layoutY="151.0" text="[stock]" textFill="WHITE" />
+            <Label fx:id="changeTo420" layoutX="247.0" layoutY="151.0" text="+0" textFill="WHITE" />
+            <Label layoutX="169.0" layoutY="173.0" text="440:" textFill="WHITE" />
+            <Label fx:id="fieldFor440" layoutX="205.0" layoutY="173.0" text="[stock]" textFill="WHITE" />
+            <Label fx:id="changeTo440" layoutX="247.0" layoutY="173.0" text="+0" textFill="WHITE" />
+            <Label layoutX="169.0" layoutY="196.0" text="451:" textFill="WHITE" />
+            <Label fx:id="fieldFor451" layoutX="205.0" layoutY="196.0" text="[stock]" textFill="WHITE" />
+            <Label fx:id="changeTo451" layoutX="247.0" layoutY="196.0" text="+0" textFill="WHITE" />
+            <Label layoutX="169.0" layoutY="219.0" text="452:" textFill="WHITE" />
+            <Label fx:id="fieldFor452" layoutX="205.0" layoutY="219.0" text="[stock]" textFill="WHITE" />
+            <Label fx:id="changeTo452" layoutX="247.0" layoutY="219.0" text="+0" textFill="WHITE" />
+            <Label layoutX="169.0" layoutY="242.0" text="201:" textFill="WHITE" />
+            <Label fx:id="fieldFor201" layoutX="205.0" layoutY="242.0" text="[stock]" textFill="WHITE" />
+            <Label fx:id="changeTo201" layoutX="247.0" layoutY="242.0" text="+0" textFill="WHITE" />
+            <Label layoutX="169.0" layoutY="265.0" text="101:" textFill="WHITE" />
+            <Label fx:id="fieldFor101" layoutX="205.0" layoutY="265.0" text="[stock]" textFill="WHITE" />
+            <Label fx:id="changeTo101" layoutX="247.0" layoutY="265.0" text="+0" textFill="WHITE" />
+         </children>
+      </Pane>
+   </children>
+</VBox>

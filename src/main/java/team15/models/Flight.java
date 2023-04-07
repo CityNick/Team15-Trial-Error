@@ -27,7 +27,6 @@ public class Flight {
   public long getFlightID() {
     return FlightID;
   }
-
   public void setFlightID(long flightID) {
     this.FlightID = flightID;
   }
@@ -36,7 +35,6 @@ public class Flight {
   public String getStartingAirport() {
     return StartingAirport;
   }
-
   public void setStartingAirport(String startingAirport) {
     this.StartingAirport = startingAirport;
   }
@@ -45,7 +43,6 @@ public class Flight {
   public String getDestinationAirport() {
     return DestinationAirport;
   }
-
   public void setDestinationAirport(String destinationAirport) {
     this.DestinationAirport = destinationAirport;
   }
@@ -54,7 +51,6 @@ public class Flight {
   public java.sql.Date getDate() {
     return Date;
   }
-
   public void setDate(java.sql.Date date) {
     this.Date = date;
   }
@@ -63,7 +59,6 @@ public class Flight {
   public java.sql.Time getTime() {
     return Time;
   }
-
   public void setTime(java.sql.Time time) {
     this.Time = time;
   }

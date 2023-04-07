@@ -4,13 +4,15 @@ import java.sql.ResultSet;
 
 public class StaffAccount {
 
-  private long StaffID;
+  private int StaffID;
   private String Password;
   private String FirstName;
   private String LastName;
   private String Role;
-  private long TravelAgentCode;
-  private long SupervisorID;
+  private int TravelAgentCode;
+  private int SupervisorID;
+
+  public StaffAccount(){}
 
   public StaffAccount(ResultSet rs){
     try {
@@ -27,10 +29,10 @@ public class StaffAccount {
     }
   }
 
-  public long getStaffID() {
+  public int getStaffID() {
     return StaffID;
   }
-  public void setStaffID(long staffID) {
+  public void setStaffID(int staffID) {
     this.StaffID = staffID;
   }
 
@@ -65,18 +67,18 @@ public class StaffAccount {
   }
 
 
-  public long getTravelAgentCode() {
+  public int getTravelAgentCode() {
     return TravelAgentCode;
   }
-  public void setTravelAgentCode(long travelAgentCode) {
+  public void setTravelAgentCode(int travelAgentCode) {
     this.TravelAgentCode = travelAgentCode;
   }
 
 
-  public long getSupervisorID() {
+  public int getSupervisorID() {
     return SupervisorID;
   }
-  public void setSupervisorID(long supervisorID) {
+  public void setSupervisorID(int supervisorID) {
     this.SupervisorID = supervisorID;
   }
 

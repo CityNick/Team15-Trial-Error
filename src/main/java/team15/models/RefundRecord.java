@@ -25,7 +25,6 @@ public class RefundRecord {
   public long getSalesRecordRecordID() {
     return SalesRecordRecordID;
   }
-
   public void setSalesRecordRecordID(long salesRecordRecordID) {
     this.SalesRecordRecordID = salesRecordRecordID;
   }
@@ -34,7 +33,6 @@ public class RefundRecord {
   public java.sql.Date getDate() {
     return Date;
   }
-
   public void setDate(java.sql.Date date) {
     this.Date = date;
   }
@@ -43,7 +41,6 @@ public class RefundRecord {
   public java.sql.Time getTime() {
     return Time;
   }
-
   public void setTime(java.sql.Time time) {
     this.Time = time;
   }
@@ -52,7 +49,6 @@ public class RefundRecord {
   public double getCommissionToRefund() {
     return CommissionToRefund;
   }
-
   public void setCommissionToRefund(double commissionToRefund) {
     this.CommissionToRefund = commissionToRefund;
   }

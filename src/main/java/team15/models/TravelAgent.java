@@ -23,7 +23,6 @@ public class TravelAgent {
   public long getTravelAgentCode() {
     return TravelAgentCode;
   }
-
   public void setTravelAgentCode(long travelAgentCode) {
     this.TravelAgentCode = travelAgentCode;
   }
@@ -32,7 +31,6 @@ public class TravelAgent {
   public String getAddress() {
     return Address;
   }
-
   public void setAddress(String address) {
     this.Address = address;
   }
@@ -41,7 +39,6 @@ public class TravelAgent {
   public String getPostCode() {
     return PostCode;
   }
-
   public void setPostCode(String postCode) {
     this.PostCode = postCode;
   }

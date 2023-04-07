@@ -9,7 +9,6 @@ public class OfficeManager {
   public long getSupervisorId() {
     return supervisorId;
   }
-
   public void setSupervisorId(long supervisorId) {
     this.supervisorId = supervisorId;
   }

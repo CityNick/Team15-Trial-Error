@@ -53,7 +53,6 @@ public class SalesRecord {
   public long getRecordID() {
     return RecordID;
   }
-
   public void setRecordID(long recordID) {
     this.RecordID = recordID;
   }
@@ -62,7 +61,6 @@ public class SalesRecord {
   public long getBlankID() {
     return BlankID;
   }
-
   public void setBlankID(long blankID) {
     this.BlankID = blankID;
   }
@@ -71,7 +69,6 @@ public class SalesRecord {
   public long getCustomerID() {
     return CustomerID;
   }
-
   public void setCustomerID(long customerID) {
     this.CustomerID = customerID;
   }
@@ -80,7 +77,6 @@ public class SalesRecord {
   public long getStaffID() {
     return StaffID;
   }
-
   public void setStaffID(long staffID) {
     this.StaffID = staffID;
   }
@@ -89,7 +85,6 @@ public class SalesRecord {
   public java.sql.Date getDate() {
     return Date;
   }
-
   public void setDate(java.sql.Date date) {
     this.Date = date;
   }
@@ -98,7 +93,6 @@ public class SalesRecord {
   public java.sql.Time getTime() {
     return Time;
   }
-
   public void setTime(java.sql.Time time) {
     this.Time = time;
   }
@@ -107,7 +101,6 @@ public class SalesRecord {
   public double getLocalPrice() {
     return LocalPrice;
   }
-
   public void setLocalPrice(double localPrice) {
     this.LocalPrice = localPrice;
   }
@@ -116,7 +109,6 @@ public class SalesRecord {
   public double getDiscount() {
     return Discount;
   }
-
   public void setDiscount(long discount) {
     this.Discount = discount;
   }
@@ -125,7 +117,6 @@ public class SalesRecord {
   public double getUSDPrice() {
     return USDPrice;
   }
-
   public void setUSDPrice(double USDPrice) {
     this.USDPrice = USDPrice;
   }
@@ -134,7 +125,6 @@ public class SalesRecord {
   public double getUSDConversionRate() {
     return USDConversionRate;
   }
-
   public void setUSDConversionRate(double USDConversionRate) {
     this.USDConversionRate = USDConversionRate;
   }
@@ -143,7 +133,6 @@ public class SalesRecord {
   public double getComission() {
     return Comission;
   }
-
   public void setComission(double comission) {
     this.Comission = comission;
   }
@@ -152,7 +141,6 @@ public class SalesRecord {
   public double getTaxRate() {
     return TaxRate;
   }
-
   public void setTaxRate(double taxRate) {
     this.TaxRate = taxRate;
   }
@@ -161,7 +149,6 @@ public class SalesRecord {
   public String getPaymentType() {
     return PaymentType;
   }
-
   public void setPaymentType(String paymentType) {
     this.PaymentType = paymentType;
   }
@@ -170,7 +157,6 @@ public class SalesRecord {
   public String getBank() {
     return Bank;
   }
-
   public void setBank(String bank) {
     this.Bank = bank;
   }
@@ -179,7 +165,6 @@ public class SalesRecord {
   public long getAccountNumber() {
     return AccountNumber;
   }
-
   public void setAccountNumber(long accountNumber) {
     this.AccountNumber = accountNumber;
   }
@@ -188,7 +173,6 @@ public class SalesRecord {
   public long getSortCode() {
     return SortCode;
   }
-
   public void setSortCode(long sortCode) {
     this.SortCode = sortCode;
   }
@@ -197,7 +181,6 @@ public class SalesRecord {
   public String getCustomerFirstName() {
     return CustomerFirstName;
   }
-
   public void setCustomerFirstName(String customerFirstName) {
     this.CustomerFirstName = customerFirstName;
   }
@@ -206,7 +189,6 @@ public class SalesRecord {
   public String getCustomerLastName() {
     return CustomerLastName;
   }
-
   public void setCustomerLastName(String customerLastName) {
     this.CustomerLastName = customerLastName;
   }

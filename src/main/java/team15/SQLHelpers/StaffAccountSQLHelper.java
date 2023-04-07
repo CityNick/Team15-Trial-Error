@@ -1,16 +1,16 @@
 package team15.SQLHelpers;
-
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
 import team15.Application;
 import team15.DatabaseConnector;
 import team15.models.StaffAccount;
 
 import java.sql.*;
 
-public class StaffAccountSQL {
+import static java.sql.Types.NULL;
+import static team15.DatabaseConnector.connection;
 
-    // ============================ LOGIN SQL HELPER ======================= //
+public class StaffAccountSQLHelper {
+
+    // ============================ LOGIN SQL HELPER ======================= //t
     public static boolean checkAccountLogin(long StaffID, String Password) {
 
         try (Connection connection = DatabaseConnector.connect()) {
@@ -34,7 +34,8 @@ public class StaffAccountSQL {
         }
     }
 
-    // ============================ VIEW STAFF ACCOUNTS ================ //
+
+    // ============================ VIEW STAFF ACCOUNTS =================== //
     public static Boolean checkStaffAccount(String search){
         try (Connection connection = DatabaseConnector.connect()){
 
@@ -73,6 +74,8 @@ public class StaffAccountSQL {
 
     }
 
+
+    // ============================ GET STAFF ACCOUNT RESULT SET ====================== //
     public static ResultSet getResultSet(String search, Connection connection) throws SQLException {
         ResultSet rs;
 
@@ -97,4 +100,71 @@ public class StaffAccountSQL {
         }
 
     }
+
+
+    // =========================== CREATE STAFF ACCOUNT ===================== //
+    public static Boolean createStaffAccount(StaffAccount staffAccount, Connection connection) throws SQLException {
+
+        // ----- Searches for matching record ----- //
+        PreparedStatement stmt = connection.prepareStatement
+                ("SELECT * FROM StaffAccount WHERE FirstName = ? AND LastName = ? AND Role =? AND TravelAgentCode = ? AND SupervisorID =?");
+        stmt.setString(1, staffAccount.getFirstName());
+        stmt.setString(2, staffAccount.getLastName());
+        stmt.setString(3, staffAccount.getRole());
+
+        if(staffAccount.getTravelAgentCode() == 0){stmt.setNull(4,NULL);}
+        else {stmt.setInt(4, staffAccount.getTravelAgentCode());}
+
+        if(staffAccount.getSupervisorID() == 0){stmt.setNull(5,NULL);}
+        else{stmt.setInt(5,staffAccount.getSupervisorID());}
+
+        ResultSet user = stmt.executeQuery();
+
+        // ----- if staff does not exist ----- //
+        if (!user.next()){
+            switch(staffAccount.getRole()){
+                case "Administrator":
+                    stmt = connection.prepareStatement(
+                            "INSERT IGNORE INTO StaffAccount (StaffID, Password, FirstName, LastName, Role) VALUES (?, ?, ?, ?, ?)");
+                    stmt.setInt(1,staffAccount.getStaffID());
+                    stmt.setString(2,staffAccount.getPassword());
+                    stmt.setString(3,staffAccount.getFirstName());
+                    stmt.setString(4,staffAccount.getLastName());
+                    stmt.setString(5, staffAccount.getRole());
+                    break;
+
+                case "Manager":
+                    stmt = connection.prepareStatement(
+                            "INSERT IGNORE INTO StaffAccount (StaffID, Password, FirstName, LastName, Role, TravelAgentCode) VALUES (?, ?, ?, ?, ?, ?)");
+                    stmt.setInt(1,staffAccount.getStaffID());
+                    stmt.setString(2,staffAccount.getPassword());
+                    stmt.setString(3,staffAccount.getFirstName());
+                    stmt.setString(4,staffAccount.getLastName());
+                    stmt.setString(5, staffAccount.getRole());
+                    stmt.setInt(6, staffAccount.getTravelAgentCode());
+                    break;
+
+                case "Travel Advisor":
+                    stmt = connection.prepareStatement(
+                            "INSERT INTO StaffAccount (StaffID, Password, FirstName, LastName, Role, TravelAgentCode, SupervisorID) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    stmt.setInt(1,staffAccount.getStaffID());
+                    stmt.setString(2,staffAccount.getPassword());
+                    stmt.setString(3,staffAccount.getFirstName());
+                    stmt.setString(4,staffAccount.getLastName());
+                    stmt.setString(5, staffAccount.getRole());
+                    stmt.setInt(6, staffAccount.getTravelAgentCode());
+                    stmt.setInt(7, staffAccount.getSupervisorID());
+            }
+
+            stmt.executeUpdate();
+            System.out.println("Account Made");
+            return true;
+        }
+        else{
+            System.out.println("Account Already Exists");
+            return false;
+        }
+
+    }
+
 }

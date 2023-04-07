@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import team15.Application;
-import team15.SQLHelpers.StaffAccountSQL;
+import team15.SQLHelpers.StaffAccountSQLHelper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +27,7 @@ public class LoginController implements Initializable {
     public void on_login_pressed() throws IOException {
 
         // ---------- Login Successful ---------- //
-        if (StaffAccountSQL.checkAccountLogin(Long.parseLong(staffIDField.getText()),passwordField.getText())){
+        if (StaffAccountSQLHelper.checkAccountLogin(Long.parseLong(staffIDField.getText()),passwordField.getText())){
 
             // ---- Check User's Role ---- //
             switch (Application.getActiveUser().getRole()){
@@ -63,6 +63,9 @@ public class LoginController implements Initializable {
                                 String newValue) {
                 if (!newValue.matches("\\d*")) {
                     staffIDField.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+                if (newValue.length() > 15) {
+                    staffIDField.setText(oldValue);
                 }
             }
         });

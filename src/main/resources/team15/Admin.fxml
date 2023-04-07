@@ -69,13 +69,8 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="searchTravelAgentBlanksField" alignment="CENTER" layoutX="602.0" layoutY="16.0" prefHeight="26.0" prefWidth="127.0" promptText="Search TA" />
-                              <Button fx:id="plusButton" layoutX="633.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="+">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="minusButton" layoutX="668.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="-" />
+                              <TextField fx:id="searchTravelAgentBlanksField" layoutX="602.0" layoutY="16.0" onKeyTyped="#searchTravelAgentBlanksEdited" prefHeight="26.0" prefWidth="127.0" promptText="Search TA Code" />
+                              <Button fx:id="manageStockButton" layoutX="595.0" layoutY="337.0" mnemonicParsing="false" onAction="#manageStockPressed" prefHeight="26.0" prefWidth="103.0" text="Manage Stock" />
                               <TableView fx:id="travelAgentBlanksTableView" layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
                                 <columns>
                                   <TableColumn prefWidth="75.0" text="C1" />
@@ -86,7 +81,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab fx:id="viewContractsButton" text="View Contracts">
+                  <Tab fx:id="viewContractsButton" onSelectionChanged="#openViewContracts" text="View Contracts">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -95,14 +90,14 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="searchTA2" alignment="CENTER" layoutX="602.0" layoutY="16.0" prefHeight="26.0" prefWidth="127.0" promptText="Search TA" />
+                              <TextField fx:id="searchTravelAgentContractField" layoutX="602.0" layoutY="16.0" onKeyTyped="#searchContractEdited" prefHeight="26.0" prefWidth="127.0" promptText="Search TA Code" />
                               <Button fx:id="plusButton2" layoutX="633.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="+">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Button>
                               <Button fx:id="minusButton2" layoutX="668.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="-" />
-                              <TableView layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
+                              <TableView fx:id="travelAgentContractTableView" layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
                                  <columns>
                                     <TableColumn prefWidth="75.0" text="C1" />
                                     <TableColumn prefWidth="75.0" text="C2" />
@@ -121,7 +116,7 @@
                                  </font>
                               </Label>
                               <TextField fx:id="searchStaffField" layoutX="602.0" layoutY="16.0" onKeyTyped="#searchStaffEdited" prefHeight="26.0" prefWidth="127.0" promptText="Search Staff" />
-                              <Button fx:id="plusButton3" layoutX="633.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="+">
+                              <Button fx:id="plusButton3" layoutX="633.0" layoutY="337.0" mnemonicParsing="false" onAction="#createStaff" prefHeight="26.0" prefWidth="29.0" text="+">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
