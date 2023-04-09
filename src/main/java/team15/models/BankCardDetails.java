@@ -1,44 +1,54 @@
 package team15.models;
 
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class BankCardDetails {
 
-  private long customerAccountCustomerId;
-  private String bank;
-  private long accountNumber;
-  private long sortCode;
+  private int CustomerID;
+  private String Bank;
+  private long AccountNumber;
+  private long SortCode;
 
-
-  public long getCustomerAccountCustomerId() {
-    return customerAccountCustomerId;
+  public BankCardDetails(ResultSet rs) throws SQLException {
+    this.CustomerID = rs.getInt("CustomerID");
+    this.Bank = rs.getString("Bank");
+    this.AccountNumber = rs.getLong("AccountNumber");
+    this.SortCode = rs.getLong("SortCode");
   }
 
-  public void setCustomerAccountCustomerId(long customerAccountCustomerId) {
-    this.customerAccountCustomerId = customerAccountCustomerId;
+
+  public long getCustomerID() {
+    return CustomerID;
+  }
+
+  public void setCustomerID(int customerID) {
+    this.CustomerID = customerID;
   }
 
 
   public String getBank() {
-    return bank;
+    return Bank;
   }
   public void setBank(String bank) {
-    this.bank = bank;
+    this.Bank = bank;
   }
 
 
   public long getAccountNumber() {
-    return accountNumber;
+    return AccountNumber;
   }
   public void setAccountNumber(long accountNumber) {
-    this.accountNumber = accountNumber;
+    this.AccountNumber = accountNumber;
   }
 
 
   public long getSortCode() {
-    return sortCode;
+    return SortCode;
   }
   public void setSortCode(long sortCode) {
-    this.sortCode = sortCode;
+    this.SortCode = sortCode;
   }
 
 }

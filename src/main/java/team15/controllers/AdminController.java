@@ -63,35 +63,7 @@ public class AdminController implements Initializable {
     // ----- User enters a Travel Agent Code ----- //
     @FXML
     public void searchTravelAgentBlanksEdited(){
-        try (Connection connection = DatabaseConnector.connect()) {
-            System.out.println(searchTravelAgentBlanksField.getText());
-
-            if (BlankSQLHelper.checkTravelAgentBlank(searchTravelAgentBlanksField.getText())) {
-                System.out.println("set found");
-
-                // ----- Retrieve rs from Blank SQL Helper ----- //
-                ResultSet rs = BlankSQLHelper.getTravelAgentBlankResultSet(searchTravelAgentBlanksField.getText(), connection);
-
-                // ----- convert rs to list ----- //
-                ArrayList<Blank> data = new ArrayList<>();
-                if (!(rs == null)) {
-                    while (rs.next()) {
-                        data.add(new Blank(rs));
-                        // ---- turn list into observable list ----- //
-                        ObservableList dataList = FXCollections.observableArrayList(data);
-
-                        // ---- display table view ---- //
-                        SQLToTable.fillTableView(travelAgentBlanksTableView, rs);
-                        travelAgentBlanksTableView.setItems(dataList);
-                    }
-                }
-            } else {
-                travelAgentBlanksTableView.getItems().clear();
-                System.out.println("set not found");
-            }
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
+        updateBlanksTable();
     }
 
 
@@ -137,13 +109,14 @@ public class AdminController implements Initializable {
     @FXML
     public void createStaff() throws IOException {
         PopupManager.displayPopup("ViewStaffPopup.fxml");
+        updateStaffTable();
     }
 
     @FXML
     public void deleteStaff(){
         if (selectedStaffID != 0){
             StaffAccountSQLHelper.deleteStaff(selectedStaffID);
-            //updateTable();
+            updateStaffTable();
             selectedStaffID = 0;
         }
     }

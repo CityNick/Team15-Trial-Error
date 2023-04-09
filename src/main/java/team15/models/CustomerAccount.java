@@ -2,25 +2,29 @@ package team15.models;
 
 
 import java.sql.ResultSet;
+import java.time.LocalDate;
 
 public class CustomerAccount {
 
-  private long CustomerID;
+  private int CustomerID;
   private String FirstName;
   private String LastName;
   private double Expenditure;
   private String Status;
   private String DiscountType;
+  private LocalDate DateOfBirth;
 
 
-  public void CustomerAccount(ResultSet rs){
+
+  public CustomerAccount(ResultSet rs){
     try {
-      this.CustomerID= rs.getLong("CustomerID");
+      this.CustomerID= rs.getInt("CustomerID");
       this.FirstName = rs.getString("FirstName");
       this.LastName = rs.getString("LastName");
       this.Expenditure = rs.getDouble("Expenditure");
       this.Status = rs.getString ("Status");
       this.DiscountType = rs.getString("DiscountType");
+      this.DateOfBirth = rs.getDate("DateOfBirth").toLocalDate();
     }
     catch(Exception e){
       e.printStackTrace();
@@ -29,10 +33,10 @@ public class CustomerAccount {
 
 
 
-  public long getCustomerID() {
+  public int getCustomerID() {
     return CustomerID;
   }
-  public void setCustomerID(long customerID) {
+  public void setCustomerID(int customerID) {
     this.CustomerID = customerID;
   }
 
@@ -76,4 +80,11 @@ public class CustomerAccount {
     this.DiscountType = discountType;
   }
 
+  public LocalDate getDateOfBirth() {
+    return DateOfBirth;
+  }
+
+  public void setDateOfBirth(LocalDate dateOfBirth) {
+    DateOfBirth = dateOfBirth;
+  }
 }

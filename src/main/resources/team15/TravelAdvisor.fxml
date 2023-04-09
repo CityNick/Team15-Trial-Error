@@ -2,9 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -157,93 +161,131 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                   </Tab>
-                  <Tab fx:id="viewStaffButton" text="Sell Blanks">
+                  <Tab fx:id="viewStaffButton" onSelectionChanged="#openSellBlanks" text="Sell Blanks">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="406.0" prefWidth="830.0">
                            <children>
-                              <Label layoutX="338.0" layoutY="35.0" prefHeight="25.0" prefWidth="77.0" text="Sell Blanks" textAlignment="JUSTIFY" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <TextField alignment="CENTER" layoutX="158.0" layoutY="90.0" prefHeight="26.0" prefWidth="178.0" />
-                              <TextField alignment="CENTER" layoutX="158.0" layoutY="125.0" prefHeight="26.0" prefWidth="178.0" />
-                              <TextField alignment="CENTER" layoutX="158.0" layoutY="161.0" prefHeight="26.0" prefWidth="178.0" />
-                              <Button fx:id="saveButton11" layoutX="173.0" layoutY="211.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="63.0" text="Search">
+                              <TextField fx:id="FirstNameField" layoutX="125.0" layoutY="58.0" prefHeight="26.0" prefWidth="122.0" promptText="First Name" />
+                              <TextField fx:id="LastNameField" layoutX="125.0" layoutY="93.0" prefHeight="26.0" prefWidth="122.0" promptText="Last Name" />
+                              <Button fx:id="saveButton11" layoutX="113.0" layoutY="169.0" mnemonicParsing="false" onAction="#searchButtonPressed" prefHeight="23.0" prefWidth="63.0" text="Search">
                                  <font>
                                     <Font size="12.0" />
                                  </font>
                               </Button>
-                              <Label layoutX="68.0" layoutY="89.0" prefHeight="25.0" prefWidth="77.0" text="First name:" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label layoutX="35.0" layoutY="57.0" prefHeight="25.0" prefWidth="77.0" text="First name:" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="68.0" layoutY="125.0" prefHeight="25.0" prefWidth="77.0" text="Surname:" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label layoutX="35.0" layoutY="93.0" prefHeight="25.0" prefWidth="77.0" text="Surname:" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="68.0" layoutY="161.0" prefHeight="25.0" prefWidth="88.0" text="Customer ID:" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label layoutX="35.0" layoutY="129.0" prefHeight="25.0" prefWidth="88.0" text="D.O.B:" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="162.0" layoutY="255.0" prefHeight="25.0" prefWidth="88.0" text="Search results:" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label layoutX="101.0" layoutY="200.0" prefHeight="25.0" prefWidth="88.0" text="Search results:" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="71.0" layoutY="282.0" prefHeight="25.0" prefWidth="88.0" text="First name:" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label layoutX="38.0" layoutY="252.0" prefHeight="25.0" prefWidth="72.0" text="Status:" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="71.0" layoutY="307.0" prefHeight="25.0" prefWidth="72.0" text="Last name:" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label layoutX="38.0" layoutY="228.0" prefHeight="25.0" prefWidth="83.0" text="Customer ID:" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="71.0" layoutY="332.0" prefHeight="25.0" prefWidth="83.0" text="Customer ID:" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label layoutX="279.0" layoutY="244.0" prefHeight="25.0" prefWidth="77.0" text="Blank type:" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="397.0" layoutY="89.0" prefHeight="25.0" prefWidth="77.0" text="Blank type:" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label layoutX="279.0" layoutY="279.0" prefHeight="25.0" prefWidth="77.0" text="Price:" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="397.0" layoutY="126.0" prefHeight="25.0" prefWidth="77.0" text="Price:" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label layoutX="279.0" layoutY="209.0" prefHeight="25.0" prefWidth="77.0" text="Pay later?" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="397.0" layoutY="161.0" prefHeight="25.0" prefWidth="77.0" text="Destination:" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label layoutX="395.0" layoutY="209.0" prefHeight="25.0" prefWidth="64.0" text="Discount?" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="397.0" layoutY="205.0" prefHeight="25.0" prefWidth="77.0" text="Pay later?" textAlignment="JUSTIFY" textFill="WHITE">
+                              <CheckBox layoutX="360.0" layoutY="212.0" mnemonicParsing="false" />
+                              <CheckBox layoutX="473.0" layoutY="212.0" mnemonicParsing="false" />
+                              <TextField alignment="CENTER" layoutX="360.0" layoutY="278.0" prefHeight="26.0" prefWidth="122.0" />
+                              <Label fx:id="customerStatus" layoutX="125.0" layoutY="252.0" prefHeight="25.0" prefWidth="88.0" text="N/A" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="397.0" layoutY="231.0" prefHeight="25.0" prefWidth="95.0" text="Apply discount" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label fx:id="customerIDLabel" layoutX="125.0" layoutY="228.0" prefHeight="25.0" prefWidth="143.0" text="N/A" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <CheckBox layoutX="498.0" layoutY="209.0" mnemonicParsing="false" />
-                              <CheckBox layoutX="498.0" layoutY="235.0" mnemonicParsing="false" />
-                              <Button fx:id="saveButton12" layoutX="502.0" layoutY="278.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="63.0" text="Save">
+                              <ComboBox fx:id="blankTypeSelection" layoutX="360.0" layoutY="243.0" prefHeight="26.0" prefWidth="122.0" />
+                              <TableView fx:id="flightsTableView" layoutX="276.0" layoutY="58.0" prefHeight="151.0" prefWidth="449.0">
+                                 <columns>
+                                    <TableColumn fx:id="startingAirportColumn" prefWidth="101.5999755859375" text="StartingAirport" />
+                                    <TableColumn fx:id="departureColumn" prefWidth="150.0" text="Departure" />
+                                    <TableColumn fx:id="leg1Column" prefWidth="57.5999755859375" text="Leg1" />
+                                    <TableColumn fx:id="leg2Column" prefWidth="57.5999755859375" text="Leg2" />
+                                    <TableColumn fx:id="leg3Column" prefWidth="57.5999755859375" text="Leg3" />
+                                    <TableColumn fx:id="leg4Column" prefWidth="57.5999755859375" text="Leg4" />
+                                    <TableColumn fx:id="destinationColumn" prefWidth="83.20004272460938" text="Destination" />
+                                    <TableColumn fx:id="arrivalColumn" prefWidth="150.0" text="Arrival" />
+                                 </columns>
+                              </TableView>
+                              <TextField fx:id="bankNameField" layoutX="125.0" layoutY="278.0" prefHeight="26.0" prefWidth="122.0" promptText="Bank" />
+                              <TextField fx:id="accountNumberField" layoutX="125.0" layoutY="307.0" prefHeight="26.0" prefWidth="122.0" promptText="xxxxxxxxxx" />
+                              <TextField fx:id="sortCodeField" layoutX="125.0" layoutY="336.0" prefHeight="26.0" prefWidth="122.0" promptText="xxxxxx" />
+                              <Label layoutX="38.0" layoutY="281.0" text="Bank name:" textFill="WHITE">
                                  <font>
-                                    <Font size="12.0" />
+                                    <Font size="14.0" />
                                  </font>
-                              </Button>
-                              <TextField alignment="CENTER" layoutX="481.0" layoutY="90.0" prefHeight="26.0" prefWidth="178.0" />
-                              <TextField alignment="CENTER" layoutX="481.0" layoutY="125.0" prefHeight="26.0" prefWidth="178.0" />
-                              <TextField alignment="CENTER" layoutX="481.0" layoutY="161.0" prefHeight="26.0" prefWidth="178.0" />
+                              </Label>
+                              <Label layoutX="38.0" layoutY="310.0" text="Acc no.:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="38.0" layoutY="339.0" text="Sort code:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="startingAirportField" layoutX="360.0" layoutY="22.0" onAction="#startingAirportEdited" prefHeight="26.0" prefWidth="122.0" promptText="Airport" />
+                              <Label layoutX="280.0" layoutY="23.0" prefHeight="25.0" prefWidth="77.0" text="Leave From:" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="489.0" layoutY="23.0" prefHeight="25.0" prefWidth="77.0" text="Destination:" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="destinationAirportField" layoutX="565.0" layoutY="22.0" onAction="#destinationAirportEdited" prefHeight="26.0" prefWidth="135.0" promptText="Airport" />
+                              <DatePicker fx:id="departureDateField" layoutX="531.0" layoutY="208.0" prefHeight="26.0" prefWidth="194.0" promptText="Departure date" />
+                              <Button layoutX="422.0" layoutY="326.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="165.0" text="Sell blank" />
+                              <Label layoutX="509.0" layoutY="279.0" prefHeight="25.0" prefWidth="77.0" text="Discount" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker fx:id="DobField" layoutX="125.0" layoutY="127.0" prefHeight="26.0" prefWidth="122.0" promptText="yyyy-mm-nn" />
                            </children></AnchorPane>
                     </content>
                   </Tab>

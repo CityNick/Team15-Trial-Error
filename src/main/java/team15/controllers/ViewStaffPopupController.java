@@ -54,6 +54,11 @@ public class ViewStaffPopupController implements Initializable {
         try (Connection connection = DatabaseConnector.connect()){
             if(StaffAccountSQLHelper.createStaffAccount(newStaff, connection)){
                 creationResultField.setText("Account Made Successfully");
+                firstNameField.clear();
+                lastNameField.clear();
+                passwordField.clear();
+                travelAgentCodeField.clear();
+                supervisorIDField.clear();
             }
             else{
                 creationResultField.setText("Account Already Exists");

@@ -172,4 +172,103 @@ public class BlankSQLHelper {
 
         return uniqueID;
     }
+
+    public static ResultSet staffBlankCount(String search,int travelAgentCode, Connection connection) throws SQLException {
+        ResultSet rs;
+        if (search == ""){
+            PreparedStatement stmt = connection.prepareStatement(
+                    "SELECT StaffID,\n" +
+                            "    sum(case when BlankType = 444 then 1 else 0 end) AS 'StockOf444',\n" +
+                            "    sum(case when BlankType = 440 then 1 else 0 end) AS 'StockOf440',\n" +
+                            "    sum(case when BlankType = 420 then 1 else 0 end) AS 'StockOf420',\n" +
+                            "    sum(case when BlankType = 451 then 1 else 0 end) AS 'StockOf451',\n" +
+                            "    sum(case when BlankType = 452 then 1 else 0 end) AS 'StockOf452',\n" +
+                            "    sum(case when BlankType = 201 then 1 else 0 end) AS 'StockOf201',\n" +
+                            "    sum(case when BlankType = 101 then 1 else 0 end) AS 'StockOf101'\n" +
+                            "FROM Blank WHERE TravelAgentCode = ? AND BlankID NOT IN (SELECT BlankID FROM SalesRecord)\n" +
+                            "GROUP BY StaffID");
+            stmt.setInt(1,travelAgentCode);
+            rs = stmt.executeQuery();
+        }
+        else{
+            PreparedStatement stmt = connection.prepareStatement(
+                    "SELECT StaffID,\n" +
+                            "    sum(case when BlankType = 444 then 1 else 0 end) AS 'StockOf444',\n" +
+                            "    sum(case when BlankType = 440 then 1 else 0 end) AS 'StockOf440',\n" +
+                            "    sum(case when BlankType = 420 then 1 else 0 end) AS 'StockOf420',\n" +
+                            "    sum(case when BlankType = 451 then 1 else 0 end) AS 'StockOf451',\n" +
+                            "    sum(case when BlankType = 452 then 1 else 0 end) AS 'StockOf452',\n" +
+                            "    sum(case when BlankType = 201 then 1 else 0 end) AS 'StockOf201',\n" +
+                            "    sum(case when BlankType = 101 then 1 else 0 end) AS 'StockOf101'\n" +
+                            "FROM Blank WHERE StaffID = ? AND TravelAgentCode = ? AND BlankID NOT IN (SELECT BlankID FROM SalesRecord)\n" +
+                            "GROUP BY StaffID");
+            stmt.setInt(1, Integer.parseInt(search));
+            stmt.setInt(2,travelAgentCode);
+            rs = stmt.executeQuery();
+        }
+
+        return rs;
+    }
+
+    public static void assignBlanks(int staffID,int travelAgentCode, int change, int blankType) {
+        try (Connection connection = DatabaseConnector.connect()){
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE Blank SET StaffID = ? WHERE StaffID IS NULL AND TravelAgentCode = ?  AND BlankType = ? LIMIT ?");
+            stmt.setInt(1, staffID);
+            stmt.setInt(2, travelAgentCode);
+            stmt.setInt(3, blankType);
+            stmt.setInt(4, change);
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    public static void unassignBlanks(int staffID, int amount, int blankType){
+
+        try (Connection connection = DatabaseConnector.connect()){
+
+            // ---- removes blanks ----- ..
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE Blank SET StaffID = NULL WHERE StaffID = ? AND BlankType = ? AND BlankID NOT IN (SELECT BlankID FROM SalesRecord) LIMIT ?");;
+            stmt.setInt(1, staffID);
+            stmt.setInt(2, blankType);
+            stmt.setInt(3, amount*-1);
+
+            stmt.executeUpdate();
+            System.out.println(amount + " " + blankType + " Blanks");
+
+
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    public static int countStaffStock(int staffID, int blankType){
+
+        try (Connection connection = DatabaseConnector.connect()){
+
+            ResultSet rs;
+            PreparedStatement stmt = connection.prepareStatement(
+                    "SELECT COUNT(BlankID) FROM Blank WHERE BlankID NOT IN(SELECT b.BlankID FROM Blank b INNER JOIN SalesRecord s ON s.BlankID = b.BlankID) AND StaffID = ? and BlankType = ?");
+            stmt.setInt(1, staffID);
+            stmt.setInt(2, blankType);
+
+            rs = stmt.executeQuery();
+
+            if (!rs.next()) {
+                return 0;
+            }
+            else{
+                return ((Number) rs.getObject(1)).intValue();
+            }
+
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return 0;
+    }
 }

@@ -31,7 +31,7 @@
                   <content>
                     <AnchorPane fx:id="saveFileName" minHeight="0.0" minWidth="0.0" prefHeight="406.0" prefWidth="678.0">
                            <children>
-                              <Label alignment="CENTER" layoutX="312.0" layoutY="102.0" prefHeight="25.0" prefWidth="128.0" text="Enter USD rate:" textFill="WHITE">
+                              <Label alignment="CENTER" layoutX="283.0" layoutY="99.0" prefHeight="26.0" prefWidth="191.0" text="Enter USD Conversion rate:" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -41,18 +41,17 @@
                                     <Font size="12.0" />
                                  </font>
                               </Button>
-                              <TextField alignment="CENTER" layoutX="421.0" layoutY="134.0" prefHeight="26.0" prefWidth="34.0" />
-                              <Label layoutX="305.0" layoutY="138.0" prefHeight="12.0" prefWidth="115.0" text="Current currency: 1" textFill="WHITE">
+                              <Label layoutX="318.0" layoutY="138.0" prefHeight="20.0" prefWidth="46.0" text="1 Unit:" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="347.0" layoutY="168.0" text="= $" textFill="WHITE">
+                              <Label layoutX="368.0" layoutY="138.0" text="= $" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <TextField alignment="CENTER" layoutX="373.0" layoutY="164.0" prefHeight="26.0" prefWidth="34.0" />
+                              <TextField alignment="CENTER" layoutX="393.0" layoutY="135.0" prefHeight="26.0" prefWidth="34.0" />
                            </children></AnchorPane>
                   </content>
                 </Tab>
@@ -76,7 +75,7 @@
                            </children></AnchorPane>
                   </content>
                 </Tab>
-                  <Tab fx:id="assignBlanksButton" text="Assign Blanks">
+                  <Tab fx:id="assignBlanksButton" onSelectionChanged="#assignBlanksOpened" text="Assign Blanks">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -85,84 +84,18 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="searchStaff" alignment="CENTER" layoutX="602.0" layoutY="16.0" prefHeight="26.0" prefWidth="127.0" promptText="Search Staff" />
-                              <Button fx:id="plusButton" layoutX="633.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="+">
+                              <TextField fx:id="searchStaffBlanksField" layoutX="602.0" layoutY="16.0" onKeyTyped="#searchStaffBlanksEdited" prefHeight="26.0" prefWidth="127.0" promptText="Search Staff" />
+                              <Button fx:id="assignBlanksButton" layoutX="584.0" layoutY="337.0" mnemonicParsing="false" onAction="#assignBlanksPressed" prefHeight="27.0" prefWidth="118.0" text="Assign Blanks">
                                  <font>
-                                    <Font name="System Bold" size="13.0" />
+                                    <Font size="13.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="minusButton" layoutX="668.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="-" />
-                              <TableView layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
+                              <TableView fx:id="staffBlanksView" layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
                                 <columns>
                                   <TableColumn prefWidth="75.0" text="C1" />
                                   <TableColumn prefWidth="75.0" text="C2" />
                                 </columns>
                               </TableView>
-                              <Label layoutX="63.0" layoutY="333.0" text="Unassigned Blanks:" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="207.0" layoutY="335.0" text="444:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="207.0" layoutY="354.0" text="451:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="281.0" layoutY="335.0" text="420:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="281.0" layoutY="354.0" text="452:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="358.0" layoutY="335.0" text="201:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="434.0" layoutY="335.0" text="101:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="241.0" layoutY="335.0" text="0" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="241.0" layoutY="354.0" text="0" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="315.0" layoutY="354.0" text="0" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="315.0" layoutY="335.0" text="0" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="389.0" layoutY="335.0" text="0" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="465.0" layoutY="335.0" text="0" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
                            </children>
                         </AnchorPane>
                     </content>
