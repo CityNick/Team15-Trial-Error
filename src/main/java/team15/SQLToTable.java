@@ -28,6 +28,25 @@ public class SQLToTable {
         }
     }
 
+    // ================= RESULT SET INTO TABLE VIEW (Staff ============= //
+    public static void fillFlightTableView(TableView tableView, ResultSet resultSet){
+        try{
+            tableView.getColumns().clear();
+            for(int i=0; i<resultSet.getMetaData().getColumnCount(); i++){
+                TableColumn column = new TableColumn<>();
+                switch(resultSet.getMetaData().getColumnName(i+1)){
+                    default:
+                        column.setText(resultSet.getMetaData().getColumnName(i+1));
+                }
+                column.setCellValueFactory(new PropertyValueFactory<>(""));
+                tableView.getColumns().add(column);
+            }
+        }
+        catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 

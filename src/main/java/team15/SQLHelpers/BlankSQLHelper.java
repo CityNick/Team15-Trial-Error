@@ -271,4 +271,28 @@ public class BlankSQLHelper {
         }
         return 0;
     }
+
+    public static Boolean checkBlankTypeStock(int staffID, int blankType){
+        try (Connection connection = DatabaseConnector.connect()){
+            ResultSet rs;
+
+            // ------ IF @param search only contains numbers -------- //
+            PreparedStatement stmt = connection.prepareStatement(
+                    "SELECT * FROM Blank WHERE StaffID = ? AND BlankType = ? AND BlankID NOT IN (SELECT BlankID FROM SalesRecord)");
+            stmt.setInt(1, staffID);
+            stmt.setInt(2, blankType);
+            rs = stmt.executeQuery();
+            if (!rs.next()) {
+                return false;
+            }
+
+            else {
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return false;
+        }
+    }
 }
