@@ -129,6 +129,7 @@ public class TravelAdvisorController implements Initializable {
     public void refundButtonPressed() throws SQLException {
         if (selectedSalesRecordID != -1) {
             RefundRecordSQLHelper.createRefund(selectedSalesRecordID, selectedSalesRecord.getCommission());
+            CustomerAccountSQLHelper.returnCommission(selectedSalesRecord);
             System.out.println("Refund Successful");
             updateSalesRecordTable();
         }

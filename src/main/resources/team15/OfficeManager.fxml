@@ -60,7 +60,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="openFileButton" layoutX="322.0" layoutY="184.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="110.0" text="Generate">
+                              <Button layoutX="322.0" layoutY="184.0" mnemonicParsing="false" onAction="#generateReportPressed" prefHeight="23.0" prefWidth="110.0" text="Generate">
                                  <font>
                                     <Font size="12.0" />
                                  </font>
@@ -71,7 +71,7 @@
                                  </font>
                               </Label>
                               <DatePicker fx:id="startDatePicker" layoutX="119.0" layoutY="134.0" prefHeight="26.0" prefWidth="122.0" promptText="Start date" />
-                              <ComboBox fx:id="reportTypeBox" editable="true" layoutX="376.0" layoutY="134.0" prefHeight="23.0" prefWidth="121.0" promptText="Report type" />
+                              <ComboBox fx:id="reportTypeBox" editable="true" layoutX="376.0" layoutY="134.0" onAction="#reportTypePicked" prefHeight="23.0" prefWidth="121.0" promptText="Report type" />
                               <DatePicker fx:id="endDatePicker" layoutX="247.0" layoutY="134.0" prefHeight="26.0" prefWidth="122.0" promptText="End date" />
                               <ComboBox fx:id="rangeBox" editable="true" layoutX="505.0" layoutY="134.0" prefHeight="23.0" prefWidth="121.0" promptText="Range" />
                            </children></AnchorPane>
@@ -102,7 +102,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab fx:id="viewCustomersButton" text="View Customers">
+                  <Tab fx:id="viewCustomersButton" onSelectionChanged="#viewCustomerOpened" text="View Customers">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -111,20 +111,19 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="searchCustomers" alignment="CENTER" layoutX="602.0" layoutY="16.0" prefHeight="26.0" prefWidth="127.0" promptText="Search Customers" />
-                              <TableView layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
+                              <TableView fx:id="customerTableView" layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
                                  <columns>
                                     <TableColumn prefWidth="75.0" text="C1" />
                                     <TableColumn prefWidth="75.0" text="C2" />
                                  </columns>
                               </TableView>
-                              <CheckBox fx:id="valuedButton" layoutX="62.0" layoutY="334.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="95.0" text="Valued" textFill="WHITE">
+                              <CheckBox fx:id="valuedBox" layoutX="62.0" layoutY="334.0" mnemonicParsing="false" onAction="#pressedValued" prefHeight="28.0" prefWidth="95.0" text="Valued" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
-                              <ComboBox layoutX="179.0" layoutY="336.0" prefHeight="26.0" prefWidth="128.0" promptText="Discount type" />
-                              <Button layoutX="586.0" layoutY="336.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" text="Apply Changes" />
+                              <ComboBox fx:id="discountTypeBox" layoutX="179.0" layoutY="336.0" prefHeight="26.0" prefWidth="128.0" promptText="Discount type" />
+                              <Button layoutX="592.0" layoutY="336.0" mnemonicParsing="false" onAction="#pressedApplyChanges" prefHeight="26.0" prefWidth="114.0" text="Apply Changes" />
                            </children></AnchorPane>
                     </content>
                   </Tab>

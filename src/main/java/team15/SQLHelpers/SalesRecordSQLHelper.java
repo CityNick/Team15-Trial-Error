@@ -1,6 +1,7 @@
 package team15.SQLHelpers;
 
 import team15.DatabaseConnector;
+import team15.models.SalesRecord;
 
 import java.sql.*;
 
@@ -51,8 +52,14 @@ public class SalesRecordSQLHelper {
             stmt.setString(15, customerLastName);
 
             stmt.executeUpdate();
-            System.out.println("Sales Record Created");
 
+            stmt = connection.prepareStatement(
+                    "UPDATE CustomerAccount SET Expenditure = Expenditure + ? Where CustomerID = ?");
+            stmt.setDouble(1,usdPrice);
+            stmt.setLong(2,customerID);
+
+            stmt.executeUpdate();
+            System.out.println("Sales Record Created, Expenditure Appended");
 
         } catch (Exception e) {
             System.out.println(e);
@@ -116,6 +123,7 @@ public class SalesRecordSQLHelper {
             return rs.next();
         }
     }
+
 }
 
 

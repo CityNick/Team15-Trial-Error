@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import team15.Application;
 import team15.DatabaseConnector;
-import team15.PopupManager;
+import team15.PopupController;
 import team15.SQLHelpers.BlankSQLHelper;
 import team15.SQLHelpers.StaffAccountSQLHelper;
 import team15.SQLHelpers.TravelAgentContractSQLHelper;
@@ -150,7 +150,7 @@ public class AdminController implements Initializable {
     @FXML
     public void manageStockPressed() throws IOException {
         // ----- Uses Popup manager to create a Popup ----- //
-        PopupManager.displayPopup("BlankStockPopup.fxml");
+        PopupController.displayPopup("BlankStockPopup.fxml");
         updateBlanksTable();
     }
 
@@ -187,7 +187,7 @@ public class AdminController implements Initializable {
     // ----- User presses + button to create a new staff Member ----- //
     @FXML
     public void createStaff() throws IOException {
-        PopupManager.displayPopup("ViewStaffPopup.fxml");
+        PopupController.displayPopup("ViewStaffPopup.fxml");
         updateStaffTable();
     }
 
