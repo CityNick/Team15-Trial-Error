@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 public class StaffBlanks {
 
 
-
     private int StaffID;
     private int StockOf444;
     private int StockOf440;
@@ -16,7 +15,7 @@ public class StaffBlanks {
     private int StockOf101;
 
 
-    public StaffBlanks(ResultSet rs){
+    public StaffBlanks(ResultSet rs) {
         try {
             this.StaffID = rs.getInt("StaffID");
             this.StockOf444 = rs.getInt("StockOf444");
@@ -26,8 +25,7 @@ public class StaffBlanks {
             this.StockOf452 = rs.getInt("StockOf452");
             this.StockOf201 = rs.getInt("StockOf201");
             this.StockOf101 = rs.getInt("StockOf101");
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

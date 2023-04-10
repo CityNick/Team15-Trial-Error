@@ -66,19 +66,17 @@ public class BlankStockPopupController implements Initializable {
     private Label changeTo101;
 
 
-
     // ============================== ADMIN SEARCHES FOR TRAVEL AGENT =========================== //
     @FXML
-    public void TravelAgentCodeFieldEdited(){
+    public void TravelAgentCodeFieldEdited() {
 
         // ----- If The Travel Agent Exists ----- //
-        if ((travelAgentCodeField.getText() != null) && (TravelAgentSQLHelper.checkTravelAgent(travelAgentCodeField.getText()))){
+        if ((travelAgentCodeField.getText() != null) && (TravelAgentSQLHelper.checkTravelAgent(travelAgentCodeField.getText()))) {
             travelAgentCodeDisplay.setText(travelAgentCodeField.getText());
             travelAgentCode = Integer.parseInt(travelAgentCodeField.getText());
             updateStock();
 
-        }
-        else{
+        } else {
             travelAgentCodeDisplay.setText("N/A");
             travelAgentCode = 0;
             updateStock();
@@ -90,13 +88,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN ADDS STOCK ----- //
     @FXML
-    public void addTo444(){
+    public void addTo444() {
         String s;
         change444 += 1;
-        if (change444 >= 0){
-            s = "+"+change444;
-        }
-        else{
+        if (change444 >= 0) {
+            s = "+" + change444;
+        } else {
             s = String.valueOf(change444);
         }
         changeTo444.setText(s);
@@ -104,13 +101,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN REDUCES STOCK ----- //
     @FXML
-    public void sub444(){
+    public void sub444() {
         String s;
         change444 -= 1;
-        if (change444 >= 0){
-            s = "+"+ change444;
-        }
-        else{
+        if (change444 >= 0) {
+            s = "+" + change444;
+        } else {
             s = String.valueOf(change444);
         }
         changeTo444.setText(s);
@@ -120,13 +116,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN ADDS STOCK ----- //
     @FXML
-    public void addTo440(){
+    public void addTo440() {
         String s;
         change440 += 1;
-        if (change440 >= 0){
-            s = "+"+ change440;
-        }
-        else{
+        if (change440 >= 0) {
+            s = "+" + change440;
+        } else {
             s = String.valueOf(change440);
         }
         changeTo440.setText(s);
@@ -134,13 +129,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN REDUCES STOCK ----- //
     @FXML
-    public void sub440(){
+    public void sub440() {
         String s;
         change440 -= 1;
-        if (change440 >= 0){
-            s = "+"+ change440;
-        }
-        else{
+        if (change440 >= 0) {
+            s = "+" + change440;
+        } else {
             s = String.valueOf(change440);
         }
         changeTo440.setText(s);
@@ -151,13 +145,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN ADDS STOCK ----- //
     @FXML
-    public void addTo420(){
+    public void addTo420() {
         String s;
         change420 += 1;
-        if (change420 >= 0){
-            s = "+"+ change420;
-        }
-        else{
+        if (change420 >= 0) {
+            s = "+" + change420;
+        } else {
             s = String.valueOf(change420);
         }
         changeTo420.setText(s);
@@ -165,13 +158,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN REDUCES STOCK ----- //
     @FXML
-    public void sub420(){
+    public void sub420() {
         String s;
         change420 -= 1;
-        if (change420 >= 0){
-            s = "+"+ change420;
-        }
-        else{
+        if (change420 >= 0) {
+            s = "+" + change420;
+        } else {
             s = String.valueOf(change420);
         }
         changeTo420.setText(s);
@@ -182,13 +174,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN ADDS STOCK ----- //
     @FXML
-    public void addTo451(){
+    public void addTo451() {
         String s;
         change451 += 1;
-        if (change451 >= 0){
-            s = "+"+ change451;
-        }
-        else{
+        if (change451 >= 0) {
+            s = "+" + change451;
+        } else {
             s = String.valueOf(change451);
         }
         changeTo451.setText(s);
@@ -196,13 +187,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN REDUCES STOCK ----- //
     @FXML
-    public void sub451(){
+    public void sub451() {
         String s;
         change451 -= 1;
-        if (change451 >= 0){
-            s = "+"+ change451;
-        }
-        else{
+        if (change451 >= 0) {
+            s = "+" + change451;
+        } else {
             s = String.valueOf(change451);
         }
         changeTo451.setText(s);
@@ -213,13 +203,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN ADDS STOCK ----- //
     @FXML
-    public void addTo452(){
+    public void addTo452() {
         String s;
         change452 += 1;
-        if (change452 >= 0){
-            s = "+"+ change452;
-        }
-        else{
+        if (change452 >= 0) {
+            s = "+" + change452;
+        } else {
             s = String.valueOf(change452);
         }
         changeTo452.setText(s);
@@ -227,13 +216,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN REDUCES STOCK ----- //
     @FXML
-    public void sub452(){
+    public void sub452() {
         String s;
         change452 -= 1;
-        if (change452 >= 0){
-            s = "+"+ change452;
-        }
-        else{
+        if (change452 >= 0) {
+            s = "+" + change452;
+        } else {
             s = String.valueOf(change452);
         }
         changeTo452.setText(s);
@@ -244,13 +232,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN ADDS STOCK ----- //
     @FXML
-    public void addTo201(){
+    public void addTo201() {
         String s;
         change201 += 1;
-        if (change201 >= 0){
-            s = "+"+ change201;
-        }
-        else{
+        if (change201 >= 0) {
+            s = "+" + change201;
+        } else {
             s = String.valueOf(change201);
         }
         changeTo201.setText(s);
@@ -258,13 +245,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN REDUCES STOCK ----- //
     @FXML
-    public void sub201(){
+    public void sub201() {
         String s;
         change201 -= 1;
-        if (change201 >= 0){
-            s = "+"+ change201;
-        }
-        else{
+        if (change201 >= 0) {
+            s = "+" + change201;
+        } else {
             s = String.valueOf(change201);
         }
         changeTo201.setText(s);
@@ -275,13 +261,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN ADDS STOCK ----- //
     @FXML
-    public void addTo101(){
+    public void addTo101() {
         String s;
         change101 += 1;
-        if (change101 >= 0){
-            s = "+"+ change101;
-        }
-        else{
+        if (change101 >= 0) {
+            s = "+" + change101;
+        } else {
             s = String.valueOf(change101);
         }
         changeTo101.setText(s);
@@ -289,13 +274,12 @@ public class BlankStockPopupController implements Initializable {
 
     // ----- ADMIN REDUCES STOCK ----- //
     @FXML
-    public void sub101(){
+    public void sub101() {
         String s;
         change101 -= 1;
-        if (change101 >= 0){
-            s = "+"+ change101;
-        }
-        else{
+        if (change101 >= 0) {
+            s = "+" + change101;
+        } else {
             s = String.valueOf(change101);
         }
         changeTo101.setText(s);
@@ -304,21 +288,20 @@ public class BlankStockPopupController implements Initializable {
 
     // ============================ ADMIN SAVES CHANGES TO STOCK =============================== //
     @FXML
-    public void makeChangesPressed(){
-        if (travelAgentCode != 0){
+    public void makeChangesPressed() {
+        if (travelAgentCode != 0) {
             String style = makeChangesButton.getStyle();
             makeChangesButton.setText("Making Changes...");
             makeChangesButton.setStyle("-fx-background-color: #5C5B5A");
 
             // ---- Add / Remove Stock ----- //
-            changeStock(change444,444);
-            changeStock(change440,440);
-            changeStock(change420,420);
-            changeStock(change451,451);
-            changeStock(change452,452);
-            changeStock(change201,201);
-            changeStock(change101,101);
-
+            changeStock(change444, 444);
+            changeStock(change440, 440);
+            changeStock(change420, 420);
+            changeStock(change451, 451);
+            changeStock(change452, 452);
+            changeStock(change201, 201);
+            changeStock(change101, 101);
 
 
             // ----- Changes Complete ----- //
@@ -329,18 +312,17 @@ public class BlankStockPopupController implements Initializable {
     }
 
 
-
     // ============================== GENERATE / REMOVE STOCK  FUNCTION ======================//
-    public void changeStock(int change, int blankType){
+    public void changeStock(int change, int blankType) {
 
-        if (travelAgentCode != 0){
+        if (travelAgentCode != 0) {
             // ---- positive change ----- //
-            if (change > 0){
-                BlankSQLHelper.stockUpBlanks(travelAgentCode,change,blankType);
+            if (change > 0) {
+                BlankSQLHelper.stockUpBlanks(travelAgentCode, change, blankType);
             }
             // ----- negative change ----- //
-            else if (change < 0){
-                BlankSQLHelper.deleteBlanks(travelAgentCode,change,blankType);
+            else if (change < 0) {
+                BlankSQLHelper.deleteBlanks(travelAgentCode, change, blankType);
             }
         }
     }
@@ -348,18 +330,18 @@ public class BlankStockPopupController implements Initializable {
 
     // ================================== UPDATES DISPLAYED STOCK =========================== //
 
-    public void updateStock(){
-        if (travelAgentCodeField.getText() != null && travelAgentCode !=0){
+    public void updateStock() {
+        if (travelAgentCodeField.getText() != null && travelAgentCode != 0) {
             int travelAgentCode = Integer.parseInt(travelAgentCodeField.getText());
-            fieldFor444.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode,444)));
-            fieldFor440.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode,440)));
-            fieldFor420.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode,420)));
+            fieldFor444.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode, 444)));
+            fieldFor440.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode, 440)));
+            fieldFor420.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode, 420)));
 
-            fieldFor451.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode,451)));
-            fieldFor452.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode,452)));
+            fieldFor451.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode, 451)));
+            fieldFor452.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode, 452)));
 
-            fieldFor201.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode,201)));
-            fieldFor101.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode,101)));
+            fieldFor201.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode, 201)));
+            fieldFor101.setText(String.valueOf(BlankSQLHelper.countTravelAgentStock(travelAgentCode, 101)));
 
             change444 = 0;
             changeTo444.setText("+0");
@@ -383,6 +365,7 @@ public class BlankStockPopupController implements Initializable {
             changeTo101.setText("+0");
         }
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class PopupManager{
+public class PopupManager {
 
     private static Stage activeStage;
 
@@ -23,7 +23,7 @@ public class PopupManager{
         activeStage.show();
     }
 
-    public static void closePopup(){
+    public static void closePopup() {
         activeStage.close();
     }
 }

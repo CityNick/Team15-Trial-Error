@@ -112,23 +112,19 @@
                                  </font>
                               </Label>
                               <TextField fx:id="searchCustomers" alignment="CENTER" layoutX="602.0" layoutY="16.0" prefHeight="26.0" prefWidth="127.0" promptText="Search Customers" />
-                              <Button fx:id="plusButton" layoutX="633.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="+">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="minusButton" layoutX="668.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="-" />
                               <TableView layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
                                  <columns>
                                     <TableColumn prefWidth="75.0" text="C1" />
                                     <TableColumn prefWidth="75.0" text="C2" />
                                  </columns>
                               </TableView>
-                              <CheckBox fx:id="valuedButton" layoutX="69.0" layoutY="334.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="95.0" text="Valued" textFill="WHITE">
+                              <CheckBox fx:id="valuedButton" layoutX="62.0" layoutY="334.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="95.0" text="Valued" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </CheckBox>
+                              <ComboBox layoutX="179.0" layoutY="336.0" prefHeight="26.0" prefWidth="128.0" promptText="Discount type" />
+                              <Button layoutX="586.0" layoutY="336.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" text="Apply Changes" />
                            </children></AnchorPane>
                     </content>
                   </Tab>

@@ -1,12 +1,15 @@
 package team15.SQLHelpers;
+
 import team15.Application;
 import team15.DatabaseConnector;
 import team15.models.StaffAccount;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import static java.sql.Types.NULL;
-import static team15.DatabaseConnector.connection;
 
 public class StaffAccountSQLHelper {
 
@@ -16,9 +19,9 @@ public class StaffAccountSQLHelper {
         try (Connection connection = DatabaseConnector.connect()) {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM StaffAccount WHERE StaffID = ? AND Password = ?");
             stmt.setLong(1, StaffID);
-            stmt.setString(2,Password);
+            stmt.setString(2, Password);
             ResultSet user = stmt.executeQuery();
-            if (!user.next()){
+            if (!user.next()) {
                 return false;
             }
             StaffAccount sa = new StaffAccount(user);
@@ -29,15 +32,15 @@ public class StaffAccountSQLHelper {
             return true;
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
             return false;
         }
     }
 
 
     // ============================ VIEW STAFF ACCOUNTS =================== //
-    public static Boolean checkStaffAccount(String search){
-        try (Connection connection = DatabaseConnector.connect()){
+    public static Boolean checkStaffAccount(String search) {
+        try (Connection connection = DatabaseConnector.connect()) {
 
             ResultSet rs;
 
@@ -48,27 +51,21 @@ public class StaffAccountSQLHelper {
                 stmt.setLong(1, (Long.parseLong(search)));
                 stmt.setLong(2, (Long.parseLong(search)));
                 rs = stmt.executeQuery();
-                if (!rs.next()) {
-                    return false;
-                }
-                return true;
+                return rs.next();
             }
             // ---- IF @param search contains letters ---- //
-            else{
+            else {
                 PreparedStatement stmt = connection.prepareStatement(
                         "SELECT * FROM StaffAccount WHERE (FirstName LIKE ? OR LastName LIKE ? OR Role LIKE ?) ORDER BY FirstName ASC");
-                stmt.setString(1,"%"+search+"%");
-                stmt.setString(2,"%"+search+"%");
-                stmt.setString(3,"%"+search+"%");
+                stmt.setString(1, "%" + search + "%");
+                stmt.setString(2, "%" + search + "%");
+                stmt.setString(3, "%" + search + "%");
                 rs = stmt.executeQuery();
-                if (!rs.next()){
-                        return false;
-                }
-                return true;
+                return rs.next();
             }
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
             return false;
         }
 
@@ -89,12 +86,12 @@ public class StaffAccountSQLHelper {
             return rs;
         }
         // ---- IF @param search contains letters ---- //
-        else{
+        else {
             PreparedStatement stmt = connection.prepareStatement(
                     "SELECT * FROM StaffAccount WHERE (FirstName LIKE ? OR LastName LIKE ? OR Role LIKE ?) ORDER BY FirstName ASC");
-            stmt.setString(1,"%"+search+"%");
-            stmt.setString(2,"%"+search+"%");
-            stmt.setString(3,"%"+search+"%");
+            stmt.setString(1, "%" + search + "%");
+            stmt.setString(2, "%" + search + "%");
+            stmt.setString(3, "%" + search + "%");
             rs = stmt.executeQuery();
             return rs;
         }
@@ -112,34 +109,40 @@ public class StaffAccountSQLHelper {
         stmt.setString(2, staffAccount.getLastName());
         stmt.setString(3, staffAccount.getRole());
 
-        if(staffAccount.getTravelAgentCode() == 0){stmt.setNull(4,NULL);}
-        else {stmt.setInt(4, staffAccount.getTravelAgentCode());}
+        if (staffAccount.getTravelAgentCode() == 0) {
+            stmt.setNull(4, NULL);
+        } else {
+            stmt.setInt(4, staffAccount.getTravelAgentCode());
+        }
 
-        if(staffAccount.getSupervisorID() == 0){stmt.setNull(5,NULL);}
-        else{stmt.setInt(5,staffAccount.getSupervisorID());}
+        if (staffAccount.getSupervisorID() == 0) {
+            stmt.setNull(5, NULL);
+        } else {
+            stmt.setInt(5, staffAccount.getSupervisorID());
+        }
 
         ResultSet user = stmt.executeQuery();
 
         // ----- if staff does not exist ----- //
-        if (!user.next()){
-            switch(staffAccount.getRole()){
+        if (!user.next()) {
+            switch (staffAccount.getRole()) {
                 case "Administrator":
                     stmt = connection.prepareStatement(
                             "INSERT IGNORE INTO StaffAccount (StaffID, Password, FirstName, LastName, Role) VALUES (?, ?, ?, ?, ?)");
-                    stmt.setInt(1,staffAccount.getStaffID());
-                    stmt.setString(2,staffAccount.getPassword());
-                    stmt.setString(3,staffAccount.getFirstName());
-                    stmt.setString(4,staffAccount.getLastName());
+                    stmt.setInt(1, staffAccount.getStaffID());
+                    stmt.setString(2, staffAccount.getPassword());
+                    stmt.setString(3, staffAccount.getFirstName());
+                    stmt.setString(4, staffAccount.getLastName());
                     stmt.setString(5, staffAccount.getRole());
                     break;
 
                 case "Manager":
                     stmt = connection.prepareStatement(
                             "INSERT IGNORE INTO StaffAccount (StaffID, Password, FirstName, LastName, Role, TravelAgentCode) VALUES (?, ?, ?, ?, ?, ?)");
-                    stmt.setInt(1,staffAccount.getStaffID());
-                    stmt.setString(2,staffAccount.getPassword());
-                    stmt.setString(3,staffAccount.getFirstName());
-                    stmt.setString(4,staffAccount.getLastName());
+                    stmt.setInt(1, staffAccount.getStaffID());
+                    stmt.setString(2, staffAccount.getPassword());
+                    stmt.setString(3, staffAccount.getFirstName());
+                    stmt.setString(4, staffAccount.getLastName());
                     stmt.setString(5, staffAccount.getRole());
                     stmt.setInt(6, staffAccount.getTravelAgentCode());
                     break;
@@ -147,10 +150,10 @@ public class StaffAccountSQLHelper {
                 case "Travel Advisor":
                     stmt = connection.prepareStatement(
                             "INSERT INTO StaffAccount (StaffID, Password, FirstName, LastName, Role, TravelAgentCode, SupervisorID) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                    stmt.setInt(1,staffAccount.getStaffID());
-                    stmt.setString(2,staffAccount.getPassword());
-                    stmt.setString(3,staffAccount.getFirstName());
-                    stmt.setString(4,staffAccount.getLastName());
+                    stmt.setInt(1, staffAccount.getStaffID());
+                    stmt.setString(2, staffAccount.getPassword());
+                    stmt.setString(3, staffAccount.getFirstName());
+                    stmt.setString(4, staffAccount.getLastName());
                     stmt.setString(5, staffAccount.getRole());
                     stmt.setInt(6, staffAccount.getTravelAgentCode());
                     stmt.setInt(7, staffAccount.getSupervisorID());
@@ -159,8 +162,7 @@ public class StaffAccountSQLHelper {
             stmt.executeUpdate();
             System.out.println("Account Made");
             return true;
-        }
-        else{
+        } else {
             System.out.println("Account Already Exists");
             return false;
         }
@@ -173,11 +175,11 @@ public class StaffAccountSQLHelper {
             stmt.setInt(1, staffID);
 
             stmt.executeUpdate();
-            System.out.println("Deleted staff: "+ staffID);
+            System.out.println("Deleted staff: " + staffID);
 
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
 
         }
     }

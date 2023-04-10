@@ -7,20 +7,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static team15.DatabaseConnector.connection;
-
 public class TravelAgentContractSQLHelper {
 
-    public static Boolean checkTravelAgentContract(String search){
-        try (Connection connection = DatabaseConnector.connect()){
+    public static Boolean checkTravelAgentContract(String search) {
+        try (Connection connection = DatabaseConnector.connect()) {
 
             ResultSet rs;
-            if (search == ""){
+            if (search == "") {
                 PreparedStatement stmt = connection.prepareStatement(
                         "SELECT * FROM TravelAgentContract");
                 rs = stmt.executeQuery();
-            }
-            else{
+            } else {
                 // ------ IF @param search only contains numbers -------- //
                 PreparedStatement stmt = connection.prepareStatement(
                         "SELECT * FROM TravelAgentContract WHERE TravelAgentCode = ? ");
@@ -28,13 +25,10 @@ public class TravelAgentContractSQLHelper {
                 rs = stmt.executeQuery();
             }
 
-            if (!rs.next()) {
-                return false;
-            }
-            return true;
+            return rs.next();
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
             return false;
         }
     }
@@ -42,13 +36,12 @@ public class TravelAgentContractSQLHelper {
     public static ResultSet getTravelAgentContractResultSet(String search, Connection connection) throws SQLException {
 
         ResultSet rs;
-        if (search != ""){
+        if (search != "") {
             PreparedStatement stmt = connection.prepareStatement(
                     "SELECT * FROM TravelAgentContract WHERE TravelAgentCode LIKE ?");
             stmt.setInt(1, Integer.parseInt(search));
             rs = stmt.executeQuery();
-        }
-        else{
+        } else {
             PreparedStatement stmt = connection.prepareStatement(
                     "SELECT * FROM TravelAgentContract ");
             rs = stmt.executeQuery();
@@ -58,8 +51,8 @@ public class TravelAgentContractSQLHelper {
 
     }
 
-    public static double getCommissionRate(int travelAgentCode, String blankType){
-        try (Connection connection = DatabaseConnector.connect()){
+    public static double getCommissionRate(int travelAgentCode, String blankType) {
+        try (Connection connection = DatabaseConnector.connect()) {
             ResultSet rs;
 
             PreparedStatement stmt = connection.prepareStatement(
@@ -73,13 +66,13 @@ public class TravelAgentContractSQLHelper {
                 System.out.println("No Travel Agent Contract found");
                 return 0;
             }
-            double commissionRate = rs.getDouble( "CommissionRate"+blankType);
+            double commissionRate = rs.getDouble("CommissionRate" + blankType);
             commissionRate /= 100;
             System.out.println(commissionRate);
             return commissionRate;
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
             return 0;
         }
     }

@@ -14,7 +14,6 @@ import team15.DatabaseConnector;
 import team15.PopupManager;
 import team15.SQLHelpers.BlankSQLHelper;
 import team15.SQLToTable;
-import team15.models.StaffAccount;
 import team15.models.StaffBlanks;
 
 import java.io.IOException;
@@ -26,8 +25,6 @@ import java.util.ResourceBundle;
 
 public class ManagerController implements Initializable {
 
-    private int selectedStaffID;
-    private StaffBlanks staffBlanks;
     @FXML
     TableView staffBlanksView;
     @FXML
@@ -36,6 +33,8 @@ public class ManagerController implements Initializable {
     ComboBox reportTypeBox;
     @FXML
     ComboBox rangeBox;
+    private int selectedStaffID;
+    private StaffBlanks staffBlanks;
 
     @FXML
     public void logoutPressed() throws IOException {
@@ -48,14 +47,14 @@ public class ManagerController implements Initializable {
 
     // ----- Open Assign Blanks Tab ----- //
     @FXML
-    public void assignBlanksOpened(){
+    public void assignBlanksOpened() {
         updateStaffBlanksTable();
     }
 
     // ----- Press Assign Blanks ---- //
     @FXML
     public void assignBlanksPressed() throws IOException {
-        if (selectedStaffID != 0){
+        if (selectedStaffID != 0) {
             AssignStaffBlankPopupController.setStaffBlanks(staffBlanks);
             AssignStaffBlankPopupController.setTravelAgentCode(Application.getActiveUser().getTravelAgentCode());
             PopupManager.displayPopup("AllocateStaffBlanksPopup.fxml");
@@ -64,21 +63,16 @@ public class ManagerController implements Initializable {
 
     // ---- edited search staff blanks ----- //
     @FXML
-    public void searchStaffBlanksEdited(){
+    public void searchStaffBlanksEdited() {
         updateStaffBlanksTable();
     }
 
 
-
-
-
-
-
-    public void updateStaffBlanksTable(){
+    public void updateStaffBlanksTable() {
         staffBlanksView.getItems().clear();
         try (Connection connection = DatabaseConnector.connect()) {
 
-            ResultSet rs = BlankSQLHelper.staffBlankCount(searchStaffBlanksField.getText(), Application.getActiveUser().getTravelAgentCode(),connection);
+            ResultSet rs = BlankSQLHelper.staffBlankCount(searchStaffBlanksField.getText(), Application.getActiveUser().getTravelAgentCode(), connection);
 
             // ----- convert rs to list ----- //
             ArrayList<StaffBlanks> data = new ArrayList<>();
@@ -94,7 +88,7 @@ public class ManagerController implements Initializable {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 
@@ -119,13 +113,11 @@ public class ManagerController implements Initializable {
             @Override
             public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
                 //Check whether item is selected and set value of selected item to Label
-                if(staffBlanksView.getSelectionModel().getSelectedItem() != null)
-                {
+                if (staffBlanksView.getSelectionModel().getSelectedItem() != null) {
                     staffBlanks = (StaffBlanks) staffBlanksView.getSelectionModel().getSelectedItem();
                     selectedStaffID = staffBlanks.getStaffID();
                     System.out.println("Selected StaffID: " + selectedStaffID);
-                }
-                else{
+                } else {
                     selectedStaffID = 0;
                     System.out.println("Selected StaffID: " + selectedStaffID);
                 }

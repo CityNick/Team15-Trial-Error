@@ -27,10 +27,10 @@ public class LoginController implements Initializable {
     public void on_login_pressed() throws IOException {
 
         // ---------- Login Successful ---------- //
-        if (StaffAccountSQLHelper.checkAccountLogin(Long.parseLong(staffIDField.getText()),passwordField.getText())){
+        if (StaffAccountSQLHelper.checkAccountLogin(Long.parseLong(staffIDField.getText()), passwordField.getText())) {
 
             // ---- Check User's Role ---- //
-            switch (Application.getActiveUser().getRole()){
+            switch (Application.getActiveUser().getRole()) {
                 // - Administrator - //
                 case "Administrator":
                     Application.changeToScene("Admin.fxml");
@@ -50,7 +50,7 @@ public class LoginController implements Initializable {
         }
 
         // ---------- Login Unsuccessful ---------- //
-        else{
+        else {
             errorField.setText("Error: Could Not Connect");
         }
     }

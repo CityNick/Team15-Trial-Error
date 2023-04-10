@@ -10,17 +10,15 @@ import java.sql.ResultSet;
 public class TravelAgentSQLHelper {
 
 
-    public static Boolean checkTravelAgent(String search){
-        try (Connection connection = DatabaseConnector.connect()){
+    public static Boolean checkTravelAgent(String search) {
+        try (Connection connection = DatabaseConnector.connect()) {
 
             ResultSet rs;
 
 
-
-            if (search == ""){
+            if (search == "") {
                 return false;
-            }
-            else{
+            } else {
                 // ------ IF @param search only contains numbers -------- //
                 PreparedStatement stmt = connection.prepareStatement(
                         "SELECT * FROM TravelAgent WHERE TravelAgentCode = ? ");
@@ -28,15 +26,10 @@ public class TravelAgentSQLHelper {
                 rs = stmt.executeQuery();
             }
 
-            if (!rs.next()) {
-                return false;
-            }
-            else{
-                return true;
-            }
+            return rs.next();
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
             return false;
         }
     }
@@ -58,7 +51,7 @@ public class TravelAgentSQLHelper {
             return ta;
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
             return null;
         }
     }

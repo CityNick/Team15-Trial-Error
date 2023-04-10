@@ -1,16 +1,13 @@
 package team15.SQLHelpers;
 
-import team15.DatabaseConnector;
-
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class FlightSQLHelper {
 
     public static ResultSet getFlightPath(String startingAirport, String destinationAirport, LocalDate departureDate, int blankType, Connection connection) throws SQLException {
         ResultSet user = null;
-        if (blankType == 444){
+        if (blankType == 444) {
             PreparedStatement stmt = connection.prepareStatement("SELECT DISTINCTROW\n" +
                     "    f1.StartingAirport AS 'Starting',\n" +
                     "    f1.DepartureTime AS 'Departure',\n" +
@@ -31,11 +28,10 @@ public class FlightSQLHelper {
                     "    ) \n" +
                     "    AND f1.DepartureTime > ? AND f1.StartingAirport LIKE ? AND f4.DestinationAirport LIKE ?  AND f4.FlightType = 'International' ORDER BY f4.ArrivalTime ASC");
             stmt.setTimestamp(1, Timestamp.valueOf(departureDate.atStartOfDay()));
-            stmt.setString(2,"%"+startingAirport+"%");
-            stmt.setString(3,"%"+destinationAirport+"%");
+            stmt.setString(2, "%" + startingAirport + "%");
+            stmt.setString(3, "%" + destinationAirport + "%");
             user = stmt.executeQuery();
-        }
-        else if (blankType == 440) {
+        } else if (blankType == 440) {
             PreparedStatement stmt = connection.prepareStatement("SELECT DISTINCTROW\n" +
                     "    f1.StartingAirport AS 'Starting',\n" +
                     "    f1.DepartureTime AS 'Departure',\n" +
@@ -51,11 +47,10 @@ public class FlightSQLHelper {
                     "        f1.DestinationAirport = f2.StartingAirport AND f1.ArrivalTime < DATE_ADD(f2.DepartureTime, INTERVAL 2 HOUR)\n" +
                     "    AND f1.DepartureTime > ? AND f1.StartingAirport LIKE ? AND f2.DestinationAirport LIKE ? AND f2.FlightType = 'International' ORDER BY f2.ArrivalTime ASC");
             stmt.setTimestamp(1, Timestamp.valueOf(departureDate.atStartOfDay()));
-            stmt.setString(2,"%"+startingAirport+"%");
-            stmt.setString(3,"%"+destinationAirport+"%");
+            stmt.setString(2, "%" + startingAirport + "%");
+            stmt.setString(3, "%" + destinationAirport + "%");
             user = stmt.executeQuery();
-        }
-        else if (blankType == 201) {
+        } else if (blankType == 201) {
             PreparedStatement stmt = connection.prepareStatement("SELECT DISTINCTROW\n" +
                     "    f1.StartingAirport AS 'Starting',\n" +
                     "    f1.DepartureTime AS 'Departure',\n" +
@@ -69,11 +64,10 @@ public class FlightSQLHelper {
                     "        f1.DestinationAirport = f2.StartingAirport AND f1.ArrivalTime < DATE_ADD(f2.DepartureTime, INTERVAL 2 HOUR)\n" +
                     "    AND f1.DepartureTime > ? AND f1.StartingAirport LIKE ? AND f2.DestinationAirport LIKE ? AND f2.FlightType = 'Domestic' ORDER BY f2.ArrivalTime ASC");
             stmt.setTimestamp(1, Timestamp.valueOf(departureDate.atStartOfDay()));
-            stmt.setString(2,"%"+startingAirport+"%");
-            stmt.setString(3,"%"+destinationAirport+"%");
+            stmt.setString(2, "%" + startingAirport + "%");
+            stmt.setString(3, "%" + destinationAirport + "%");
             user = stmt.executeQuery();
-        }
-        else if (blankType == 101) {
+        } else if (blankType == 101) {
             PreparedStatement stmt = connection.prepareStatement("SELECT DISTINCTROW\n" +
                     "    StartingAirport AS 'Starting',\n" +
                     "    DepartureTime AS 'Departure',\n" +
@@ -84,12 +78,12 @@ public class FlightSQLHelper {
                     "    Flight WHERE\n" +
                     "    DepartureTime > ? AND StartingAirport LIKE ? AND DestinationAirport LIKE ? AND FlightType = 'Domestic' ORDER BY ArrivalTime ASC");
             stmt.setTimestamp(1, Timestamp.valueOf(departureDate.atStartOfDay()));
-            stmt.setString(2,"%"+startingAirport+"%");
-            stmt.setString(3,"%"+destinationAirport+"%");
+            stmt.setString(2, "%" + startingAirport + "%");
+            stmt.setString(3, "%" + destinationAirport + "%");
             user = stmt.executeQuery();
 
         }
-        
+
         System.out.println("Query made");
         return user;
     }

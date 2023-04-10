@@ -11,16 +11,15 @@ import java.util.Random;
 
 public class BlankSQLHelper {
 
-    public static Boolean checkTravelAgentBlank(String search){
-        try (Connection connection = DatabaseConnector.connect()){
+    public static Boolean checkTravelAgentBlank(String search) {
+        try (Connection connection = DatabaseConnector.connect()) {
 
             ResultSet rs;
-            if (search == ""){
+            if (search == "") {
                 PreparedStatement stmt = connection.prepareStatement(
                         "SELECT * FROM Blank");
                 rs = stmt.executeQuery();
-            }
-            else{
+            } else {
                 // ------ IF @param search only contains numbers -------- //
                 PreparedStatement stmt = connection.prepareStatement(
                         "SELECT * FROM Blank WHERE TravelAgentCode = ? ");
@@ -28,13 +27,10 @@ public class BlankSQLHelper {
                 rs = stmt.executeQuery();
             }
 
-            if (!rs.next()) {
-                return false;
-            }
-            return true;
+            return rs.next();
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
             return false;
         }
     }
@@ -42,13 +38,12 @@ public class BlankSQLHelper {
     public static ResultSet getTravelAgentBlankResultSet(String search, Connection connection) throws SQLException {
 
         ResultSet rs;
-        if (search != ""){
+        if (search != "") {
             PreparedStatement stmt = connection.prepareStatement(
                     "SELECT * FROM Blank WHERE TravelAgentCode LIKE ?");
             stmt.setInt(1, Integer.parseInt(search));
             rs = stmt.executeQuery();
-        }
-        else{
+        } else {
             PreparedStatement stmt = connection.prepareStatement(
                     "SELECT * FROM Blank ");
             rs = stmt.executeQuery();
@@ -58,9 +53,9 @@ public class BlankSQLHelper {
 
     }
 
-    public static int countTravelAgentStock(int travelAgentCode, int blankType){
+    public static int countTravelAgentStock(int travelAgentCode, int blankType) {
 
-        try (Connection connection = DatabaseConnector.connect()){
+        try (Connection connection = DatabaseConnector.connect()) {
 
             ResultSet rs;
             PreparedStatement stmt = connection.prepareStatement(
@@ -72,30 +67,29 @@ public class BlankSQLHelper {
 
             if (!rs.next()) {
                 return 0;
-            }
-            else{
+            } else {
                 return ((Number) rs.getObject(1)).intValue();
             }
 
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
         return 0;
     }
 
 
-    public static void stockUpBlanks(int travelAgentCode, int amount, int blankType){
+    public static void stockUpBlanks(int travelAgentCode, int amount, int blankType) {
 
-        try (Connection connection = DatabaseConnector.connect()){
+        try (Connection connection = DatabaseConnector.connect()) {
             long blankID;
 
             // ----- stock up blanks based on amount ----- //
-            for (int i = 0; i < amount; ++i){
+            for (int i = 0; i < amount; ++i) {
 
                 // ---- ensures new entry gets a unique ID ----- //
                 blankID = generateUniqueID(blankType);
-                while (checkBlankExists(blankID)){
+                while (checkBlankExists(blankID)) {
                     blankID = generateUniqueID(blankType);
                 }
 
@@ -107,38 +101,37 @@ public class BlankSQLHelper {
                 stmt.setInt(3, travelAgentCode);
 
                 stmt.executeUpdate();
-                System.out.println("Blank created:"+ blankID);
+                System.out.println("Blank created:" + blankID);
             }
 
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 
-    public static void deleteBlanks(int travelAgentCode, int amount, int blankType){
+    public static void deleteBlanks(int travelAgentCode, int amount, int blankType) {
 
-        try (Connection connection = DatabaseConnector.connect()){
+        try (Connection connection = DatabaseConnector.connect()) {
 
             // ---- removes blanks ----- ..
             PreparedStatement stmt = connection.prepareStatement(
-                    "DELETE FROM Blank WHERE BlankType = ? AND TravelAgentCode = ? AND BlankID NOT IN (SELECT BlankID FROM SalesRecord) ORDER BY StaffID ASC LIMIT ?");;
+                    "DELETE FROM Blank WHERE BlankType = ? AND TravelAgentCode = ? AND BlankID NOT IN (SELECT BlankID FROM SalesRecord) ORDER BY StaffID ASC LIMIT ?");
             stmt.setInt(1, blankType);
             stmt.setInt(2, travelAgentCode);
-            stmt.setInt(3, amount*-1);
+            stmt.setInt(3, amount * -1);
 
             stmt.executeUpdate();
             System.out.println(amount + " " + blankType + " Blanks");
 
 
-
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 
-    public static Boolean checkBlankExists(long blankID){
-        try (Connection connection = DatabaseConnector.connect()){
+    public static Boolean checkBlankExists(long blankID) {
+        try (Connection connection = DatabaseConnector.connect()) {
             ResultSet rs;
 
             // ------ IF @param search only contains numbers -------- //
@@ -148,32 +141,26 @@ public class BlankSQLHelper {
             rs = stmt.executeQuery();
 
 
-            if (!rs.next()) {
-                return false;
-            }
-
-            else {
-                return true;
-            }
+            return rs.next();
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
             return false;
         }
     }
 
-    public static long generateUniqueID(int blankType){
+    public static long generateUniqueID(int blankType) {
         long uniqueID = blankType * 100000000L;
         Random random = new Random();
 
-        uniqueID += (random.nextLong(0,99999999));
+        uniqueID += (random.nextLong(0, 99999999));
 
         return uniqueID;
     }
 
-    public static ResultSet staffBlankCount(String search,int travelAgentCode, Connection connection) throws SQLException {
+    public static ResultSet staffBlankCount(String search, int travelAgentCode, Connection connection) throws SQLException {
         ResultSet rs;
-        if (search == ""){
+        if (search == "") {
             PreparedStatement stmt = connection.prepareStatement(
                     "SELECT StaffID,\n" +
                             "    sum(case when BlankType = 444 then 1 else 0 end) AS 'StockOf444',\n" +
@@ -185,10 +172,9 @@ public class BlankSQLHelper {
                             "    sum(case when BlankType = 101 then 1 else 0 end) AS 'StockOf101'\n" +
                             "FROM Blank WHERE TravelAgentCode = ? AND BlankID NOT IN (SELECT BlankID FROM SalesRecord)\n" +
                             "GROUP BY StaffID");
-            stmt.setInt(1,travelAgentCode);
+            stmt.setInt(1, travelAgentCode);
             rs = stmt.executeQuery();
-        }
-        else{
+        } else {
             PreparedStatement stmt = connection.prepareStatement(
                     "SELECT StaffID,\n" +
                             "    sum(case when BlankType = 444 then 1 else 0 end) AS 'StockOf444',\n" +
@@ -201,15 +187,15 @@ public class BlankSQLHelper {
                             "FROM Blank WHERE StaffID = ? AND TravelAgentCode = ? AND BlankID NOT IN (SELECT BlankID FROM SalesRecord)\n" +
                             "GROUP BY StaffID");
             stmt.setInt(1, Integer.parseInt(search));
-            stmt.setInt(2,travelAgentCode);
+            stmt.setInt(2, travelAgentCode);
             rs = stmt.executeQuery();
         }
 
         return rs;
     }
 
-    public static void assignBlanks(int staffID,int travelAgentCode, int change, int blankType) {
-        try (Connection connection = DatabaseConnector.connect()){
+    public static void assignBlanks(int staffID, int travelAgentCode, int change, int blankType) {
+        try (Connection connection = DatabaseConnector.connect()) {
             PreparedStatement stmt = connection.prepareStatement(
                     "UPDATE Blank SET StaffID = ? WHERE StaffID IS NULL AND TravelAgentCode = ?  AND BlankType = ? LIMIT ?");
             stmt.setInt(1, staffID);
@@ -219,34 +205,33 @@ public class BlankSQLHelper {
             stmt.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 
-    public static void unassignBlanks(int staffID, int amount, int blankType){
+    public static void unassignBlanks(int staffID, int amount, int blankType) {
 
-        try (Connection connection = DatabaseConnector.connect()){
+        try (Connection connection = DatabaseConnector.connect()) {
 
             // ---- removes blanks ----- ..
             PreparedStatement stmt = connection.prepareStatement(
-                    "UPDATE Blank SET StaffID = NULL WHERE StaffID = ? AND BlankType = ? AND BlankID NOT IN (SELECT BlankID FROM SalesRecord) LIMIT ?");;
+                    "UPDATE Blank SET StaffID = NULL WHERE StaffID = ? AND BlankType = ? AND BlankID NOT IN (SELECT BlankID FROM SalesRecord) LIMIT ?");
             stmt.setInt(1, staffID);
             stmt.setInt(2, blankType);
-            stmt.setInt(3, amount*-1);
+            stmt.setInt(3, amount * -1);
 
             stmt.executeUpdate();
             System.out.println(amount + " " + blankType + " Blanks");
 
 
-
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 
-    public static int countStaffStock(int staffID, int blankType){
+    public static int countStaffStock(int staffID, int blankType) {
 
-        try (Connection connection = DatabaseConnector.connect()){
+        try (Connection connection = DatabaseConnector.connect()) {
 
             ResultSet rs;
             PreparedStatement stmt = connection.prepareStatement(
@@ -258,20 +243,19 @@ public class BlankSQLHelper {
 
             if (!rs.next()) {
                 return 0;
-            }
-            else{
+            } else {
                 return ((Number) rs.getObject(1)).intValue();
             }
 
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
         return 0;
     }
 
-    public static Boolean checkBlankTypeStock(int staffID, int blankType){
-        try (Connection connection = DatabaseConnector.connect()){
+    public static Boolean checkBlankTypeStock(int staffID, int blankType) {
+        try (Connection connection = DatabaseConnector.connect()) {
             ResultSet rs;
 
             // ------ IF @param search only contains numbers -------- //
@@ -280,22 +264,16 @@ public class BlankSQLHelper {
             stmt.setInt(1, staffID);
             stmt.setInt(2, blankType);
             rs = stmt.executeQuery();
-            if (!rs.next()) {
-                return false;
-            }
-
-            else {
-                return true;
-            }
+            return rs.next();
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
             return false;
         }
     }
 
-    public static Blank getBlankForSale(int staffID, int blankType){
-        try (Connection connection = DatabaseConnector.connect()){
+    public static Blank getBlankForSale(int staffID, int blankType) {
+        try (Connection connection = DatabaseConnector.connect()) {
             ResultSet rs;
 
             PreparedStatement stmt = connection.prepareStatement(
@@ -311,7 +289,7 @@ public class BlankSQLHelper {
             return blank;
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
             return null;
         }
     }

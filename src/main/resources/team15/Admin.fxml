@@ -34,12 +34,17 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="saveButton" layoutX="347.0" layoutY="184.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="63.0" text="Save">
+                              <Button fx:id="Backup" layoutX="347.0" layoutY="184.0" mnemonicParsing="false" onAction="#backupPressed" prefHeight="23.0" prefWidth="63.0" text="Backup">
                                  <font>
                                     <Font size="12.0" />
                                  </font>
                               </Button>
-                              <TextField fx:id="saveFileName" alignment="CENTER" layoutX="293.0" layoutY="134.0" prefHeight="26.0" prefWidth="170.0" promptText="Save file name..." />
+                              <Button fx:id="selectFile" layoutX="293.0" layoutY="135.0" mnemonicParsing="false" onAction="#selectFilePressed" prefHeight="26.0" prefWidth="170.0" text="Select / Enter File...." />
+                              <Label fx:id="backupState" alignment="CENTER" contentDisplay="CENTER" layoutX="152.0" layoutY="221.0" prefHeight="35.0" prefWidth="454.0" textFill="#a91111">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
                            </children></AnchorPane>
                   </content>
                 </Tab>
@@ -47,14 +52,20 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="openFileButton" layoutX="303.0" layoutY="139.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="147.0" text="Open file...">
+                              <Button fx:id="restoreFileButton" layoutX="299.0" layoutY="139.0" mnemonicParsing="false" onAction="#selectedRestoreFile" prefHeight="23.0" prefWidth="147.0" text="Select backup file...">
                                  <font>
                                     <Font size="12.0" />
                                  </font>
                               </Button>
-                              <Label layoutX="332.0" layoutY="102.0" prefHeight="25.0" prefWidth="96.0" text="Select save file:" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label layoutX="329.0" layoutY="102.0" prefHeight="25.0" prefWidth="96.0" text="Select save file:" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="342.0" layoutY="180.0" mnemonicParsing="false" onAction="#restorePressed" prefHeight="26.0" prefWidth="68.0" text="Restore" />
+                              <Label fx:id="restoreState" alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="229.0" prefHeight="35.0" prefWidth="454.0" textFill="#a91111">
+                                 <font>
+                                    <Font size="24.0" />
                                  </font>
                               </Label>
                            </children></AnchorPane>
@@ -64,7 +75,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Label layoutX="291.0" layoutY="18.0" prefHeight="25.0" prefWidth="170.0" text="View Travel Agent Blanks" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label alignment="CENTER" layoutX="266.0" layoutY="18.0" prefHeight="26.0" prefWidth="214.0" text="View Travel Agent Blanks" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -129,7 +140,7 @@
                                     <TableColumn prefWidth="84.79998779296875" text="First Name" />
                                     <TableColumn prefWidth="80.800048828125" text="Last Name" />
                                     <TableColumn prefWidth="76.80001831054688" text="Role" />
-                                    <TableColumn prefWidth="120.800048828125" text="Trave Agent Code" />
+                                    <TableColumn prefWidth="120.800048828125" text="Travel Agent Code" />
                                     <TableColumn prefWidth="123.20001220703125" text="Supervisor ID" />
                                  </columns>
                               </TableView>

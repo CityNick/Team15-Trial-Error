@@ -4,10 +4,14 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import team15.Application;
 import team15.DatabaseConnector;
 import team15.PopupManager;
@@ -19,6 +23,7 @@ import team15.models.Blank;
 import team15.models.StaffAccount;
 import team15.models.TravelAgentContract;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -30,6 +35,8 @@ import java.util.ResourceBundle;
 public class AdminController implements Initializable {
 
     private int selectedStaffID = 0;
+    private File backupFile;
+    private File restoreFile;
     @FXML
     private TextField searchStaffField;
     @FXML
@@ -42,9 +49,81 @@ public class AdminController implements Initializable {
     private TableView travelAgentBlanksTableView;
     @FXML
     private TableView travelAgentContractTableView;
+    @FXML
+    private Button selectFile;
+    @FXML
+    private Button restoreFileButton;
+    @FXML
+    private Label backupState;
+    @FXML
+    private Label restoreState;
 
 
-    // ============================ LOGOUT ===============================//
+    // ================================ BACKUP ================================= //
+    @FXML
+    public void selectFilePressed(ActionEvent e) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select or enter a file");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SQL", "*.sql"));
+        backupFile = fileChooser.showSaveDialog(((Button) e.getSource()).getScene().getWindow());
+        selectFile.setText(backupFile.getName());
+    }
+
+    @FXML
+    private void backupPressed(ActionEvent event) throws IOException {
+        if (backupFile != null) {
+            String[] backupCommand = new String[]{"mysqldump", "--skip-column-statistics", "--databases", "in2018g15",
+                    "-hsmcse-stuproj00.city.ac.uk", "-P3306", "-uin2018g15_a", "-p3mo2KgVO",
+                    "-r" + backupFile.getAbsolutePath()};
+
+            Process process = Runtime.getRuntime().exec(backupCommand);
+            try {
+                process.waitFor();
+                backupState.setText("Backup Successful");
+            } catch (InterruptedException e) {
+                backupState.setText("Backup Unsuccessful");
+                throw new RuntimeException(e);
+            }
+            System.out.println(process.getOutputStream().toString());
+            System.out.println(process.getErrorStream().toString());
+        } else {
+            backupState.setText("Please Enter A Save File");
+        }
+
+    }
+
+    // =============================== Restore ================================= //
+    @FXML
+    private void selectedRestoreFile(ActionEvent e) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select or enter a file");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SQL", "*.sql"));
+        restoreFile = fileChooser.showOpenDialog(((Button) e.getSource()).getScene().getWindow());
+        restoreFileButton.setText(restoreFile.getName());
+    }
+
+    @FXML
+    private void restorePressed() throws IOException {
+        if (restoreFile != null) {
+            String[] restoreCmd = new String[]{"mysql", "-hsmcse-stuproj00.city.ac.uk", "-P3306", "-uin2018g15_a", "-p3mo2KgVO", "in2018g15"};
+            ProcessBuilder processBuilder = new ProcessBuilder(restoreCmd);
+            processBuilder.redirectInput(ProcessBuilder.Redirect.from(restoreFile));
+
+            Process process = processBuilder.start();
+            try {
+                process.waitFor();
+                restoreState.setText("Restore Successful");
+            } catch (InterruptedException e) {
+                restoreState.setText("Restore Unsuccessful");
+                throw new RuntimeException(e);
+            }
+        } else {
+            restoreState.setText("Please Enter A Save File To Restore");
+        }
+    }
+
+
+    // ================================ LOGOUT ==================================//
     // ----- Logout Button IS Pressed ----- //
     @FXML
     public void logoutPressed() throws IOException {
@@ -56,13 +135,13 @@ public class AdminController implements Initializable {
 
     // ----- Open Maintain Blanks Tab ------ //
     @FXML
-    public void openMaintainBlanks(){
+    public void openMaintainBlanks() {
         updateBlanksTable();
     }
 
     // ----- User enters a Travel Agent Code ----- //
     @FXML
-    public void searchTravelAgentBlanksEdited(){
+    public void searchTravelAgentBlanksEdited() {
         updateBlanksTable();
     }
 
@@ -80,13 +159,13 @@ public class AdminController implements Initializable {
 
     // ----- Open View Contracts Tab ------ //
     @FXML
-    public void openViewContracts(){
+    public void openViewContracts() {
         updateContractTable();
     }
 
     // ----- User enters a value into the search bar ----- //
     @FXML
-    public void searchContractEdited(){
+    public void searchContractEdited() {
         updateContractTable();
     }
 
@@ -95,7 +174,7 @@ public class AdminController implements Initializable {
 
     // ----- Opened View Staff Tab ----- //
     @FXML
-    public void openStaffTab(){
+    public void openStaffTab() {
         updateStaffTable();
     }
 
@@ -113,8 +192,8 @@ public class AdminController implements Initializable {
     }
 
     @FXML
-    public void deleteStaff(){
-        if (selectedStaffID != 0){
+    public void deleteStaff() {
+        if (selectedStaffID != 0) {
             StaffAccountSQLHelper.deleteStaff(selectedStaffID);
             updateStaffTable();
             selectedStaffID = 0;
@@ -122,9 +201,7 @@ public class AdminController implements Initializable {
     }
 
 
-
-
-    public void updateBlanksTable(){
+    public void updateBlanksTable() {
         travelAgentBlanksTableView.getItems().clear();
         try (Connection connection = DatabaseConnector.connect()) {
 
@@ -144,12 +221,12 @@ public class AdminController implements Initializable {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
 
     }
 
-    public void updateStaffTable(){
+    public void updateStaffTable() {
         try (Connection connection = DatabaseConnector.connect()) {
             System.out.println(searchStaffField.getText());
 
@@ -177,11 +254,11 @@ public class AdminController implements Initializable {
                 System.out.println("set not found");
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 
-    public void updateContractTable(){
+    public void updateContractTable() {
         try (Connection connection = DatabaseConnector.connect()) {
             System.out.println(searchTravelAgentContractField.getText());
 
@@ -209,10 +286,9 @@ public class AdminController implements Initializable {
                 System.out.println("set not found");
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
-
 
 
     @Override
@@ -248,20 +324,17 @@ public class AdminController implements Initializable {
             @Override
             public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
                 //Check whether item is selected and set value of selected item to Label
-                if(staffTableView.getSelectionModel().getSelectedItem() != null)
-                {
+                if (staffTableView.getSelectionModel().getSelectedItem() != null) {
                     StaffAccount staff = (StaffAccount) staffTableView.getSelectionModel().getSelectedItem();
                     selectedStaffID = staff.getStaffID();
                     System.out.println("Selected StaffID: " + selectedStaffID);
-                }
-                else{
+                } else {
                     selectedStaffID = 0;
                     System.out.println("Selected StaffID: " + selectedStaffID);
                 }
             }
         });
     }
-
 
 
 }

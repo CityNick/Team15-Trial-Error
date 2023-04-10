@@ -11,11 +11,8 @@ import team15.DatabaseConnector;
 import team15.SQLHelpers.StaffAccountSQLHelper;
 import team15.models.StaffAccount;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ViewStaffPopupController implements Initializable {
@@ -35,7 +32,8 @@ public class ViewStaffPopupController implements Initializable {
     @FXML
     private Label creationResultField;
 
-    @FXML public void createPressed() {
+    @FXML
+    public void createPressed() {
         creationResultField.setText("");
 
         StaffAccount newStaff = new StaffAccount();
@@ -44,27 +42,32 @@ public class ViewStaffPopupController implements Initializable {
         newStaff.setPassword(passwordField.getText());
         newStaff.setRole(Role.getValue());
 
-        if (travelAgentCodeField.getText() == ""){newStaff.setTravelAgentCode(0);}
-        else { newStaff.setTravelAgentCode(Integer.parseInt(travelAgentCodeField.getText()));}
+        if (travelAgentCodeField.getText() == "") {
+            newStaff.setTravelAgentCode(0);
+        } else {
+            newStaff.setTravelAgentCode(Integer.parseInt(travelAgentCodeField.getText()));
+        }
 
-        if (supervisorIDField.getText() == ""){newStaff.setSupervisorID(0);}
-        else{newStaff.setSupervisorID(Integer.parseInt(supervisorIDField.getText()));}
+        if (supervisorIDField.getText() == "") {
+            newStaff.setSupervisorID(0);
+        } else {
+            newStaff.setSupervisorID(Integer.parseInt(supervisorIDField.getText()));
+        }
 
 
-        try (Connection connection = DatabaseConnector.connect()){
-            if(StaffAccountSQLHelper.createStaffAccount(newStaff, connection)){
+        try (Connection connection = DatabaseConnector.connect()) {
+            if (StaffAccountSQLHelper.createStaffAccount(newStaff, connection)) {
                 creationResultField.setText("Account Made Successfully");
                 firstNameField.clear();
                 lastNameField.clear();
                 passwordField.clear();
                 travelAgentCodeField.clear();
                 supervisorIDField.clear();
-            }
-            else{
+            } else {
                 creationResultField.setText("Account Already Exists");
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 

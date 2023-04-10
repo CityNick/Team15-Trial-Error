@@ -55,7 +55,7 @@ public class SalesRecordSQLHelper {
 
 
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e);
         }
     }
 
@@ -67,14 +67,14 @@ public class SalesRecordSQLHelper {
 
                 PreparedStatement stmt = connection.prepareStatement(
                         "SELECT * FROM SalesRecord WHERE CustomerFirstName LIKE ? AND CustomerLastName LIKE ? AND RecordID NOT IN (SELECT SalesRecordRecordID From RefundRecord)");
-                stmt.setString(1, "%"+firstName+"%");
-                stmt.setString(2, "%"+lastName+"%");
+                stmt.setString(1, "%" + firstName + "%");
+                stmt.setString(2, "%" + lastName + "%");
                 rs = stmt.executeQuery();
             } else {
                 PreparedStatement stmt = connection.prepareStatement(
                         "SELECT * FROM SalesRecord WHERE CustomerFirstName LIKE ? AND CustomerLastName LIKE ? AND Date >= ? AND RecordID NOT IN (SELECT SalesRecordRecordID From RefundRecord)");
-                stmt.setString(1, "%"+firstName+"%");
-                stmt.setString(2, "%"+lastName+"%");
+                stmt.setString(1, "%" + firstName + "%");
+                stmt.setString(2, "%" + lastName + "%");
                 stmt.setDate(3, date);
                 rs = stmt.executeQuery();
             }
@@ -96,14 +96,14 @@ public class SalesRecordSQLHelper {
 
                     PreparedStatement stmt = connection.prepareStatement(
                             "SELECT * FROM SalesRecord WHERE CustomerFirstName LIKE ? AND CustomerLastName LIKE ? AND RecordID NOT IN (SELECT SalesRecordRecordID From RefundRecord) ");
-                    stmt.setString(1, "%"+firstName+"%");
-                    stmt.setString(2, "%"+lastName+"%");
+                    stmt.setString(1, "%" + firstName + "%");
+                    stmt.setString(2, "%" + lastName + "%");
                     rs = stmt.executeQuery();
                 } else {
                     PreparedStatement stmt = connection.prepareStatement(
                             "SELECT * FROM SalesRecord WHERE CustomerFirstName LIKE ? AND CustomerLastName LIKE ? AND Date >= ? AND RecordID NOT IN (SELECT SalesRecordRecordID From RefundRecord)");
-                    stmt.setString(1, "%"+firstName+"%");
-                    stmt.setString(2, "%"+lastName+"%");
+                    stmt.setString(1, "%" + firstName + "%");
+                    stmt.setString(2, "%" + lastName + "%");
                     stmt.setDate(3, date);
                     rs = stmt.executeQuery();
                 }
@@ -113,10 +113,7 @@ public class SalesRecordSQLHelper {
                 stmt.setLong(1, blankID);
                 rs = stmt.executeQuery();
             }
-            if (!rs.next()) {
-                return false;
-            }
-            return true;
+            return rs.next();
         }
     }
 }

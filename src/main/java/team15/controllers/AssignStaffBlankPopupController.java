@@ -66,96 +66,35 @@ public class AssignStaffBlankPopupController implements Initializable {
     private Label changeTo101;
 
 
-
     // ============================= ADMIN CHANGES STOCK FOR 444 ============================== //
 
-    // ----- ADMIN ADDS STOCK ----- //
-    @FXML
-    public void addTo444(){
-        String s;
-        change444 += 1;
-        if (change444 >= 0){
-            s = "+"+change444;
-        }
-        else{
-            s = String.valueOf(change444);
-        }
-        changeTo444.setText(s);
+    public static int getStaffID() {
+        return staffID;
     }
 
-    // ----- ADMIN REDUCES STOCK ----- //
-    @FXML
-    public void sub444(){
-        String s;
-        change444 -= 1;
-        if (change444 >= 0){
-            s = "+"+ change444;
-        }
-        else{
-            s = String.valueOf(change444);
-        }
-        changeTo444.setText(s);
+    public static void setStaffID(int staffID) {
+        AssignStaffBlankPopupController.staffID = staffID;
     }
 
     // ============================= ADMIN CHANGES STOCK FOR 440 ============================== //
 
-    // ----- ADMIN ADDS STOCK ----- //
-    @FXML
-    public void addTo440(){
-        String s;
-        change440 += 1;
-        if (change440 >= 0){
-            s = "+"+ change440;
-        }
-        else{
-            s = String.valueOf(change440);
-        }
-        changeTo440.setText(s);
+    public static int getTravelAgentCode() {
+        return travelAgentCode;
     }
 
-    // ----- ADMIN REDUCES STOCK ----- //
-    @FXML
-    public void sub440(){
-        String s;
-        change440 -= 1;
-        if (change440 >= 0){
-            s = "+"+ change440;
-        }
-        else{
-            s = String.valueOf(change440);
-        }
-        changeTo440.setText(s);
+    public static void setTravelAgentCode(int travelAgentCode) {
+        AssignStaffBlankPopupController.travelAgentCode = travelAgentCode;
     }
 
 
     // ============================= ADMIN CHANGES STOCK FOR 440 ============================== //
 
-    // ----- ADMIN ADDS STOCK ----- //
-    @FXML
-    public void addTo420(){
-        String s;
-        change420 += 1;
-        if (change420 >= 0){
-            s = "+"+ change420;
-        }
-        else{
-            s = String.valueOf(change420);
-        }
-        changeTo420.setText(s);
+    public static StaffBlanks getStaffBlanks() {
+        return staffBlanksObject;
     }
 
-    // ----- ADMIN REDUCES STOCK ----- //
-    @FXML
-    public void sub420(){
-        String s;
-        change420 -= 1;
-        if (change420 >= 0){
-            s = "+"+ change420;
-        }
-        else{
-            s = String.valueOf(change420);
-        }
-        changeTo420.setText(s);
+    public static void setStaffBlanks(StaffBlanks staffBlanks) {
+        staffBlanksObject = staffBlanks;
     }
 
 
@@ -163,30 +102,28 @@ public class AssignStaffBlankPopupController implements Initializable {
 
     // ----- ADMIN ADDS STOCK ----- //
     @FXML
-    public void addTo451(){
+    public void addTo444() {
         String s;
-        change451 += 1;
-        if (change451 >= 0){
-            s = "+"+ change451;
+        change444 += 1;
+        if (change444 >= 0) {
+            s = "+" + change444;
+        } else {
+            s = String.valueOf(change444);
         }
-        else{
-            s = String.valueOf(change451);
-        }
-        changeTo451.setText(s);
+        changeTo444.setText(s);
     }
 
     // ----- ADMIN REDUCES STOCK ----- //
     @FXML
-    public void sub451(){
+    public void sub444() {
         String s;
-        change451 -= 1;
-        if (change451 >= 0){
-            s = "+"+ change451;
+        change444 -= 1;
+        if (change444 >= 0) {
+            s = "+" + change444;
+        } else {
+            s = String.valueOf(change444);
         }
-        else{
-            s = String.valueOf(change451);
-        }
-        changeTo451.setText(s);
+        changeTo444.setText(s);
     }
 
 
@@ -194,30 +131,28 @@ public class AssignStaffBlankPopupController implements Initializable {
 
     // ----- ADMIN ADDS STOCK ----- //
     @FXML
-    public void addTo452(){
+    public void addTo440() {
         String s;
-        change452 += 1;
-        if (change452 >= 0){
-            s = "+"+ change452;
+        change440 += 1;
+        if (change440 >= 0) {
+            s = "+" + change440;
+        } else {
+            s = String.valueOf(change440);
         }
-        else{
-            s = String.valueOf(change452);
-        }
-        changeTo452.setText(s);
+        changeTo440.setText(s);
     }
 
     // ----- ADMIN REDUCES STOCK ----- //
     @FXML
-    public void sub452(){
+    public void sub440() {
         String s;
-        change452 -= 1;
-        if (change452 >= 0){
-            s = "+"+ change452;
+        change440 -= 1;
+        if (change440 >= 0) {
+            s = "+" + change440;
+        } else {
+            s = String.valueOf(change440);
         }
-        else{
-            s = String.valueOf(change452);
-        }
-        changeTo452.setText(s);
+        changeTo440.setText(s);
     }
 
 
@@ -225,30 +160,28 @@ public class AssignStaffBlankPopupController implements Initializable {
 
     // ----- ADMIN ADDS STOCK ----- //
     @FXML
-    public void addTo201(){
+    public void addTo420() {
         String s;
-        change201 += 1;
-        if (change201 >= 0){
-            s = "+"+ change201;
+        change420 += 1;
+        if (change420 >= 0) {
+            s = "+" + change420;
+        } else {
+            s = String.valueOf(change420);
         }
-        else{
-            s = String.valueOf(change201);
-        }
-        changeTo201.setText(s);
+        changeTo420.setText(s);
     }
 
     // ----- ADMIN REDUCES STOCK ----- //
     @FXML
-    public void sub201(){
+    public void sub420() {
         String s;
-        change201 -= 1;
-        if (change201 >= 0){
-            s = "+"+ change201;
+        change420 -= 1;
+        if (change420 >= 0) {
+            s = "+" + change420;
+        } else {
+            s = String.valueOf(change420);
         }
-        else{
-            s = String.valueOf(change201);
-        }
-        changeTo201.setText(s);
+        changeTo420.setText(s);
     }
 
 
@@ -256,13 +189,93 @@ public class AssignStaffBlankPopupController implements Initializable {
 
     // ----- ADMIN ADDS STOCK ----- //
     @FXML
-    public void addTo101(){
+    public void addTo451() {
+        String s;
+        change451 += 1;
+        if (change451 >= 0) {
+            s = "+" + change451;
+        } else {
+            s = String.valueOf(change451);
+        }
+        changeTo451.setText(s);
+    }
+
+    // ----- ADMIN REDUCES STOCK ----- //
+    @FXML
+    public void sub451() {
+        String s;
+        change451 -= 1;
+        if (change451 >= 0) {
+            s = "+" + change451;
+        } else {
+            s = String.valueOf(change451);
+        }
+        changeTo451.setText(s);
+    }
+
+    // ----- ADMIN ADDS STOCK ----- //
+    @FXML
+    public void addTo452() {
+        String s;
+        change452 += 1;
+        if (change452 >= 0) {
+            s = "+" + change452;
+        } else {
+            s = String.valueOf(change452);
+        }
+        changeTo452.setText(s);
+    }
+
+    // ----- ADMIN REDUCES STOCK ----- //
+    @FXML
+    public void sub452() {
+        String s;
+        change452 -= 1;
+        if (change452 >= 0) {
+            s = "+" + change452;
+        } else {
+            s = String.valueOf(change452);
+        }
+        changeTo452.setText(s);
+    }
+
+
+    // ================================== UPDATES DISPLAYED STOCK =========================== //
+
+    // ----- ADMIN ADDS STOCK ----- //
+    @FXML
+    public void addTo201() {
+        String s;
+        change201 += 1;
+        if (change201 >= 0) {
+            s = "+" + change201;
+        } else {
+            s = String.valueOf(change201);
+        }
+        changeTo201.setText(s);
+    }
+
+    // ----- ADMIN REDUCES STOCK ----- //
+    @FXML
+    public void sub201() {
+        String s;
+        change201 -= 1;
+        if (change201 >= 0) {
+            s = "+" + change201;
+        } else {
+            s = String.valueOf(change201);
+        }
+        changeTo201.setText(s);
+    }
+
+    // ----- ADMIN ADDS STOCK ----- //
+    @FXML
+    public void addTo101() {
         String s;
         change101 += 1;
-        if (change101 >= 0){
-            s = "+"+ change101;
-        }
-        else{
+        if (change101 >= 0) {
+            s = "+" + change101;
+        } else {
             s = String.valueOf(change101);
         }
         changeTo101.setText(s);
@@ -270,34 +283,31 @@ public class AssignStaffBlankPopupController implements Initializable {
 
     // ----- ADMIN REDUCES STOCK ----- //
     @FXML
-    public void sub101(){
+    public void sub101() {
         String s;
         change101 -= 1;
-        if (change101 >= 0){
-            s = "+"+ change101;
-        }
-        else{
+        if (change101 >= 0) {
+            s = "+" + change101;
+        } else {
             s = String.valueOf(change101);
         }
         changeTo101.setText(s);
     }
 
-
     // ============================ ADMIN SAVES CHANGES TO STOCK =============================== //
     @FXML
-    public void makeChangesPressed(){
-        if (staffID != 0){
+    public void makeChangesPressed() {
+        if (staffID != 0) {
             String style = makeChangesButton.getStyle();
 
             // ---- Add / Remove Stock ----- //
-            changeStock(change444,444);
-            changeStock(change440,440);
-            changeStock(change420,420);
-            changeStock(change451,451);
-            changeStock(change452,452);
-            changeStock(change201,201);
-            changeStock(change101,101);
-
+            changeStock(change444, 444);
+            changeStock(change440, 440);
+            changeStock(change420, 420);
+            changeStock(change451, 451);
+            changeStock(change452, 452);
+            changeStock(change201, 201);
+            changeStock(change101, 101);
 
 
             // ----- Changes Complete ----- //
@@ -306,37 +316,32 @@ public class AssignStaffBlankPopupController implements Initializable {
         }
     }
 
-
-
     // ============================== GENERATE / REMOVE STOCK  FUNCTION ======================//
-    public void changeStock(int change, int blankType){
+    public void changeStock(int change, int blankType) {
 
-        if (staffID != 0){
+        if (staffID != 0) {
             // ---- positive change ----- //
-            if (change > 0){
-                BlankSQLHelper.assignBlanks(staffID, travelAgentCode,change,blankType);
+            if (change > 0) {
+                BlankSQLHelper.assignBlanks(staffID, travelAgentCode, change, blankType);
             }
             // ----- negative change ----- //
-            else if (change < 0){
-                BlankSQLHelper.unassignBlanks(staffID,change,blankType);
+            else if (change < 0) {
+                BlankSQLHelper.unassignBlanks(staffID, change, blankType);
             }
         }
     }
 
+    public void updateStock() {
 
-    // ================================== UPDATES DISPLAYED STOCK =========================== //
+        fieldFor444.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID, 444)));
+        fieldFor440.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID, 440)));
+        fieldFor420.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID, 420)));
 
-    public void updateStock(){
+        fieldFor451.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID, 451)));
+        fieldFor452.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID, 452)));
 
-        fieldFor444.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID,444)));
-        fieldFor440.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID,440)));
-        fieldFor420.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID,420)));
-
-        fieldFor451.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID,451)));
-        fieldFor452.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID,452)));
-
-        fieldFor201.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID,201)));
-        fieldFor101.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID,101)));
+        fieldFor201.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID, 201)));
+        fieldFor101.setText(String.valueOf(BlankSQLHelper.countStaffStock(staffID, 101)));
 
         change444 = 0;
         changeTo444.setText("+0");
@@ -360,37 +365,12 @@ public class AssignStaffBlankPopupController implements Initializable {
         changeTo101.setText("+0");
 
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         staffID = staffBlanksObject.getStaffID();
         StaffIDDisplay.setText(String.valueOf(staffID));
         updateStock();
-    }
-
-
-
-    public static int getStaffID() {
-        return staffID;
-    }
-
-    public static void setStaffID(int staffID) {
-        AssignStaffBlankPopupController.staffID = staffID;
-    }
-
-    public static int getTravelAgentCode() {
-        return travelAgentCode;
-    }
-
-    public static void setTravelAgentCode(int travelAgentCode) {
-        AssignStaffBlankPopupController.travelAgentCode = travelAgentCode;
-    }
-
-    public static StaffBlanks getStaffBlanks() {
-        return staffBlanksObject;
-    }
-
-    public static void setStaffBlanks(StaffBlanks staffBlanks) {
-        staffBlanksObject = staffBlanks;
     }
 
 }
