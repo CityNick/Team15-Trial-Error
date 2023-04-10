@@ -107,7 +107,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TableView layoutX="71.0" layoutY="141.0" prefHeight="194.0" prefWidth="613.0">
+                              <TableView fx:id="salesRecordTableView" layoutX="71.0" layoutY="141.0" prefHeight="194.0" prefWidth="613.0">
                                  <columns>
                                     <TableColumn prefWidth="75.0" text="C1" />
                                     <TableColumn prefWidth="75.0" text="C2" />
@@ -123,20 +123,20 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <DatePicker layoutX="135.0" layoutY="74.0" prefHeight="26.0" prefWidth="145.0" promptText="yyyy-mm-dd" />
-                              <TextField alignment="CENTER" layoutX="135.0" layoutY="107.0" prefHeight="26.0" prefWidth="145.0" />
-                              <TextField alignment="CENTER" layoutX="387.0" layoutY="74.0" prefHeight="26.0" prefWidth="145.0" />
+                              <DatePicker fx:id="refundDateField" layoutX="135.0" layoutY="74.0" prefHeight="26.0" prefWidth="145.0" promptText="yyyy-mm-dd" />
+                              <TextField fx:id="refundBlankIDField" layoutX="135.0" layoutY="107.0" onAction="#refundBlankIDEdited" prefHeight="26.0" prefWidth="145.0" promptText="Exact ID" />
+                              <TextField fx:id="refundFirstNameField" layoutX="387.0" layoutY="74.0" prefHeight="26.0" prefWidth="145.0" promptText="First Name" />
                               <Label layoutX="309.0" layoutY="75.0" prefHeight="25.0" prefWidth="77.0" text="First name:" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="309.0" layoutY="107.0" prefHeight="25.0" prefWidth="77.0" text="Surname:" textAlignment="JUSTIFY" textFill="WHITE">
+                              <Label layoutX="309.0" layoutY="107.0" prefHeight="25.0" prefWidth="77.0" text="Last Name" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <TextField alignment="CENTER" layoutX="387.0" layoutY="106.0" prefHeight="26.0" prefWidth="145.0" />
+                              <TextField fx:id="refundLastNameField" layoutX="387.0" layoutY="106.0" prefHeight="26.0" prefWidth="145.0" promptText="Last Name" />
                               <Label layoutX="71.0" layoutY="78.0" text="Date:" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
@@ -147,12 +147,12 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="saveButton111" layoutX="578.0" layoutY="91.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="63.0" text="Search">
+                              <Button layoutX="578.0" layoutY="91.0" mnemonicParsing="false" onAction="#searchSalesRecordPressed" prefHeight="23.0" prefWidth="63.0" text="Search">
                                  <font>
                                     <Font size="12.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="292.0" layoutY="342.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="165.0" text="Refund" />
+                              <Button layoutX="292.0" layoutY="342.0" mnemonicParsing="false" onAction="#refundButtonPressed" prefHeight="26.0" prefWidth="165.0" text="Refund" />
                            </children>
                         </AnchorPane>
                      </content>

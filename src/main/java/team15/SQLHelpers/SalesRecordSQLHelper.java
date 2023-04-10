@@ -2,8 +2,7 @@ package team15.SQLHelpers;
 
 import team15.DatabaseConnector;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 
 import static java.sql.Types.NULL;
 
@@ -13,20 +12,19 @@ public class SalesRecordSQLHelper {
                                        double discount, double usdPrice, double usdConversion,
                                        double commission, double taxRate, String paymentType,
                                        String bank, long accountNumber, long sortcode,
-                                       String customerFirstName, String customerLastName){
-        try (Connection connection = DatabaseConnector.connect()){
+                                       String customerFirstName, String customerLastName) {
+        try (Connection connection = DatabaseConnector.connect()) {
 
             // ---- adds new sales record ----- ..
             PreparedStatement stmt = connection.prepareStatement(
-                    "INSERT INTO SalesRecord (BlankID, CustomerID, StaffID, Date, LocalPrice, Discount, USDPrice, USDConversionRate, Commission, TaxRate, PaymentType, Bank, AccountNumber, Sortcode, CustomerFirstName,CustomerLastName)"+
-            " Values (?, ?, ?, CURRENT_TIMESTAMP, ?,?,?,?,?,?,?,?,?,?,?,?)");
+                    "INSERT INTO SalesRecord (BlankID, CustomerID, StaffID, Date, LocalPrice, Discount, USDPrice, USDConversionRate, Commission, TaxRate, PaymentType, Bank, AccountNumber, Sortcode, CustomerFirstName,CustomerLastName)" +
+                            " Values (?, ?, ?, CURRENT_TIMESTAMP, ?,?,?,?,?,?,?,?,?,?,?,?)");
             stmt.setLong(1, blankID);
 
-            if (customerID != -1){
+            if (customerID != -1) {
                 stmt.setLong(2, customerID);
-            }
-            else{
-                stmt.setNull(2,NULL);
+            } else {
+                stmt.setNull(2, NULL);
             }
 
             stmt.setInt(3, staffID);
@@ -38,15 +36,14 @@ public class SalesRecordSQLHelper {
             stmt.setDouble(9, taxRate);
             stmt.setString(10, paymentType);
 
-            if (bank != ""){
+            if (bank != "") {
                 stmt.setString(11, bank);
                 stmt.setLong(12, accountNumber);
                 stmt.setLong(13, sortcode);
-            }
-            else{
-                stmt.setNull(11,NULL);
-                stmt.setNull(12,NULL);
-                stmt.setNull(13,NULL);
+            } else {
+                stmt.setNull(11, NULL);
+                stmt.setNull(12, NULL);
+                stmt.setNull(13, NULL);
             }
 
 
@@ -57,9 +54,71 @@ public class SalesRecordSQLHelper {
             System.out.println("Sales Record Created");
 
 
-
         } catch (Exception e) {
             System.out.println(e.toString());
         }
     }
+
+    public static ResultSet getSalesRecords(long blankID, Date date, String firstName, String lastName, Connection connection) throws SQLException {
+        ResultSet rs;
+
+        if (blankID == 0) {
+            if (date == null) {
+
+                PreparedStatement stmt = connection.prepareStatement(
+                        "SELECT * FROM SalesRecord WHERE CustomerFirstName LIKE ? AND CustomerLastName LIKE ? AND RecordID NOT IN (SELECT SalesRecordRecordID From RefundRecord)");
+                stmt.setString(1, "%"+firstName+"%");
+                stmt.setString(2, "%"+lastName+"%");
+                rs = stmt.executeQuery();
+            } else {
+                PreparedStatement stmt = connection.prepareStatement(
+                        "SELECT * FROM SalesRecord WHERE CustomerFirstName LIKE ? AND CustomerLastName LIKE ? AND Date >= ? AND RecordID NOT IN (SELECT SalesRecordRecordID From RefundRecord)");
+                stmt.setString(1, "%"+firstName+"%");
+                stmt.setString(2, "%"+lastName+"%");
+                stmt.setDate(3, date);
+                rs = stmt.executeQuery();
+            }
+        } else {
+            PreparedStatement stmt = connection.prepareStatement(
+                    "SELECT * FROM SalesRecord WHERE BlankID = ? ");
+            stmt.setLong(1, blankID);
+            rs = stmt.executeQuery();
+        }
+        return rs;
+    }
+
+    public static Boolean checkSalesRecord(long blankID, Date date, String firstName, String lastName) throws SQLException {
+        try (Connection connection = DatabaseConnector.connect()) {
+            ResultSet rs;
+
+            if (blankID == 0) {
+                if (date == null) {
+
+                    PreparedStatement stmt = connection.prepareStatement(
+                            "SELECT * FROM SalesRecord WHERE CustomerFirstName LIKE ? AND CustomerLastName LIKE ? AND RecordID NOT IN (SELECT SalesRecordRecordID From RefundRecord) ");
+                    stmt.setString(1, "%"+firstName+"%");
+                    stmt.setString(2, "%"+lastName+"%");
+                    rs = stmt.executeQuery();
+                } else {
+                    PreparedStatement stmt = connection.prepareStatement(
+                            "SELECT * FROM SalesRecord WHERE CustomerFirstName LIKE ? AND CustomerLastName LIKE ? AND Date >= ? AND RecordID NOT IN (SELECT SalesRecordRecordID From RefundRecord)");
+                    stmt.setString(1, "%"+firstName+"%");
+                    stmt.setString(2, "%"+lastName+"%");
+                    stmt.setDate(3, date);
+                    rs = stmt.executeQuery();
+                }
+            } else {
+                PreparedStatement stmt = connection.prepareStatement(
+                        "SELECT * FROM SalesRecord WHERE BlankID = ? ");
+                stmt.setLong(1, blankID);
+                rs = stmt.executeQuery();
+            }
+            if (!rs.next()) {
+                return false;
+            }
+            return true;
+        }
+    }
 }
+
+

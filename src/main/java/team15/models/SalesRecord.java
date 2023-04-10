@@ -15,16 +15,16 @@ public class SalesRecord {
   private double Discount;
   private double USDPrice;
   private double USDConversionRate;
-  private double Comission;
+  private double Commission;
   private double TaxRate;
   private String PaymentType;
   private String Bank;
   private long AccountNumber;
-  private long SortCode;
+  private long Sortcode;
   private String CustomerFirstName;
   private String CustomerLastName;
 
-  public SalesRecord(long blankID, long customerID, long staffID, Timestamp date, double localPrice, double discount, double USDPrice, double USDConversionRate, double comission, double taxRate, String paymentType, String bank, long accountNumber, long sortCode, String customerFirstName, String customerLastName) {
+  public SalesRecord(long blankID, long customerID, long staffID, Timestamp date, double localPrice, double discount, double USDPrice, double USDConversionRate, double commission, double taxRate, String paymentType, String bank, long accountNumber, long sortcode, String customerFirstName, String customerLastName) {
     BlankID = blankID;
     CustomerID = customerID;
     StaffID = staffID;
@@ -33,17 +33,17 @@ public class SalesRecord {
     Discount = discount;
     this.USDPrice = USDPrice;
     this.USDConversionRate = USDConversionRate;
-    Comission = comission;
+    Commission = commission;
     TaxRate = taxRate;
     PaymentType = paymentType;
     Bank = bank;
     AccountNumber = accountNumber;
-    SortCode = sortCode;
+    Sortcode = sortcode;
     CustomerFirstName = customerFirstName;
     CustomerLastName = customerLastName;
   }
 
-  public void SalesRecord(ResultSet rs){
+  public SalesRecord(ResultSet rs){
     try {
       this.RecordID = rs.getLong("RecordID");
       this.BlankID = rs.getLong("BlankID");
@@ -54,12 +54,12 @@ public class SalesRecord {
       this.Discount = rs.getDouble("Discount");
       this.USDPrice = rs.getDouble("USDPrice");
       this.USDConversionRate = rs.getDouble("USDConversionRate");
-      this.Comission = rs.getDouble("Comission");
+      this.Commission = rs.getDouble("Commission");
       this.TaxRate = rs.getDouble("TaxRate");
       this.PaymentType = rs.getString("PaymentType");
       this.Bank = rs.getString("Bank");
       this.AccountNumber = rs.getLong("AccountNumber");
-      this.SortCode = rs.getLong("SortCode");
+      this.Sortcode = rs.getLong("Sortcode");
       this.CustomerFirstName = rs.getString("CustomerFirstName");
       this.CustomerLastName = rs.getString("CustomerLastName");
     }
@@ -140,11 +140,11 @@ public class SalesRecord {
   }
 
 
-  public double getComission() {
-    return Comission;
+  public double getCommission() {
+    return Commission;
   }
-  public void setComission(double comission) {
-    this.Comission = comission;
+  public void setCommission(double commission) {
+    this.Commission = commission;
   }
 
 
@@ -180,11 +180,11 @@ public class SalesRecord {
   }
 
 
-  public long getSortCode() {
-    return SortCode;
+  public long getSortcode() {
+    return Sortcode;
   }
-  public void setSortCode(long sortCode) {
-    this.SortCode = sortCode;
+  public void setSortcode(long sortcode) {
+    this.Sortcode = sortcode;
   }
 
 

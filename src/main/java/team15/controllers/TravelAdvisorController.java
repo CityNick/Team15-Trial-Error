@@ -12,14 +12,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import team15.Application;
 import team15.DatabaseConnector;
 import team15.SQLHelpers.*;
+import team15.SQLToTable;
 import team15.models.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -80,6 +78,21 @@ public class TravelAdvisorController implements Initializable {
     CheckBox payLaterBox;
     @FXML
     Label finalPriceLabel;
+    @FXML
+    DatePicker refundDateField;
+    @FXML
+    TextField refundBlankIDField;
+    @FXML
+    TextField refundFirstNameField;
+    @FXML
+    TextField refundLastNameField;
+    @FXML
+    TableView salesRecordTableView;
+
+    private long refundBlankID = 0;
+
+    private long selectedSalesRecordID = -1;
+    private SalesRecord selectedSalesRecord;
 
     private Boolean cashPayment = false;
     private boolean payLater = false;
@@ -93,6 +106,36 @@ public class TravelAdvisorController implements Initializable {
     private ArrayList<Integer> flightIDs = new ArrayList<Integer>();
     private double discount = 0;
 
+
+
+    // ========================================= REFUNDS ============================================== //
+
+    // ----- Editing blank ID ------ //
+    @FXML
+    public void refundBlankIDEdited(){
+        if (refundBlankIDField.getText() != ""){
+            refundBlankID = Long.parseLong(refundBlankIDField.getText());
+        }
+        else{
+            refundBlankID = 0;
+        }
+    }
+
+    // ----- Searching for Sales Record ----- //
+    @FXML
+    public void searchSalesRecordPressed(){
+        updateSalesRecordTable();
+    }
+
+    // ---- Pressing Refund Button ---- //
+    @FXML
+    public void refundButtonPressed() throws SQLException {
+        if (selectedSalesRecordID != -1){
+            RefundRecordSQLHelper.createRefund(selectedSalesRecordID, selectedSalesRecord.getCommission());
+            System.out.println("Refund Successful");
+            updateSalesRecordTable();
+        }
+    }
 
 
 
@@ -410,6 +453,36 @@ public class TravelAdvisorController implements Initializable {
                 }
             }
         });
+
+        refundBlankIDField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    refundBlankIDField.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+                if (newValue.length() > 11) {
+                    refundBlankIDField.setText(oldValue);
+                }
+            }
+        });
+
+        salesRecordTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+                //Check whether item is selected and set value of selected item to Label
+                if(salesRecordTableView.getSelectionModel().getSelectedItem() != null)
+                {
+                    selectedSalesRecord = (SalesRecord) salesRecordTableView.getSelectionModel().getSelectedItem();
+                    selectedSalesRecordID = selectedSalesRecord.getRecordID();
+                }
+                else{
+                    selectedSalesRecordID = -1;
+                    selectedSalesRecord = null;
+                }
+                System.out.println(selectedSalesRecordID);
+            }
+        });
     }
 
     private void reassignColumns(){
@@ -545,4 +618,42 @@ public class TravelAdvisorController implements Initializable {
         }
         System.out.println(paymentType);
     }
+
+    private void updateSalesRecordTable(){
+        try (Connection connection = DatabaseConnector.connect()) {
+            Date date;
+            if(refundDateField.getValue() == null){
+                date = null;
+            }
+            else{
+                date = Date.valueOf(refundDateField.getValue());
+            }
+            if (SalesRecordSQLHelper.checkSalesRecord(refundBlankID, date, refundFirstNameField.getText(), refundLastNameField.getText())) {
+                System.out.println("set found");
+
+                // ----- Retrieve rs from SalesRecordSQLHelper ----- //
+                ResultSet rs = SalesRecordSQLHelper.getSalesRecords(refundBlankID, date, refundFirstNameField.getText(), refundLastNameField.getText(), connection);
+
+                // ----- convert rs to list ----- //
+                ArrayList<SalesRecord> data = new ArrayList<>();
+                if (!(rs == null)) {
+                    while (rs.next()) {
+                        data.add(new SalesRecord(rs));
+                        // ---- turn list into observable list ----- //
+                        ObservableList dataList = FXCollections.observableArrayList(data);
+
+                        // ---- display table view ---- //
+                        SQLToTable.fillTableView(salesRecordTableView, rs);
+                        salesRecordTableView.setItems(dataList);
+                    }
+                }
+            } else {
+                salesRecordTableView.getItems().clear();
+                System.out.println("set not found");
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
 }
