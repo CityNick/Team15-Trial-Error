@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 
 public class FlightPath440 {
 
+
     private String StartingAirport;
     private Timestamp Departure;
     private int FlightLeg1;
@@ -30,4 +31,53 @@ public class FlightPath440 {
         this.Arrival = _Arrival;
 
     }
+
+    public String getStartingAirport() {
+        return StartingAirport;
+    }
+
+    public void setStartingAirport(String startingAirport) {
+        StartingAirport = startingAirport;
+    }
+
+    public Timestamp getDeparture() {
+        return Departure;
+    }
+
+    public void setDeparture(Timestamp departure) {
+        Departure = departure;
+    }
+
+    public int getFlightLeg1() {
+        return FlightLeg1;
+    }
+
+    public void setFlightLeg1(int flightLeg1) {
+        FlightLeg1 = flightLeg1;
+    }
+
+    public int getFlightLeg2() {
+        return FlightLeg2;
+    }
+
+    public void setFlightLeg2(int flightLeg2) {
+        FlightLeg2 = flightLeg2;
+    }
+
+    public String getDestination() {
+        return Destination;
+    }
+
+    public void setDestination(String destination) {
+        Destination = destination;
+    }
+
+    public Timestamp getArrival() {
+        return Arrival;
+    }
+
+    public void setArrival(Timestamp arrival) {
+        Arrival = arrival;
+    }
+
 }

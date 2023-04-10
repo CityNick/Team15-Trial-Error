@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="950.0">
+         <children>
+            <ImageView fitHeight="650.0" fitWidth="950.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../Images/PopupBG2.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="122.0" layoutY="176.0" text="Report Period: yyyy-mm-dd to yyyy/mm/dd" textFill="WHITE" />
+            <Label layoutX="317.0" layoutY="408.0" text="if you read this you have to drink water or you'll die instantly" textFill="#c90b0b" />
+         </children>
+      </Pane>
+   </children>
+</VBox>

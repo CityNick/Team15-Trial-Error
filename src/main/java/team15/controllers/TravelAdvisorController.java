@@ -1,24 +1,23 @@
 package team15.controllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.Axis;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import team15.Application;
 import team15.DatabaseConnector;
-import team15.SQLHelpers.BankCardDetailsSQLHelper;
-import team15.SQLHelpers.BlankSQLHelper;
-import team15.SQLHelpers.CustomerAccountSQLHelper;
-import team15.SQLHelpers.FlightSQLHelper;
-import team15.models.BankCardDetails;
-import team15.models.CustomerAccount;
-import team15.models.FlightPath444;
+import team15.SQLHelpers.*;
+import team15.models.*;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -71,18 +70,35 @@ public class TravelAdvisorController implements Initializable {
     ComboBox blankTypeSelection;
     @FXML
     Label outOfStockLabel;
+    @FXML
+    TextField priceField;
+    @FXML
+    CheckBox cashBox;
+    @FXML
+    Label discountLabel;
+    @FXML
+    CheckBox payLaterBox;
+    @FXML
+    Label finalPriceLabel;
 
+    private Boolean cashPayment = false;
+    private boolean payLater = false;
+    private String paymentType = "Debit/Credit";
     private BankCardDetails paymentInfo;
 
     private Boolean customerFound;
     private CustomerAccount currentCustomer;
     private int currentBlank = 0;
 
+    private ArrayList<Integer> flightIDs = new ArrayList<Integer>();
+    private double discount = 0;
 
 
 
 
-    // ========================== SELLING BLANKS ========================== //
+
+
+    // ======================================== SELLING BLANKS ====================================== //
 
     // ----- OPEN SELL BLANKS ----- //
     @FXML
@@ -122,41 +138,78 @@ public class TravelAdvisorController implements Initializable {
         if(BlankSQLHelper.checkBlankTypeStock(Application.getActiveUser().getStaffID(), (int) blankTypeSelection.getValue())){
             outOfStockLabel.setText("");
             currentBlank = (int) blankTypeSelection.getValue();
-            updateFlightTable();
         }
         else{
             outOfStockLabel.setText("OUT OF STOCK");
             currentBlank = 0;
-            updateFlightTable();
         }
+        updateFlightTable();
     }
 
-
     // ----- Searching For Flights ----- //
-    public void updateFlightTable(){
+    private void updateFlightTable(){
         flightsTableView.getItems().clear();
         if (currentBlank != 0 && currentBlank != 452 && currentBlank != 451){
+            reassignColumns();
             try (Connection connection = DatabaseConnector.connect()) {
                 LocalDate departureDate;
                 if (departureDateField.getValue() == null){departureDate = LocalDate.now();
                     System.out.println(Timestamp.valueOf(departureDate.atStartOfDay()));}
                 else{departureDate = departureDateField.getValue();}
-                ResultSet rs = FlightSQLHelper.getFlightPath(startingAirportField.getText(),destinationAirportField.getText(), departureDate, connection);
+                ResultSet rs = FlightSQLHelper.getFlightPath(startingAirportField.getText(),destinationAirportField.getText(), departureDate, currentBlank, connection);
 
-                // ----- convert rs to list ----- //
-                ArrayList<FlightPath444> data = new ArrayList<>();
+                // ----- convert rs to list (444)----- //
+                if (currentBlank == 444){
+                    ArrayList<FlightPath444> data = new ArrayList<>();
+                    if (rs != null) {
+                        while (rs.next()) {
+                            data.add(new FlightPath444(rs));
+                            // ---- turn list into observable list ----- //
+                            ObservableList dataList = FXCollections.observableArrayList(data);
+
+                            // ---- display table view ---- //
+                            flightsTableView.setItems(dataList);
+                        }
+                    }
+                } else if (currentBlank == 440) {
+                    ArrayList<FlightPath440> data = new ArrayList<>();
+                    if (rs != null) {
+                        while (rs.next()) {
+                            data.add(new FlightPath440(rs));
+                            // ---- turn list into observable list ----- //
+                            ObservableList dataList = FXCollections.observableArrayList(data);
+
+                            // ---- display table view ---- //
+                            flightsTableView.setItems(dataList);
+                        }
+                    }
+                } else if (currentBlank == 201) {
+                    ArrayList<FlightPath201> data = new ArrayList<>();
+                    if (rs != null) {
+                        while (rs.next()) {
+                            data.add(new FlightPath201(rs));
+                            // ---- turn list into observable list ----- //
+                            ObservableList dataList = FXCollections.observableArrayList(data);
+
+                            // ---- display table view ---- //
+                            flightsTableView.setItems(dataList);
+                        }
+                    }
+                } else if (currentBlank == 101) {
+                ArrayList<FlightPath101> data = new ArrayList<>();
                 if (rs != null) {
                     while (rs.next()) {
-                        data.add(new FlightPath444(rs));
+                        data.add(new FlightPath101(rs));
                         // ---- turn list into observable list ----- //
                         ObservableList dataList = FXCollections.observableArrayList(data);
 
                         // ---- display table view ---- //
-                        //SQLToTable.fillTableView(flightsTableView, rs);
-                        reassignColumns();
                         flightsTableView.setItems(dataList);
                     }
                 }
+            }
+
+
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
@@ -170,6 +223,93 @@ public class TravelAdvisorController implements Initializable {
     public void destinationAirportEdited(){
         updateFlightTable();
     }
+    @FXML
+    public void dateSelected(){
+        updateFlightTable();
+    }
+
+    // ----- Cash payment selected -----/
+    @FXML
+    public void cashPressed(){
+        if (cashPayment == true){
+            cashPayment = false;;
+        }
+        else{
+            cashPayment = true;
+            payLater = false;
+            payLaterBox.setSelected(false);
+        }
+        changePaymentType();
+    }
+
+    // ---- Pay Later Selected ----- //
+    @FXML
+    public void payLaterPressed(){
+        if(bankNameField.getText() != null && accountNumberField.getText() != null && sortCodeField.getText() != null){
+            if (payLater == true){
+                payLater = false;;
+            }
+            else{
+                payLater = true;
+                cashBox.setSelected(false);
+                cashPayment = false;
+            }
+        }
+        changePaymentType();
+    }
+
+    // ---- Price Set ----- //
+    @FXML
+    public void priceChanged(){
+        finalPriceLabel.setText(String.valueOf(Double.parseDouble(priceField.getText()) - discount));
+    }
+
+
+    // ---------- PRESSED SELL BLANKS ---------- //
+    @FXML
+    public void sellBlankPressed(){
+        // ----- Check if conditions met ----- //
+        if (checkForEmptySellBlankFields() && checkPaymentInfo() && checkValidFlightPicked()){
+
+            // ---- retrieve the blank ----- //
+            Blank blankForSale = BlankSQLHelper.getBlankForSale(Application.getActiveUser().getStaffID(), currentBlank);
+
+            // ---- create Sales Record ---- //
+            long blankID = blankForSale.getBlankID();
+            int customerID = -1;
+            if (customerFound == true){
+                customerID = currentCustomer.getCustomerID();
+            }
+            int staffID = Application.getActiveUser().getStaffID();
+            double localPrice = Double.parseDouble(finalPriceLabel.getText());
+            double discount = this.discount;
+            double conversionRate = TravelAgentSQLHelper.getTravelAgent(Application.getActiveUser().getTravelAgentCode()).getUSDConversionRate();
+            conversionRate = Math.round(conversionRate*100.0)/100.0;
+            double usdPrice = localPrice * conversionRate;
+            usdPrice = Math.round(usdPrice*100.0)/100.0;
+            double commission = usdPrice * TravelAgentContractSQLHelper.getCommissionRate(Application.getActiveUser().getTravelAgentCode(), String.valueOf(currentBlank));
+            commission = Math.round(commission*100.0)/100.0;
+            double taxRate = 0;
+            String bank = "";
+            long accountNumber = 0;
+            long sortcode = 0;
+            if (cashPayment != true){
+                bank = bankNameField.getText();
+                accountNumber = Long.parseLong(accountNumberField.getText());
+                sortcode = Long.parseLong(sortCodeField.getText());
+            }
+            String customerFirstName = FirstNameField.getText();
+            String customerLastName = LastNameField.getText();
+
+            // --------------- ADD SALES RECORD TO DATABASE ------------- //
+            SalesRecordSQLHelper.createNewRecord(blankID, customerID, staffID, localPrice,
+                    discount, conversionRate, usdPrice, commission,
+                    taxRate, paymentType, bank, accountNumber, sortcode,
+                    customerFirstName,customerLastName);
+        }
+    }
+
+
 
 
 
@@ -195,45 +335,214 @@ public class TravelAdvisorController implements Initializable {
 
         // ----- Combo Box ----- //
         blankTypeSelection.getItems().addAll(444,420,201,101,451,452);
+
+
+        // ====================== GET FLIGHT IDS FROM FLIGHT =================== //
+        flightsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+                //Check whether item is selected and set value of selected item to Label
+                flightIDs = new ArrayList<Integer>();
+                if(flightsTableView.getSelectionModel().getSelectedItem() != null)
+                {
+                    if (currentBlank == 444 ){
+                        FlightPath444 flight = (FlightPath444) flightsTableView.getSelectionModel().getSelectedItem();
+                        flightIDs.add(flight.getFlightLeg1());
+                        flightIDs.add(flight.getFlightLeg2());
+                        flightIDs.add(flight.getFlightLeg3());
+                        flightIDs.add(flight.getFlightLeg4());
+                    }
+                    else if (currentBlank == 440 ){
+                        FlightPath440 flight = (FlightPath440) flightsTableView.getSelectionModel().getSelectedItem();
+                        flightIDs.add(flight.getFlightLeg1());
+                        flightIDs.add(flight.getFlightLeg2());
+                    }
+                    else if (currentBlank == 201 ){
+                        FlightPath201 flight = (FlightPath201) flightsTableView.getSelectionModel().getSelectedItem();
+                        flightIDs.add(flight.getFlightLeg1());
+                        flightIDs.add(flight.getFlightLeg2());
+                    }
+                    else if (currentBlank == 101 ){
+                        FlightPath101 flight = (FlightPath101) flightsTableView.getSelectionModel().getSelectedItem();
+                        flightIDs.add(flight.getFlightLeg1());
+                    }
+                }
+                System.out.println(flightIDs);
+            }
+        });
+
+        // ====================== Entering the price =================== //
+        priceField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                    priceField.setText(oldValue);
+                }
+                if (newValue.length() > 15) {
+                    priceField.setText(oldValue);
+                }
+            }
+        });
+
+        accountNumberField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    accountNumberField.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+                if (newValue.length() > 10) {
+                    accountNumberField.setText(oldValue);
+                }
+            }
+        });
+
+        sortCodeField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    sortCodeField.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+                if (newValue.length() > 6) {
+                    sortCodeField.setText(oldValue);
+                }
+            }
+        });
     }
 
-    public void reassignColumns(){
+    private void reassignColumns(){
         flightsTableView.getColumns().clear();
+        TableColumn column1 = new TableColumn<>();
+        TableColumn column2 = new TableColumn<>();
+        TableColumn column3 = new TableColumn<>();
+        TableColumn column4 = new TableColumn<>();
+        TableColumn column5 = new TableColumn<>();
+        TableColumn column6 = new TableColumn<>();
+        TableColumn column7 = new TableColumn<>();
+        TableColumn column8 = new TableColumn<>();
+
         switch(currentBlank){
             case 444:
-                TableColumn column1 = new TableColumn<>();
                 column1.setText("StartingAirport");
                 column1.setCellValueFactory(new PropertyValueFactory<FlightPath444,String>("StartingAirport"));
 
-                TableColumn column2 = new TableColumn<>();
                 column2.setText("Departure");
                 column2.setCellValueFactory(new PropertyValueFactory<FlightPath444,Timestamp>("Departure"));
 
-                TableColumn column3 = new TableColumn<>();
                 column3.setText("FlightLeg1");
                 column3.setCellValueFactory(new PropertyValueFactory<FlightPath444,Integer>("FlightLeg1"));
 
-                TableColumn column4 = new TableColumn<>();
                 column4.setText("FlightLeg2");
                 column4.setCellValueFactory(new PropertyValueFactory<FlightPath444,Integer>("FlightLeg2"));
 
-                TableColumn column5 = new TableColumn<>();
                 column5.setText("FlightLeg3");
                 column5.setCellValueFactory(new PropertyValueFactory<FlightPath444,Integer>("FlightLeg3"));
 
-                TableColumn column6 = new TableColumn<>();
                 column6.setText("FlightLeg3");
                 column6.setCellValueFactory(new PropertyValueFactory<FlightPath444,Integer>("FlightLeg4"));
 
-                TableColumn column7 = new TableColumn<>();
                 column7.setText("Destination");
                 column7.setCellValueFactory(new PropertyValueFactory<FlightPath444,String>("Destination"));
 
-                TableColumn column8 = new TableColumn<>();
                 column8.setText("Arrival");
                 column8.setCellValueFactory(new PropertyValueFactory<FlightPath444,Timestamp>("Arrival"));
 
                 flightsTableView.getColumns().addAll(column1,column2,column3,column4,column5,column6,column7,column8);
+                break;
+
+            case 420:
+            case 201:
+                column1.setText("StartingAirport");
+                column1.setCellValueFactory(new PropertyValueFactory<FlightPath444,String>("StartingAirport"));
+
+                column2.setText("Departure");
+                column2.setCellValueFactory(new PropertyValueFactory<FlightPath444,Timestamp>("Departure"));
+
+                column3.setText("FlightLeg1");
+                column3.setCellValueFactory(new PropertyValueFactory<FlightPath444,Integer>("FlightLeg1"));
+
+                column4.setText("FlightLeg2");
+                column4.setCellValueFactory(new PropertyValueFactory<FlightPath444,Integer>("FlightLeg2"));
+
+                column5.setText("Destination");
+                column5.setCellValueFactory(new PropertyValueFactory<FlightPath444,String>("Destination"));
+
+                column6.setText("Arrival");
+                column6.setCellValueFactory(new PropertyValueFactory<FlightPath444,Timestamp>("Arrival"));
+
+                flightsTableView.getColumns().addAll(column1,column2,column3,column4,column5,column6);
+                break;
+
+            case 101:
+                column1.setText("StartingAirport");
+                column1.setCellValueFactory(new PropertyValueFactory<FlightPath444,String>("StartingAirport"));
+
+                column2.setText("Departure");
+                column2.setCellValueFactory(new PropertyValueFactory<FlightPath444,Timestamp>("Departure"));
+
+                column3.setText("FlightLeg1");
+                column3.setCellValueFactory(new PropertyValueFactory<FlightPath444,Integer>("FlightLeg1"));
+
+                column4.setText("Destination");
+                column4.setCellValueFactory(new PropertyValueFactory<FlightPath444,String>("Destination"));
+
+                column5.setText("Arrival");
+                column5.setCellValueFactory(new PropertyValueFactory<FlightPath444,Timestamp>("Arrival"));
+
+                flightsTableView.getColumns().addAll(column1,column2,column3,column4,column5);
+                break;
+
         }
+    }
+
+    private boolean checkForEmptySellBlankFields(){
+        if (FirstNameField.getText() != "" && LastNameField.getText() != "" &&
+        checkPaymentInfo() && currentBlank != 0 && priceField.getText() != ""){
+            return true;
+        }
+        else{
+            System.out.println("Missing Fields");
+            return false;
+        }
+    }
+
+    private boolean checkPaymentInfo(){
+        if (cashPayment == true){
+            return true;
+        }
+        else if(bankNameField.getText() != "" && accountNumberField.getText() != "" && sortCodeField.getText() != "") {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private boolean checkValidFlightPicked(){
+        // ----- if a flight blank has been selected ----- //
+        if ( (currentBlank == 444) || currentBlank == 440 || currentBlank == 201 || currentBlank == 101) {
+            // ---- check that advisor has selected a flight ----- //
+            if (flightIDs.isEmpty() != true) {
+                return true;
+            }
+        }
+        // ---- check if it is a MCO blank ---- //
+        if (currentBlank == 452 || currentBlank == 451 ){
+            return true;
+        }
+        return false;
+    }
+
+    private void changePaymentType(){
+        if(cashPayment == true && payLater == false){
+            paymentType = "Cash";
+        } else if (cashPayment == false && payLater == true) {
+            paymentType = "Pay Later";
+        } else if (cashPayment == false && payLater == false) {
+            paymentType = "Debit/Credit";
+        }
+        System.out.println(paymentType);
     }
 }

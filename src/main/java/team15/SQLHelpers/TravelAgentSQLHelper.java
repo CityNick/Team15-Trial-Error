@@ -1,6 +1,7 @@
 package team15.SQLHelpers;
 
 import team15.DatabaseConnector;
+import team15.models.TravelAgent;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,6 +38,28 @@ public class TravelAgentSQLHelper {
         } catch (Exception e) {
             System.out.println(e.toString());
             return false;
+        }
+    }
+
+    public static TravelAgent getTravelAgent(int travelAgentCode) {
+        try (Connection connection = DatabaseConnector.connect()) {
+            ResultSet rs;
+
+            // ------ IF @param search only contains numbers -------- //
+            PreparedStatement stmt = connection.prepareStatement(
+                    "SELECT * FROM TravelAgent WHERE TravelAgentCode = ? ");
+            stmt.setInt(1, travelAgentCode);
+            rs = stmt.executeQuery();
+
+            if (!rs.next()) {
+                return null;
+            }
+            TravelAgent ta = new TravelAgent(rs);
+            return ta;
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return null;
         }
     }
 }

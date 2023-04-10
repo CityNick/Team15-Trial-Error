@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="950.0">
+         <children>
+            <ImageView fitHeight="650.0" fitWidth="950.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../Images/PopupBG2.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="218.0" layoutY="111.0" text="[dates go here]" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label layoutX="510.0" layoutY="111.0" text="XXX" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="381.0" layoutY="111.0" text="Travel Agent Code:" textFill="#c0e8ff">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="114.0" layoutY="111.0" text="Report Period:" textFill="#c0e8ff">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="695.0" layoutY="111.0" text="XXXXXXXXXXXXXXXXXXX" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="633.0" layoutY="111.0" text="Address:" textFill="#c0e8ff">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="289.0" layoutY="140.0" text="Stock Turnover Report" textFill="#21a3ea" underline="true">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <TableView layoutX="88.0" layoutY="244.0" prefHeight="287.0" prefWidth="107.0">
+              <columns>
+                <TableColumn prefWidth="48.0" text="Type" />
+                  <TableColumn prefWidth="58.19999694824219" text="Count" />
+              </columns>
+            </TableView>
+            <TableView layoutX="199.0" layoutY="244.0" prefHeight="287.0" prefWidth="118.0">
+               <columns>
+                  <TableColumn prefWidth="50.40003967285156" text="StaffID" />
+                  <TableColumn prefWidth="65.5999755859375" text="Count" />
+               </columns>
+            </TableView>
+            <TableView layoutX="329.0" layoutY="244.0" prefHeight="287.0" prefWidth="118.0">
+               <columns>
+                  <TableColumn prefWidth="50.40003967285156" text="StaffID" />
+                  <TableColumn prefWidth="65.5999755859375" text="Count" />
+               </columns>
+            </TableView>
+            <Label layoutX="94.0" layoutY="217.0" text="Agent Stock" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="213.0" layoutY="217.0" text="Sub-Agent" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="351.0" layoutY="217.0" text="Assigned" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TableView layoutX="451.0" layoutY="244.0" prefHeight="287.0" prefWidth="118.0">
+               <columns>
+                  <TableColumn prefWidth="50.40003967285156" text="Type" />
+                  <TableColumn prefWidth="65.5999755859375" text="Count" />
+               </columns>
+            </TableView>
+            <Label layoutX="483.0" layoutY="217.0" text="Used" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TableView layoutX="581.0" layoutY="244.0" prefHeight="287.0" prefWidth="263.0">
+               <columns>
+                  <TableColumn prefWidth="50.40003967285156" text="Type" />
+                  <TableColumn prefWidth="74.0" text="Count" />
+               </columns>
+            </TableView>
+            <Label layoutX="647.0" layoutY="217.0" text="Agent's Amount" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</VBox>

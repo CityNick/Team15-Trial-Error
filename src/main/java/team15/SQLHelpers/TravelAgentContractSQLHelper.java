@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static team15.DatabaseConnector.connection;
+
 public class TravelAgentContractSQLHelper {
 
     public static Boolean checkTravelAgentContract(String search){
@@ -54,5 +56,31 @@ public class TravelAgentContractSQLHelper {
 
         return rs;
 
+    }
+
+    public static double getCommissionRate(int travelAgentCode, String blankType){
+        try (Connection connection = DatabaseConnector.connect()){
+            ResultSet rs;
+
+            PreparedStatement stmt = connection.prepareStatement(
+                    "SELECT * FROM TravelAgentContract WHERE TravelAgentCode = ?");
+            stmt.setInt(1, travelAgentCode);
+
+            rs = stmt.executeQuery();
+
+
+            if (!rs.next()) {
+                System.out.println("No Travel Agent Contract found");
+                return 0;
+            }
+            double commissionRate = rs.getDouble( "CommissionRate"+blankType);
+            commissionRate /= 100;
+            System.out.println(commissionRate);
+            return commissionRate;
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return 0;
+        }
     }
 }

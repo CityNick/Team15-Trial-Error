@@ -2,6 +2,7 @@ package team15.models;
 
 
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 public class SalesRecord {
 
@@ -9,8 +10,7 @@ public class SalesRecord {
   private long BlankID;
   private long CustomerID;
   private long StaffID;
-  private java.sql.Date Date;
-  private java.sql.Time Time;
+  private Timestamp Date;
   private double LocalPrice;
   private double Discount;
   private double USDPrice;
@@ -24,14 +24,32 @@ public class SalesRecord {
   private String CustomerFirstName;
   private String CustomerLastName;
 
+  public SalesRecord(long blankID, long customerID, long staffID, Timestamp date, double localPrice, double discount, double USDPrice, double USDConversionRate, double comission, double taxRate, String paymentType, String bank, long accountNumber, long sortCode, String customerFirstName, String customerLastName) {
+    BlankID = blankID;
+    CustomerID = customerID;
+    StaffID = staffID;
+    Date = date;
+    LocalPrice = localPrice;
+    Discount = discount;
+    this.USDPrice = USDPrice;
+    this.USDConversionRate = USDConversionRate;
+    Comission = comission;
+    TaxRate = taxRate;
+    PaymentType = paymentType;
+    Bank = bank;
+    AccountNumber = accountNumber;
+    SortCode = sortCode;
+    CustomerFirstName = customerFirstName;
+    CustomerLastName = customerLastName;
+  }
+
   public void SalesRecord(ResultSet rs){
     try {
       this.RecordID = rs.getLong("RecordID");
       this.BlankID = rs.getLong("BlankID");
       this.CustomerID = rs.getLong("CustomerID");
       this.StaffID = rs.getLong("StaffID");
-      this.Date = rs.getDate("Date");
-      this.Time = rs.getTime("Time");
+      this.Date = rs.getTimestamp("Date");
       this.LocalPrice = rs.getDouble("LocalPrice");
       this.Discount = rs.getDouble("Discount");
       this.USDPrice = rs.getDouble("USDPrice");
@@ -82,19 +100,11 @@ public class SalesRecord {
   }
 
 
-  public java.sql.Date getDate() {
+  public Timestamp getDate() {
     return Date;
   }
-  public void setDate(java.sql.Date date) {
+  public void setDate(Timestamp date) {
     this.Date = date;
-  }
-
-
-  public java.sql.Time getTime() {
-    return Time;
-  }
-  public void setTime(java.sql.Time time) {
-    this.Time = time;
   }
 
 

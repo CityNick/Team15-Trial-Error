@@ -1,6 +1,7 @@
 package team15.SQLHelpers;
 
 import team15.DatabaseConnector;
+import team15.models.Blank;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -82,9 +83,6 @@ public class BlankSQLHelper {
         }
         return 0;
     }
-
-
-
 
 
     public static void stockUpBlanks(int travelAgentCode, int amount, int blankType){
@@ -293,6 +291,28 @@ public class BlankSQLHelper {
         } catch (Exception e) {
             System.out.println(e.toString());
             return false;
+        }
+    }
+
+    public static Blank getBlankForSale(int staffID, int blankType){
+        try (Connection connection = DatabaseConnector.connect()){
+            ResultSet rs;
+
+            PreparedStatement stmt = connection.prepareStatement(
+                    "SELECT * FROM Blank WHERE StaffID = ? AND BlankType = ? AND BlankID NOT IN (SELECT BlankID FROM SalesRecord) LIMIT 1");
+            stmt.setInt(1, staffID);
+            stmt.setInt(2, blankType);
+            rs = stmt.executeQuery();
+            if (!rs.next()) {
+                System.out.println("no blank found");
+                return null;
+            }
+            Blank blank = new Blank(rs);
+            return blank;
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return null;
         }
     }
 }

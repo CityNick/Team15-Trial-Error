@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import team15.Application;
@@ -31,6 +32,10 @@ public class ManagerController implements Initializable {
     TableView staffBlanksView;
     @FXML
     TextField searchStaffBlanksField;
+    @FXML
+    ComboBox reportTypeBox;
+    @FXML
+    ComboBox rangeBox;
 
     @FXML
     public void logoutPressed() throws IOException {
@@ -126,6 +131,10 @@ public class ManagerController implements Initializable {
                 }
             }
         });
+
+        reportTypeBox.getItems().addAll("Stock Turnover", "Interline Sales", "Domestic Sales");
+
+        rangeBox.getItems().addAll("Global", "Individual");
     }
 
 

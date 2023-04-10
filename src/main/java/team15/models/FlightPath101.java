@@ -9,7 +9,6 @@ public class FlightPath101 {
     private String StartingAirport;
     private Timestamp Departure;
     private int FlightLeg1;
-    private int FlightLeg2;
     private String Destination;
     private Timestamp Arrival;
 
@@ -52,13 +51,6 @@ public class FlightPath101 {
         FlightLeg1 = flightLeg1;
     }
 
-    public int getFlightLeg2() {
-        return FlightLeg2;
-    }
-
-    public void setFlightLeg2(int flightLeg2) {
-        FlightLeg2 = flightLeg2;
-    }
 
     public String getDestination() {
         return Destination;
