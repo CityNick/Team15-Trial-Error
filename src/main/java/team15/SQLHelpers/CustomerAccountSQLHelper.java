@@ -90,7 +90,7 @@ public class CustomerAccountSQLHelper {
         }
     }
 
-    public static void createNewCustomer(String firstName, String lastName, Date dob, String bank, int accountNumber, int sortcode) throws SQLException {
+    public static void createNewCustomer(String firstName, String lastName, Date dob, String bank, long accountNumber, int sortcode) throws SQLException {
         try (Connection connection = DatabaseConnector.connect()) {
 
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO CustomerAccount (FirstName,LastName, Expenditure,DateOfBirth) VALUES (?,?,?,?)");
@@ -114,8 +114,8 @@ public class CustomerAccountSQLHelper {
 
                 stmt = connection.prepareStatement("INSERT IGNORE INTO BankCardDetails (CustomerID, Bank, AccountNumber, SortCode) VALUES (?,?,?,?)");
                 stmt.setInt(1, customer.getCustomerID());
-                stmt.setString(2, firstName);
-                stmt.setInt(3, accountNumber);
+                stmt.setString(2, bank);
+                stmt.setLong(3, accountNumber);
                 stmt.setInt(4, sortcode);
 
                 stmt.executeUpdate();

@@ -17,7 +17,7 @@ public class StaffAccountSQLHelper {
     public static boolean checkAccountLogin(long StaffID, String Password) {
 
         try (Connection connection = DatabaseConnector.connect()) {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM StaffAccount WHERE StaffID = ? AND Password = ?");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM StaffAccount WHERE StaffID = ? AND Password = BINARY ?");
             stmt.setLong(1, StaffID);
             stmt.setString(2, Password);
             ResultSet user = stmt.executeQuery();

@@ -127,7 +127,7 @@ public class TravelAdvisorController implements Initializable {
     private String paymentType = "Debit/Credit";
     private BankCardDetails paymentInfo;
 
-    private Boolean customerFound;
+    private Boolean customerFound = false;
     private CustomerAccount currentCustomer;
     private int currentBlank = 0;
     private double basePrice = 0;
@@ -163,8 +163,8 @@ public class TravelAdvisorController implements Initializable {
             RefundRecordSQLHelper.createRefund(selectedSalesRecordID, selectedSalesRecord.getCommission());
             CustomerAccountSQLHelper.returnCommission(selectedSalesRecord);
             System.out.println("Refund Successful");
-            updateSalesRecordTable();
         }
+        updateSalesRecordTable();
     }
 
 
@@ -470,10 +470,12 @@ public class TravelAdvisorController implements Initializable {
             String lastName = createCustomerLastNameField.getText();
             Date dob = Date.valueOf(createDOB.getValue());
             String bank = createBankNameField.getText();
-            int accountNumber = Integer.parseInt(createAccountNumField.getText());
+            long accountNumber = Integer.parseInt(createAccountNumField.getText());
             int sortcode = Integer.parseInt(createSortcodeField.getText());
 
             CustomerAccountSQLHelper.createNewCustomer(firstName, lastName,dob, bank, accountNumber, sortcode);
+
+            clearCreateCustomerDetails();
         }
     }
 
@@ -567,8 +569,21 @@ public class TravelAdvisorController implements Initializable {
                 if (!newValue.matches("\\d*")) {
                     accountNumberField.setText(newValue.replaceAll("[^\\d]", ""));
                 }
-                if (newValue.length() > 10) {
+                if (newValue.length() > 8) {
                     accountNumberField.setText(oldValue);
+                }
+            }
+        });
+
+        createAccountNumField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    createAccountNumField.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+                if (newValue.length() > 8) {
+                    createAccountNumField.setText(oldValue);
                 }
             }
         });
@@ -582,6 +597,19 @@ public class TravelAdvisorController implements Initializable {
                 }
                 if (newValue.length() > 6) {
                     sortCodeField.setText(oldValue);
+                }
+            }
+        });
+
+        createSortcodeField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    createSortcodeField.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+                if (newValue.length() > 6) {
+                    createSortcodeField.setText(oldValue);
                 }
             }
         });
@@ -634,10 +662,15 @@ public class TravelAdvisorController implements Initializable {
     }
 
     private Double calculateDiscount(double basePrice) throws SQLException {
-        double discount = FlexibleDiscountSQLHelper.calculateDiscount(currentCustomer.getExpenditure(), basePrice);
-        discount = Math.round(discount * 100.0) / 100.0;
-        discountLabel.setText(String.valueOf(discount));
-        return discount;
+        if (currentCustomer !=null){
+            double discount = FlexibleDiscountSQLHelper.calculateDiscount(currentCustomer.getExpenditure(), basePrice);
+            discount = Math.round(discount * 100.0) / 100.0;
+            discountLabel.setText(String.valueOf(discount));
+            return discount;
+        }
+        else{
+            return Double.valueOf(0);
+        }
     }
 
     private void reassignColumns() {
@@ -800,6 +833,7 @@ public class TravelAdvisorController implements Initializable {
 
                         // ---- display table view ---- //
                         SQLToTable.fillTableView(salesRecordTableView, rs);
+                        salesRecordTableView.getItems().clear();
                         salesRecordTableView.setItems(dataList);
                     }
                 }
@@ -818,7 +852,7 @@ public class TravelAdvisorController implements Initializable {
             recordID = Long.parseLong(recordIDField.getText());
         }
         else{
-            recordID = -1;
+            recordID = 0;
         }
         String firstName = firstNameRecordField.getText();
         String lastName = lastNameRecordField.getText();
@@ -873,6 +907,14 @@ public class TravelAdvisorController implements Initializable {
         column5.setCellValueFactory(new PropertyValueFactory<SalesRecord, Date>("Date"));
 
         recordTableView.getColumns().addAll(column1, column2, column3, column4, column5);
+    }
+
+    private void clearCreateCustomerDetails(){
+        createCustomerFirstNameField.setText("");
+        createCustomerLastNameField.setText("");
+        createBankNameField.setText("");
+        createAccountNumField.setText("");
+        createSortcodeField.setText("");
     }
 
 }

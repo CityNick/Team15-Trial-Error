@@ -76,6 +76,7 @@ public class Application extends javafx.application.Application {
         activeStage.setTitle("AirVia Systems");                                                        // - window title set
         activeStage.setScene(scene);                                                                   // - sets the login scene
         activeStage.show();                                                                            // - shows application
+        activeStage.setResizable(false);
     }
 
 }

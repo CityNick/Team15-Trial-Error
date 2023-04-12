@@ -90,6 +90,7 @@ public class SalesRecordSQLHelper {
                     "SELECT * FROM SalesRecord WHERE BlankID = ? ");
             stmt.setLong(1, blankID);
             rs = stmt.executeQuery();
+            System.out.println("Found BlankID");
         }
         return rs;
     }
@@ -132,6 +133,7 @@ public class SalesRecordSQLHelper {
         ResultSet rs = stmt.executeQuery();
 
         if (!rs.next()){
+            System.out.println("Sales RecordID Not found");
             stmt = connection.prepareStatement(
                     "SELECT * FROM SalesRecord WHERE Date >= ? AND CustomerFirstName LIKE ? AND CustomerLastName LIKE ?");
             stmt.setDate(1, date);
@@ -145,6 +147,7 @@ public class SalesRecordSQLHelper {
 
         }
         else{
+            System.out.println("Found Via RecordID");
             return rs;
         }
     }
