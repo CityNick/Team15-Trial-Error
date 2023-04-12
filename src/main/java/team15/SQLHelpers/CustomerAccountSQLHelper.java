@@ -89,4 +89,39 @@ public class CustomerAccountSQLHelper {
             System.out.println(e);
         }
     }
+
+    public static void createNewCustomer(String firstName, String lastName, Date dob, String bank, int accountNumber, int sortcode) throws SQLException {
+        try (Connection connection = DatabaseConnector.connect()) {
+
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO CustomerAccount (FirstName,LastName, Expenditure,DateOfBirth) VALUES (?,?,?,?)");
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+            stmt.setDouble(3, 0);
+            stmt.setDate(4, dob);
+
+            stmt.executeUpdate();
+            System.out.println("Customer Account Created");
+
+            stmt = connection.prepareStatement("SELECT * FROM CustomerAccount WHERE FirstName = ? AND LastName = ? AND Expenditure = 0 AND DateOfBirth = ?");
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+            stmt.setDate(3, dob);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                CustomerAccount customer = new CustomerAccount(rs);
+                System.out.println(customer.getCustomerID());
+
+                stmt = connection.prepareStatement("INSERT IGNORE INTO BankCardDetails (CustomerID, Bank, AccountNumber, SortCode) VALUES (?,?,?,?)");
+                stmt.setInt(1, customer.getCustomerID());
+                stmt.setString(2, firstName);
+                stmt.setInt(3, accountNumber);
+                stmt.setInt(4, sortcode);
+
+                stmt.executeUpdate();
+
+                System.out.println("Payment Method Added");
+            }
+        }
+    }
 }

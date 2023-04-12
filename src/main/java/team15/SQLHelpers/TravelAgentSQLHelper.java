@@ -1,11 +1,13 @@
 package team15.SQLHelpers;
 
+import team15.Application;
 import team15.DatabaseConnector;
 import team15.models.TravelAgent;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class TravelAgentSQLHelper {
 
@@ -53,6 +55,19 @@ public class TravelAgentSQLHelper {
         } catch (Exception e) {
             System.out.println(e);
             return null;
+        }
+    }
+
+    public static void newExchangeRate(double conversionRate) throws SQLException {
+        try (Connection connection = DatabaseConnector.connect()) {
+            ResultSet rs;
+
+            // ------ IF @param search only contains numbers -------- //
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE TravelAgent SET USDConversionRate = ? WHERE TravelAgentCode = ?");
+            stmt.setDouble(1, conversionRate);
+            stmt.setInt(2, Application.getActiveUser().getTravelAgentCode());
+            stmt.executeUpdate();
         }
     }
 }

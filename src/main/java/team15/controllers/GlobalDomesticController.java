@@ -19,7 +19,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class GlobalInterlineController implements Initializable {
+public class GlobalDomesticController implements Initializable {
 
     @FXML
     private TableView salesTableView;
@@ -119,7 +119,7 @@ public class GlobalInterlineController implements Initializable {
         createReportColumns();
         try (Connection connection = DatabaseConnector.connect()) {
 
-            ResultSet rs = ReportSQLHelper.getGlobalInterlineReport(Application.getActiveUser().getTravelAgentCode(),connection, startDate, endDate);
+            ResultSet rs = ReportSQLHelper.getGlobalDomesticReport(Application.getActiveUser().getTravelAgentCode(),connection, startDate, endDate);
 
             ArrayList<Report> data = new ArrayList<>();
             if (!(rs == null)) {
@@ -164,7 +164,7 @@ public class GlobalInterlineController implements Initializable {
     }
 
     public static void setStartDate(Date startDate) {
-        GlobalInterlineController.startDate = startDate;
+        GlobalDomesticController.startDate = startDate;
     }
 
     public static Date getEndDate() {
@@ -172,7 +172,7 @@ public class GlobalInterlineController implements Initializable {
     }
 
     public static void setEndDate(Date endDate) {
-        GlobalInterlineController.endDate = endDate;
+        GlobalDomesticController.endDate = endDate;
     }
 
     public static int getTravelAgentCode() {
@@ -180,6 +180,6 @@ public class GlobalInterlineController implements Initializable {
     }
 
     public static void setTravelAgentCode(int travelAgentCode) {
-        GlobalInterlineController.travelAgentCode = travelAgentCode;
+        GlobalDomesticController.travelAgentCode = travelAgentCode;
     }
 }

@@ -12,6 +12,8 @@ public class Application extends javafx.application.Application {
     private static Stage activeStage;
     private static StaffAccount activeUser;
 
+
+
     // =============================== Start Up ====================================== //
 
     /**

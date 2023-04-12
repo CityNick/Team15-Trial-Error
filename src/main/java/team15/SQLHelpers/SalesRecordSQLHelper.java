@@ -124,6 +124,43 @@ public class SalesRecordSQLHelper {
         }
     }
 
+    public static ResultSet getResultSet(long recordID, Date date, String firstName, String lastName, Connection connection) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement(
+                "SELECT * FROM SalesRecord WHERE RecordID = ?");
+        stmt.setLong(1, recordID);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if (!rs.next()){
+            stmt = connection.prepareStatement(
+                    "SELECT * FROM SalesRecord WHERE Date >= ? AND CustomerFirstName LIKE ? AND CustomerLastName LIKE ?");
+            stmt.setDate(1, date);
+            stmt.setString(2,"%"+firstName+"%");
+            stmt.setString(3,"%"+lastName+"%");
+
+
+            rs = stmt.executeQuery();
+            System.out.println("Query Done");
+            return rs;
+
+        }
+        else{
+            return rs;
+        }
+    }
+
+    public static void updateRecord(SalesRecord recordToChange, double newUSDRate) throws SQLException {
+        try (Connection connection = DatabaseConnector.connect()) {
+
+
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE SalesRecord SET USDConversionRate = ? WHERE RecordID = ?");
+            stmt.setDouble(1, newUSDRate);
+            stmt.setLong(2, recordToChange.getRecordID());
+            stmt.executeUpdate();
+
+        }
+    }
 }
 
 

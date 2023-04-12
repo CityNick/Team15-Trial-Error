@@ -7,20 +7,17 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import team15.Application;
 import team15.DatabaseConnector;
 import team15.PopupController;
-import team15.SQLHelpers.BlankSQLHelper;
-import team15.SQLHelpers.CustomerAccountSQLHelper;
+import team15.SQLHelpers.*;
 import team15.SQLToTable;
-import team15.models.CustomerAccount;
-import team15.models.StaffBlanks;
+import team15.models.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -46,16 +43,113 @@ public class ManagerController implements Initializable {
     @FXML
     DatePicker endDatePicker;
     @FXML
+    Label exchangeRateLabel;
+    @FXML
+    Label fixedDiscountLabel;
+    @FXML
+    TableView discountTableView;
+    @FXML
+    TextField discountField;
+    @FXML
+    TextField thresholdField;
+    @FXML
+    TextField fixedDiscountField;
+    @FXML
+    TextField exchangeRateField;
+
+
+
     private int selectedStaffID;
     private int selectedCustomerID;
     private StaffBlanks staffBlanks;
     private CustomerAccount customerAccount;
     private Boolean isValued = false;
+    private FlexibleDiscount flexibleDiscount;
 
     @FXML
     public void logoutPressed() throws IOException {
         Application.changeToScene("login.fxml");     // - returns to login page
         Application.setActiveUser(null);                  // - deletes current active user
+    }
+
+    // ============================== USD & DISCOUNT ===================================== //
+
+    // ----- Opened USD & Discounts ----- //
+    @FXML
+    public void openedUSDAndDiscount() throws SQLException {
+        TravelAgent travelAgent = TravelAgentSQLHelper.getTravelAgent(Application.getActiveUser().getTravelAgentCode());
+        double exchangeRate = travelAgent.getUSDConversionRate();
+        exchangeRate = Math.round(exchangeRate * 100.0) / 100.0;
+        exchangeRateLabel.setText("1 Unit = $ "+ String.valueOf(exchangeRate));
+
+        double fixedDiscount = FixedDiscountSQLHelper.getFixedDiscount();
+        fixedDiscount = Math.round(fixedDiscount * 100.0) / 100.0;
+        fixedDiscountLabel.setText("Fixed Discount: "+fixedDiscount+"%");
+
+        updateFlexibleDiscountTable();
+    }
+
+
+    // ----- Save Exchange Rate Pressed ----- //
+    @FXML
+    public void saveExchangeRatePressed() throws SQLException {
+        if (!exchangeRateField.getText().equals("")){
+            double conversionRate = Double.parseDouble(exchangeRateField.getText());
+            conversionRate = Math.round(conversionRate * 100.0) / 100.0;
+            TravelAgentSQLHelper.newExchangeRate(conversionRate);
+
+            TravelAgent travelAgent = TravelAgentSQLHelper.getTravelAgent(Application.getActiveUser().getTravelAgentCode());
+            double exchangeRate = travelAgent.getUSDConversionRate();
+            exchangeRate = Math.round(exchangeRate * 100.0) / 100.0;
+            exchangeRateLabel.setText("1 Unit = $ "+ String.valueOf(exchangeRate));
+            exchangeRateField.setText("");
+        }
+    }
+
+    // ----- Save Fixed ExchangeRate ------ //
+    @FXML
+    public void changeFixedDiscountPressed() throws SQLException {
+        if (!fixedDiscountField.getText().equals("")){
+            double fixedDiscount = Double.parseDouble(fixedDiscountField.getText());
+            fixedDiscount = Math.round(fixedDiscount * 100.0) / 100.0;
+            FixedDiscountSQLHelper.newFixedDiscount(fixedDiscount);
+
+            fixedDiscount = FixedDiscountSQLHelper.getFixedDiscount();
+            fixedDiscount = Math.round(fixedDiscount * 100.0) / 100.0;
+            fixedDiscountLabel.setText("Fixed Discount: "+fixedDiscount+"%");
+            fixedDiscountField.setText("");
+        }
+    }
+
+    // ----- Deleting A Flexible Discount ----- //
+    @FXML
+    public void deleteFlexibleDiscountPressed() throws SQLException{
+        if (flexibleDiscount != null){
+            FlexibleDiscountSQLHelper.removeFlexibleDiscount(flexibleDiscount);
+            thresholdField.setText("");
+            discountField.setText("");
+
+            updateFlexibleDiscountTable();
+        }
+    }
+
+    // ----- Adding A New Flexible Discount ----- //
+    @FXML
+    public void addNewFlexibleDiscountPressed() throws SQLException {
+
+        double threshold = Double.parseDouble(thresholdField.getText());
+        threshold = Math.round(threshold * 100.0) / 100.0;
+
+        double discount = Double.parseDouble(discountField.getText());
+        discount = Math.round(discount * 100.0) / 100.0;
+
+        if (!FlexibleDiscountSQLHelper.checkFlexibleDiscountExists(threshold, discount)){
+            FlexibleDiscountSQLHelper.addNewFlexibleDiscount(threshold, discount);
+            thresholdField.setText("");
+            discountField.setText("");
+
+            updateFlexibleDiscountTable();
+        }
     }
 
 
@@ -89,25 +183,41 @@ public class ManagerController implements Initializable {
                 if (rangeBox.getValue().equals("Global")){
                     GlobalInterlineController.setStartDate(Date.valueOf(startDatePicker.getValue()));
                     GlobalInterlineController.setEndDate(Date.valueOf(endDatePicker.getValue()));
+                    GlobalInterlineController.setTravelAgentCode(Application.getActiveUser().getTravelAgentCode());
                     PopupController.displayPopup("GlobalInterlineSales.fxml");
 
                 }
                 // ----- individual interline -----//
                 else{
+                    IndividualInterlineController.setStartDate(Date.valueOf(startDatePicker.getValue()));
+                    IndividualInterlineController.setEndDate(Date.valueOf(endDatePicker.getValue()));
+                    IndividualInterlineController.setTravelAgentCode(Application.getActiveUser().getTravelAgentCode());
                     PopupController.displayPopup("IndividualInterlineSales.fxml");
                 }
             }
-            // --------- INTERLINE SALES ---------- //
+            // --------- DOMESTIC SALES ---------- //
             else if (reportTypeBox.getValue().equals("Domestic Sales")){
 
-                // ----- global interline ----- //
+                // ----- global domestic ----- //
                 if (rangeBox.getValue().equals("Global")){
+                    GlobalDomesticController.setStartDate(Date.valueOf(startDatePicker.getValue()));
+                    GlobalDomesticController.setEndDate(Date.valueOf(endDatePicker.getValue()));
+                    GlobalDomesticController.setTravelAgentCode(Application.getActiveUser().getTravelAgentCode());
                     PopupController.displayPopup("GlobalDomesticSales.fxml");
                 }
-                // ----- individual interline -----//
+                // ----- individual domestic -----//
                 else{
-                    PopupController.displayPopup("IndividualIDomesticSales.fxml");
+                    IndividualDomesticController.setStartDate(Date.valueOf(startDatePicker.getValue()));
+                    IndividualDomesticController.setEndDate(Date.valueOf(endDatePicker.getValue()));
+                    IndividualDomesticController.setTravelAgentCode(Application.getActiveUser().getTravelAgentCode());
+                    PopupController.displayPopup("IndividualDomesticSales.fxml");
                 }
+            }
+            // -------- STOCK TURNOVER -------- //
+            else if (reportTypeBox.getValue().equals("Stock Turnover")) {
+                StockTurnoverController.setStartDate(Date.valueOf(startDatePicker.getValue()));
+                StockTurnoverController.setEndDate(Date.valueOf(endDatePicker.getValue()));
+                PopupController.displayPopup("TicketStockTurnover.fxml");
             }
         }
         else{
@@ -203,6 +313,7 @@ public class ManagerController implements Initializable {
         }
     }
 
+
     private void updateCustomerTable(){
         customerTableView.getItems().clear();
         try (Connection connection = DatabaseConnector.connect()) {
@@ -227,6 +338,41 @@ public class ManagerController implements Initializable {
         }
     }
 
+    private void updateFlexibleDiscountTable() throws SQLException {
+        discountTableView.getColumns().clear();
+        TableColumn column1 = new TableColumn<>();
+        TableColumn column2 = new TableColumn<>();
+
+        column1.setText("Threshold");
+        column1.setCellValueFactory(new PropertyValueFactory<FlexibleDiscount, String>("Threshold"));
+
+        column2.setText("Discount (%)");
+        column2.setCellValueFactory(new PropertyValueFactory<FlexibleDiscount, Timestamp>("Percentage"));
+
+        discountTableView.getColumns().addAll(column1, column2);
+
+        discountTableView.getItems().clear();
+        try (Connection connection = DatabaseConnector.connect()) {
+
+            ResultSet rs = FlexibleDiscountSQLHelper.getFlexibleDiscounts(connection);
+
+            ArrayList<FlexibleDiscount> data = new ArrayList<>();
+            if (!(rs == null)) {
+                while (rs.next()) {
+                    FlexibleDiscount flexibleDiscount = new FlexibleDiscount(rs);
+
+                    data.add(flexibleDiscount);
+                    // ---- turn list into observable list ----- //
+                    ObservableList dataList = FXCollections.observableArrayList(data);
+
+                    // ---- display table view ---- //
+                    discountTableView.setItems(dataList);
+                }
+
+            }
+        }
+    }
+
     private Boolean validDatesPicked(){
         if (startDatePicker.getValue() != null && endDatePicker.getValue() != null){
             int val = startDatePicker.getValue().compareTo(endDatePicker.getValue());
@@ -245,6 +391,13 @@ public class ManagerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        // ---- opens on USD Rate ------ //
+        try {
+            openedUSDAndDiscount();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         // ----- Ensures Users enter a valid input ----- //
         searchStaffBlanksField.textProperty().addListener(new ChangeListener<String>() {
@@ -304,6 +457,71 @@ public class ManagerController implements Initializable {
 
         rangeBox.getItems().addAll("Global", "Individual");
         discountTypeBox.getItems().addAll("Fixed", "Flex");
+
+        exchangeRateField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                    exchangeRateField.setText(oldValue);
+                }
+                if (newValue.length() > 15) {
+                    exchangeRateField.setText(oldValue);
+                }
+            }
+        });
+
+        thresholdField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                    thresholdField.setText(oldValue);
+                }
+                if (newValue.length() > 15) {
+                    thresholdField.setText(oldValue);
+                }
+            }
+        });
+
+        discountField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                    discountField.setText(oldValue);
+                }
+                if (newValue.length() > 15) {
+                    discountField.setText(oldValue);
+                }
+            }
+        });
+        fixedDiscountField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                    fixedDiscountField.setText(oldValue);
+                }
+                if (newValue.length() > 15) {
+                    fixedDiscountField.setText(oldValue);
+                }
+            }
+        });
+
+        discountTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+                //Check whether item is selected and set value of selected item to Label
+                if (discountTableView.getSelectionModel().getSelectedItem() != null) {
+                    flexibleDiscount = (FlexibleDiscount) discountTableView.getSelectionModel().getSelectedItem();
+                }
+                else{
+                    flexibleDiscount = null;
+                }
+            }
+        });
+
     }
 
 

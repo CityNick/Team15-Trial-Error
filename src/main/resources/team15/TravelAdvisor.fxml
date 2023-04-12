@@ -28,176 +28,6 @@
             </ImageView>
             <TabPane layoutX="75.0" layoutY="129.0" prefHeight="434.0" prefWidth="771.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab fx:id="usdRateButton" text="USD Rate">
-                  <content>
-                    <AnchorPane fx:id="saveFileName" minHeight="0.0" minWidth="0.0" prefHeight="406.0" prefWidth="678.0">
-                           <children>
-                              <Label alignment="CENTER" layoutX="74.0" layoutY="82.0" prefHeight="25.0" prefWidth="128.0" text="Search for record:" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="saveButton" layoutX="347.0" layoutY="301.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="63.0" text="Save">
-                                 <font>
-                                    <Font size="12.0" />
-                                 </font>
-                              </Button>
-                              <TextField alignment="CENTER" layoutX="161.0" layoutY="168.0" prefHeight="26.0" prefWidth="145.0" />
-                              <Label layoutX="79.0" layoutY="136.0" prefHeight="12.0" prefWidth="115.0" text="Record ID:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="352.0" layoutY="215.0" prefHeight="20.0" prefWidth="162.0" text="Current USD Rate:  $" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField alignment="CENTER" layoutX="161.0" layoutY="132.0" prefHeight="26.0" prefWidth="145.0" />
-                              <Label layoutX="79.0" layoutY="172.0" prefHeight="18.0" prefWidth="68.0" text="Date:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="79.0" layoutY="208.0" prefHeight="20.0" prefWidth="85.0" text="First Name:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="79.0" layoutY="244.0" prefHeight="20.0" prefWidth="84.0" text="Last Name:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField alignment="CENTER" layoutX="161.0" layoutY="205.0" prefHeight="26.0" prefWidth="145.0" />
-                              <TextField alignment="CENTER" layoutX="161.0" layoutY="241.0" prefHeight="26.0" prefWidth="145.0" />
-                              <Label layoutX="352.0" layoutY="245.0" prefHeight="18.0" prefWidth="118.0" text="New USD Rate:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="472.0" layoutY="245.0" prefHeight="18.0" prefWidth="118.0" text="\$" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField alignment="CENTER" layoutX="484.0" layoutY="241.0" prefHeight="26.0" prefWidth="89.0" />
-                              <TableView layoutX="333.0" layoutY="79.0" prefHeight="124.0" prefWidth="362.0">
-                                <columns>
-                                  <TableColumn prefWidth="71.99996948242188" text="C1" />
-                                  <TableColumn prefWidth="78.4000244140625" text="C2" />
-                                </columns>
-                              </TableView>
-                           </children></AnchorPane>
-                  </content>
-                </Tab>
-                  <Tab fx:id="viewCustomersButton1" text="Refunds">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <TableView fx:id="salesRecordTableView" layoutX="71.0" layoutY="141.0" prefHeight="194.0" prefWidth="613.0">
-                                 <columns>
-                                    <TableColumn prefWidth="75.0" text="C1" />
-                                    <TableColumn prefWidth="75.0" text="C2" />
-                                 </columns>
-                              </TableView>
-                              <Label alignment="CENTER" layoutX="289.0" layoutY="17.0" prefHeight="25.0" prefWidth="170.0" text="Refunds" textAlignment="JUSTIFY" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="71.0" layoutY="43.0" prefHeight="25.0" prefWidth="58.0" text="Search:" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker fx:id="refundDateField" layoutX="135.0" layoutY="74.0" prefHeight="26.0" prefWidth="145.0" promptText="yyyy-mm-dd" />
-                              <TextField fx:id="refundBlankIDField" layoutX="135.0" layoutY="107.0" onAction="#refundBlankIDEdited" prefHeight="26.0" prefWidth="145.0" promptText="Exact ID" />
-                              <TextField fx:id="refundFirstNameField" layoutX="387.0" layoutY="74.0" prefHeight="26.0" prefWidth="145.0" promptText="First Name" />
-                              <Label layoutX="309.0" layoutY="75.0" prefHeight="25.0" prefWidth="77.0" text="First name:" textAlignment="JUSTIFY" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="309.0" layoutY="107.0" prefHeight="25.0" prefWidth="77.0" text="Last Name" textAlignment="JUSTIFY" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="refundLastNameField" layoutX="387.0" layoutY="106.0" prefHeight="26.0" prefWidth="145.0" promptText="Last Name" />
-                              <Label layoutX="71.0" layoutY="78.0" text="Date:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="71.0" layoutY="107.0" prefHeight="25.0" prefWidth="54.0" text="Blank ID:" textAlignment="JUSTIFY" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Button layoutX="578.0" layoutY="91.0" mnemonicParsing="false" onAction="#searchSalesRecordPressed" prefHeight="23.0" prefWidth="63.0" text="Search">
-                                 <font>
-                                    <Font size="12.0" />
-                                 </font>
-                              </Button>
-                              <Button layoutX="292.0" layoutY="342.0" mnemonicParsing="false" onAction="#refundButtonPressed" prefHeight="26.0" prefWidth="165.0" text="Refund" />
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
-                  <Tab fx:id="assignBlanksButton" text="Create Customer">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="315.0" layoutY="35.0" prefHeight="25.0" prefWidth="127.0" text="Create Customer" textAlignment="JUSTIFY" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="258.0" layoutY="87.0" text="First name:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField alignment="CENTER" layoutX="345.0" layoutY="84.0" prefHeight="26.0" prefWidth="145.0" />
-                              <TextField alignment="CENTER" layoutX="345.0" layoutY="121.0" prefHeight="26.0" prefWidth="145.0" />
-                              <Label layoutX="258.0" layoutY="123.0" text="Surname:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField alignment="CENTER" layoutX="345.0" layoutY="179.0" prefHeight="26.0" prefWidth="145.0" />
-                              <TextField alignment="CENTER" layoutX="345.0" layoutY="216.0" prefHeight="26.0" prefWidth="145.0" />
-                              <TextField alignment="CENTER" layoutX="345.0" layoutY="254.0" prefHeight="26.0" prefWidth="145.0" />
-                              <Label layoutX="258.0" layoutY="182.0" text="Bank name:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="258.0" layoutY="219.0" text="Acc no.:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="259.0" layoutY="256.0" text="Sort code:" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="saveButton1" layoutX="347.0" layoutY="301.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="63.0" text="Save">
-                                 <font>
-                                    <Font size="12.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab fx:id="viewCustomersButton" disable="true">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
-                  </Tab>
                   <Tab fx:id="viewStaffButton" onSelectionChanged="#openSellBlanks" text="Sell Blanks">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="406.0" prefWidth="830.0">
@@ -260,8 +90,8 @@
                                  </font>
                               </Label>
                               <CheckBox fx:id="payLaterBox" layoutX="360.0" layoutY="212.0" mnemonicParsing="false" onAction="#payLaterPressed" />
-                              <CheckBox layoutX="473.0" layoutY="212.0" mnemonicParsing="false" />
-                              <TextField fx:id="priceField" layoutX="360.0" layoutY="278.0" onAction="#priceChanged" onKeyTyped="#priceChanged" prefHeight="26.0" prefWidth="122.0" />
+                              <CheckBox fx:id="discountBox" layoutX="473.0" layoutY="212.0" mnemonicParsing="false" onAction="#discountPressed" />
+                              <TextField fx:id="priceField" layoutX="360.0" layoutY="278.0" onKeyTyped="#priceChanged" prefHeight="26.0" prefWidth="122.0" />
                               <Label fx:id="customerStatus" layoutX="125.0" layoutY="252.0" prefHeight="25.0" prefWidth="88.0" text="N/A" textAlignment="JUSTIFY" textFill="WHITE">
                                  <font>
                                     <Font size="14.0" />
@@ -350,6 +180,187 @@
                               </Label>
                               <CheckBox fx:id="cashBox" layoutX="360.0" layoutY="338.0" mnemonicParsing="false" onAction="#cashPressed" />
                            </children></AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab fx:id="viewCustomersButton1" text="Refunds">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="salesRecordTableView" layoutX="71.0" layoutY="141.0" prefHeight="194.0" prefWidth="613.0">
+                                 <columns>
+                                    <TableColumn prefWidth="75.0" text="C1" />
+                                    <TableColumn prefWidth="75.0" text="C2" />
+                                 </columns>
+                              </TableView>
+                              <Label alignment="CENTER" layoutX="289.0" layoutY="17.0" prefHeight="25.0" prefWidth="170.0" text="Refunds" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="71.0" layoutY="43.0" prefHeight="25.0" prefWidth="58.0" text="Search:" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker fx:id="refundDateField" layoutX="135.0" layoutY="74.0" prefHeight="26.0" prefWidth="145.0" promptText="yyyy-mm-dd" />
+                              <TextField fx:id="refundBlankIDField" layoutX="135.0" layoutY="107.0" onAction="#refundBlankIDEdited" prefHeight="26.0" prefWidth="145.0" promptText="Exact ID" />
+                              <TextField fx:id="refundFirstNameField" layoutX="387.0" layoutY="74.0" prefHeight="26.0" prefWidth="145.0" promptText="First Name" />
+                              <Label layoutX="309.0" layoutY="75.0" prefHeight="25.0" prefWidth="77.0" text="First name:" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="309.0" layoutY="107.0" prefHeight="25.0" prefWidth="77.0" text="Last Name" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="refundLastNameField" layoutX="387.0" layoutY="106.0" prefHeight="26.0" prefWidth="145.0" promptText="Last Name" />
+                              <Label layoutX="71.0" layoutY="78.0" text="Date:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="71.0" layoutY="107.0" prefHeight="25.0" prefWidth="54.0" text="Blank ID:" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="578.0" layoutY="91.0" mnemonicParsing="false" onAction="#searchSalesRecordPressed" prefHeight="23.0" prefWidth="63.0" text="Search">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="292.0" layoutY="342.0" mnemonicParsing="false" onAction="#refundButtonPressed" prefHeight="26.0" prefWidth="165.0" text="Refund" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="assignBlanksButton" text="Create Customer">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="315.0" layoutY="35.0" prefHeight="25.0" prefWidth="127.0" text="Create Customer" textAlignment="JUSTIFY" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="258.0" layoutY="87.0" text="First name:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="createCustomerFirstNameField" layoutX="345.0" layoutY="84.0" prefHeight="26.0" prefWidth="145.0" promptText="First Name" />
+                              <TextField fx:id="createCustomerLastNameField" layoutX="345.0" layoutY="121.0" prefHeight="26.0" prefWidth="145.0" promptText="Last Name" />
+                              <Label layoutX="258.0" layoutY="123.0" text="Last Name:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="createBankNameField" layoutX="345.0" layoutY="213.0" prefHeight="26.0" prefWidth="145.0" promptText="Bank" />
+                              <TextField fx:id="createAccountNumField" layoutX="345.0" layoutY="250.0" prefHeight="26.0" prefWidth="145.0" promptText="XXXXXXXXXX" />
+                              <TextField fx:id="createSortcodeField" alignment="BOTTOM_LEFT" layoutX="345.0" layoutY="288.0" prefHeight="26.0" prefWidth="145.0" promptText="XXXXXX" />
+                              <Label layoutX="258.0" layoutY="216.0" text="Bank name:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="258.0" layoutY="253.0" text="Acc no.:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="259.0" layoutY="290.0" text="Sort code:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="saveButton1" layoutX="347.0" layoutY="335.0" mnemonicParsing="false" onAction="#createCustomerPressed" prefHeight="23.0" prefWidth="63.0" text="Create">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="258.0" layoutY="159.0" text="Birth Date:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker fx:id="createDOB" layoutX="346.0" layoutY="156.0" prefHeight="26.0" prefWidth="145.0" promptText="D.O.B" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                <Tab fx:id="usdRateButton" text="USD Rate">
+                  <content>
+                    <AnchorPane fx:id="saveFileName" minHeight="0.0" minWidth="0.0" prefHeight="406.0" prefWidth="678.0">
+                           <children>
+                              <Label alignment="CENTER" layoutX="74.0" layoutY="82.0" prefHeight="25.0" prefWidth="128.0" text="Search for record:" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="change" layoutX="631.0" layoutY="241.0" mnemonicParsing="false" onAction="#updateRecordPressed" prefHeight="23.0" prefWidth="63.0" text="update">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="79.0" layoutY="136.0" prefHeight="12.0" prefWidth="115.0" text="Record ID:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="currentUSDRateLabel" layoutX="352.0" layoutY="215.0" prefHeight="20.0" prefWidth="354.0" text="Current USD Rate:  $" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="recordIDField" alignment="CENTER" layoutX="161.0" layoutY="132.0" prefHeight="26.0" prefWidth="145.0" />
+                              <Label layoutX="79.0" layoutY="172.0" prefHeight="18.0" prefWidth="68.0" text="Date:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="79.0" layoutY="208.0" prefHeight="20.0" prefWidth="85.0" text="First Name:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="79.0" layoutY="244.0" prefHeight="20.0" prefWidth="84.0" text="Last Name:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="firstNameRecordField" alignment="CENTER" layoutX="161.0" layoutY="205.0" prefHeight="26.0" prefWidth="145.0" />
+                              <TextField fx:id="lastNameRecordField" alignment="CENTER" layoutX="161.0" layoutY="241.0" prefHeight="26.0" prefWidth="145.0" />
+                              <Label layoutX="352.0" layoutY="245.0" prefHeight="18.0" prefWidth="118.0" text="New USD Rate:" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="472.0" layoutY="245.0" prefHeight="18.0" prefWidth="118.0" text="\$" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="newUSDRateTextField" layoutX="484.0" layoutY="241.0" prefHeight="26.0" prefWidth="89.0" />
+                              <TableView fx:id="recordTableView" layoutX="333.0" layoutY="79.0" prefHeight="124.0" prefWidth="362.0">
+                                <columns>
+                                  <TableColumn prefWidth="71.99996948242188" text="C1" />
+                                  <TableColumn prefWidth="78.4000244140625" text="C2" />
+                                </columns>
+                              </TableView>
+                              <DatePicker fx:id="recordDate" layoutX="161.0" layoutY="169.0" prefHeight="26.0" prefWidth="145.0" />
+                              <Button fx:id="saveButton2" layoutX="200.0" layoutY="301.0" mnemonicParsing="false" onAction="#searchRecordButtonPressed" prefHeight="23.0" prefWidth="63.0" text="search">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Button>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab fx:id="viewCustomersButton" disable="true">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                   </Tab>
               </tabs>

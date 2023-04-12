@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team15.controllers.StockTurnoverController">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="950.0">
          <children>
@@ -18,16 +18,16 @@
                   <Image url="@../Images/PopupBG2.png" />
                </image>
             </ImageView>
-            <Label layoutX="218.0" layoutY="153.0" text="[dates go here]" textFill="WHITE">
+            <Label fx:id="periodLabel" layoutX="218.0" layoutY="153.0" prefHeight="20.0" prefWidth="287.0" text="[dates go here]" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font></Label>
-            <Label layoutX="516.0" layoutY="152.0" text="XXX" textFill="WHITE">
+            <Label fx:id="travelAgentLabel" layoutX="811.0" layoutY="152.0" text="XXX" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="387.0" layoutY="152.0" text="Travel Agent Code:" textFill="#c0e8ff">
+            <Label layoutX="682.0" layoutY="152.0" text="Travel Agent Code:" textFill="#c0e8ff">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -37,79 +37,68 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="685.0" layoutY="152.0" text="XXXXXXXXXXXXXXXXXXX" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="621.0" layoutY="152.0" text="Address:" textFill="#c0e8ff">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
             <Label layoutX="387.0" layoutY="114.0" text="Stock Turnover Report" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <TableView layoutX="98.0" layoutY="239.0" prefHeight="287.0" prefWidth="107.0">
+            <TableView fx:id="agentStockTableView" layoutX="78.0" layoutY="216.0" prefHeight="287.0" prefWidth="97.0">
               <columns>
                 <TableColumn prefWidth="48.0" text="Type" />
                   <TableColumn prefWidth="58.19999694824219" text="Count" />
               </columns>
             </TableView>
-            <TableView layoutX="209.0" layoutY="239.0" prefHeight="287.0" prefWidth="118.0">
+            <TableView fx:id="subAgentTableView" layoutX="178.0" layoutY="216.0" prefHeight="287.0" prefWidth="157.0">
                <columns>
                   <TableColumn prefWidth="50.40003967285156" text="StaffID" />
+                  <TableColumn prefWidth="55.0" text="Type" />
+                  <TableColumn prefWidth="55.0" text="Count" />
+               </columns>
+            </TableView>
+            <TableView fx:id="assignTableView" layoutX="339.0" layoutY="216.0" prefHeight="287.0" prefWidth="178.0">
+               <columns>
+                  <TableColumn prefWidth="50.40003967285156" text="StaffID" />
+                  <TableColumn prefWidth="65.5999755859375" text="Type" />
                   <TableColumn prefWidth="65.5999755859375" text="Count" />
                </columns>
             </TableView>
-            <TableView layoutX="339.0" layoutY="239.0" prefHeight="287.0" prefWidth="118.0">
+            <Label layoutX="91.0" layoutY="191.0" text="Agent Stock" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="201.0" layoutY="191.0" text="Sub-Agent (New)" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="380.0" layoutY="191.0" text="Assigned (Old)" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <TableView fx:id="usedTableView" layoutX="521.0" layoutY="216.0" prefHeight="287.0" prefWidth="168.0">
                <columns>
                   <TableColumn prefWidth="50.40003967285156" text="StaffID" />
-                  <TableColumn prefWidth="65.5999755859375" text="Count" />
-               </columns>
-            </TableView>
-            <Label layoutX="113.0" layoutY="214.0" text="Agent Stock" textFill="WHITE">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="231.0" layoutY="214.0" text="Sub-Agent" textFill="WHITE">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="368.0" layoutY="214.0" text="Assigned" textFill="WHITE">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <TableView layoutX="461.0" layoutY="239.0" prefHeight="287.0" prefWidth="118.0">
-               <columns>
                   <TableColumn prefWidth="50.40003967285156" text="Type" />
                   <TableColumn prefWidth="65.5999755859375" text="Count" />
                </columns>
             </TableView>
-            <Label layoutX="500.0" layoutY="214.0" text="Used" textFill="WHITE">
+            <Label layoutX="561.0" layoutY="191.0" text="Totals Used" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <TableView layoutX="591.0" layoutY="239.0" prefHeight="287.0" prefWidth="263.0">
+            <TableView fx:id="remainingTableView" layoutX="694.0" layoutY="216.0" prefHeight="287.0" prefWidth="178.0">
                <columns>
+                  <TableColumn prefWidth="50.40003967285156" text="StaffID" />
                   <TableColumn prefWidth="50.40003967285156" text="Type" />
                   <TableColumn prefWidth="74.0" text="Count" />
                </columns>
             </TableView>
-            <Label layoutX="670.0" layoutY="214.0" text="Agent's Amount" textFill="WHITE">
+            <Label layoutX="723.0" layoutY="191.0" text="Stock Remaining" textFill="WHITE">
                <font>
                   <Font size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="685.0" layoutY="169.0" text="addresses prob have 2 lines" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
                </font>
             </Label>
          </children>

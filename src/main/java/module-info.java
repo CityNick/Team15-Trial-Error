@@ -14,6 +14,6 @@ module teamproject.teamprojectproduct {
     exports team15.SQLHelpers;
     opens team15.SQLHelpers to javafx.fxml;
 
-    opens team15.models to javafx.base;
     exports team15.models;
+    opens team15.models to javafx.base, javafx.fxml;
 }

@@ -4,23 +4,27 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import team15.Application;
 import team15.DatabaseConnector;
-import team15.models.Report;
 import team15.SQLHelpers.ReportSQLHelper;
-
+import team15.SQLHelpers.StaffAccountSQLHelper;
+import team15.models.Report;
+import team15.models.StaffAccount;
 
 import java.net.URL;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class GlobalInterlineController implements Initializable {
-
+public class IndividualDomesticController implements Initializable {
     @FXML
     private TableView salesTableView;
     @FXML
@@ -41,6 +45,8 @@ public class GlobalInterlineController implements Initializable {
     private Label totalCommissionLabel;
     @FXML
     private TableColumn staffIDColumn;
+    @FXML
+    private ComboBox staffBox;
 
 
 
@@ -57,10 +63,16 @@ public class GlobalInterlineController implements Initializable {
 
     private static int numPaymentsPending=0;
     private static double pendingValue=0;
-
     private static double totalCommission=0;
 
+    private static int staffID = -1;
 
+    @FXML
+    public void staffIDSelected() throws SQLException {
+        resetValues();
+        staffID = (int) staffBox.getValue();
+        fillInTable();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -70,7 +82,14 @@ public class GlobalInterlineController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        try {
+            addStaffIDs();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     private void createReportColumns(){
         TableColumn column1 = new TableColumn<>();
@@ -114,12 +133,14 @@ public class GlobalInterlineController implements Initializable {
         salesTableView.getColumns().addAll(column1,column2,column3, column4,column5,column6,column7,column8,column9);
     }
 
+
     private void fillInTable() throws SQLException {
+        salesTableView.getItems().clear();
         salesTableView.getColumns().clear();
         createReportColumns();
         try (Connection connection = DatabaseConnector.connect()) {
 
-            ResultSet rs = ReportSQLHelper.getGlobalInterlineReport(Application.getActiveUser().getTravelAgentCode(),connection, startDate, endDate);
+            ResultSet rs = ReportSQLHelper.getIndividualDomesticReport(connection, startDate, endDate, staffID);
 
             ArrayList<Report> data = new ArrayList<>();
             if (!(rs == null)) {
@@ -164,7 +185,7 @@ public class GlobalInterlineController implements Initializable {
     }
 
     public static void setStartDate(Date startDate) {
-        GlobalInterlineController.startDate = startDate;
+        IndividualDomesticController.startDate = startDate;
     }
 
     public static Date getEndDate() {
@@ -172,7 +193,7 @@ public class GlobalInterlineController implements Initializable {
     }
 
     public static void setEndDate(Date endDate) {
-        GlobalInterlineController.endDate = endDate;
+        IndividualDomesticController.endDate = endDate;
     }
 
     public static int getTravelAgentCode() {
@@ -180,6 +201,38 @@ public class GlobalInterlineController implements Initializable {
     }
 
     public static void setTravelAgentCode(int travelAgentCode) {
-        GlobalInterlineController.travelAgentCode = travelAgentCode;
+        IndividualDomesticController.travelAgentCode = travelAgentCode;
+    }
+
+    public static int getStaffID() {
+        return staffID;
+    }
+
+    public static void setStaffID(int staffID) {
+        IndividualDomesticController.staffID = staffID;
+    }
+
+    private void addStaffIDs() throws SQLException {
+        try (Connection connection = DatabaseConnector.connect()) {
+
+            ResultSet rs = StaffAccountSQLHelper.getStaffIDs(connection, Application.getActiveUser().getTravelAgentCode());
+
+            if (!(rs == null)) {
+                while (rs.next()) {
+                    StaffAccount staff = new StaffAccount(rs);
+                    staffBox.getItems().add(staff.getStaffID());
+                }
+
+            }
+        }
+    }
+
+    private void resetValues(){
+        blanksSold = 0;
+        numPaymentsMade = 0;
+        paymentsValue = 0;
+        numPaymentsPending = 0;
+        pendingValue = 0;
+        totalCommission = 0;
     }
 }

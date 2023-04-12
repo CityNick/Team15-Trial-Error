@@ -87,6 +87,34 @@ public class TravelAdvisorController implements Initializable {
     TextField refundLastNameField;
     @FXML
     TableView salesRecordTableView;
+    @FXML
+    CheckBox discountBox;
+    @FXML
+    TextField recordIDField;
+    @FXML
+    DatePicker recordDate;
+    @FXML
+    TextField firstNameRecordField;
+    @FXML
+    TextField lastNameRecordField;
+    @FXML
+    TableView recordTableView;
+    @FXML
+    Label currentUSDRateLabel;
+    @FXML
+    TextField newUSDRateTextField;
+    @FXML
+    TextField createCustomerFirstNameField;
+    @FXML
+    TextField createCustomerLastNameField;
+    @FXML
+    TextField createBankNameField;
+    @FXML
+    TextField createAccountNumField;
+    @FXML
+    TextField createSortcodeField;
+    @FXML
+    DatePicker createDOB;
 
     private long refundBlankID = 0;
 
@@ -95,15 +123,19 @@ public class TravelAdvisorController implements Initializable {
 
     private Boolean cashPayment = false;
     private boolean payLater = false;
+    private boolean discount = false;
     private String paymentType = "Debit/Credit";
     private BankCardDetails paymentInfo;
 
     private Boolean customerFound;
     private CustomerAccount currentCustomer;
     private int currentBlank = 0;
+    private double basePrice = 0;
+    private double finalPrice = 0;
+
+    private SalesRecord recordToChange;
 
     private ArrayList<Integer> flightIDs = new ArrayList<Integer>();
-    private final double discount = 0;
 
 
     // ========================================= REFUNDS ============================================== //
@@ -146,7 +178,7 @@ public class TravelAdvisorController implements Initializable {
 
     // ----- Searching For The Customer ----- //
     @FXML
-    public void searchButtonPressed() {
+    public void searchButtonPressed() throws SQLException {
         if (CustomerAccountSQLHelper.checkCustomer(FirstNameField.getText(), LastNameField.getText(), DobField.getValue())) {
             System.out.println("Found");
 
@@ -164,7 +196,14 @@ public class TravelAdvisorController implements Initializable {
 
         } else {
             System.out.println("NOT Found");
-            customerFound = false;
+            discount = false;
+            discountBox.setSelected(false);
+            priceChanged();
+            customerIDLabel.setText("N/A");
+            customerStatus.setText("N/A");
+            bankNameField.setText("");
+            accountNumberField.setText("");
+            sortCodeField.setText("");
         }
     }
 
@@ -300,14 +339,44 @@ public class TravelAdvisorController implements Initializable {
 
     // ---- Price Set ----- //
     @FXML
-    public void priceChanged() {
-        finalPriceLabel.setText(String.valueOf(Double.parseDouble(priceField.getText()) - discount));
+    public void priceChanged() throws SQLException {
+        if (priceField.getText().equals("")){
+            basePrice = 0;
+        }
+        else{
+            basePrice = Double.parseDouble(priceField.getText());
+        }
+        if (discount){
+            finalPrice = basePrice - calculateDiscount(basePrice);
+        }
+        else{
+            finalPrice = basePrice;
+        }
+        finalPriceLabel.setText(String.valueOf(finalPrice));
+    }
+
+    // ---- Discount ----- //
+    @FXML
+    public void discountPressed() throws SQLException {
+        if(customerFound){
+            if (discount) {
+                discount = false;
+
+            } else {
+                discount = true;
+            }
+            priceChanged();
+        }
+        else{
+            discountBox.setSelected(false);
+            discount = false;
+        }
     }
 
 
     // ---------- PRESSED SELL BLANKS ---------- //
     @FXML
-    public void sellBlankPressed() {
+    public void sellBlankPressed() throws SQLException {
         // ----- Check if conditions met ----- //
         if (checkForEmptySellBlankFields() && checkPaymentInfo() && checkValidFlightPicked()) {
 
@@ -321,8 +390,9 @@ public class TravelAdvisorController implements Initializable {
                 customerID = currentCustomer.getCustomerID();
             }
             int staffID = Application.getActiveUser().getStaffID();
-            double localPrice = Double.parseDouble(finalPriceLabel.getText());
-            double discount = this.discount;
+            double localPrice = finalPrice;
+            double discount = calculateDiscount(basePrice);
+            discount = Math.round(discount * 100.0) / 100.0;
             double conversionRate = TravelAgentSQLHelper.getTravelAgent(Application.getActiveUser().getTravelAgentCode()).getUSDConversionRate();
             conversionRate = Math.round(conversionRate * 100.0) / 100.0;
             double usdPrice = localPrice * conversionRate;
@@ -343,12 +413,69 @@ public class TravelAdvisorController implements Initializable {
 
             // --------------- ADD SALES RECORD TO DATABASE ------------- //
             SalesRecordSQLHelper.createNewRecord(blankID, customerID, staffID, localPrice,
-                    discount, conversionRate, usdPrice, commission,
+                    discount, usdPrice, conversionRate, commission,
                     taxRate, paymentType, bank, accountNumber, sortcode,
                     customerFirstName, customerLastName);
+
+            // ------------- ADD FLIGHTS TO FLIGHT RECORD ---------- //
+            BlankFlightCouponSQLHelper.addFlights(blankID, flightIDs);
+
+
+
+            FirstNameField.setText("");
+            LastNameField.setText("");
+
+            payLater = false;
+            payLaterBox.setSelected(false);
+            this.discount = false;
+            discountBox.setSelected(false);
+
+            cashPayment = false;
+            cashBox.setSelected(false);
+
+            flightIDs = new ArrayList<Integer>();
+
+            paymentType = "Credit/Debit";
+            clearCustomerInfo();
+
+            priceField.setText("");
+            priceChanged();
         }
     }
 
+    // ========================== Change Record's USD Rate ===================== //
+    @FXML
+    public void searchRecordButtonPressed() throws SQLException {
+        updateRecordTable();
+    }
+
+    @FXML
+    public void updateRecordPressed() throws SQLException {
+        if (recordToChange != null && !newUSDRateTextField.getText().equals("")){
+            double newUSDRate = Double.parseDouble(newUSDRateTextField.getText());
+            SalesRecordSQLHelper.updateRecord(recordToChange, newUSDRate);
+            updateRecordTable();
+        }
+    }
+
+
+    // ========================== Create Customer =========================== //
+    @FXML
+    public void createCustomerPressed() throws SQLException {
+        if (!createCustomerFirstNameField.getText().equals("") && !createCustomerLastNameField.getText().equals("") &&
+                createDOB.getValue() != null && !createBankNameField.getText().equals("") &&
+                !createSortcodeField.getText().equals("") && !createAccountNumField.getText().equals("")){
+
+            String firstName = createCustomerFirstNameField.getText();
+            String lastName = createCustomerLastNameField.getText();
+            Date dob = Date.valueOf(createDOB.getValue());
+            String bank = createBankNameField.getText();
+            int accountNumber = Integer.parseInt(createAccountNumField.getText());
+            int sortcode = Integer.parseInt(createSortcodeField.getText());
+
+            CustomerAccountSQLHelper.createNewCustomer(firstName, lastName,dob, bank, accountNumber, sortcode);
+        }
+    }
 
     // ============================= LOGOUT ============================== //
     @FXML
@@ -359,6 +486,8 @@ public class TravelAdvisorController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        recordTableColumns();
 
         // ----- Column Set Up ----- //
         startingAirportColumn.setCellValueFactory(new PropertyValueFactory<FlightPath444, String>("StartingAirport"));
@@ -418,6 +547,19 @@ public class TravelAdvisorController implements Initializable {
             }
         });
 
+        newUSDRateTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                    newUSDRateTextField.setText(oldValue);
+                }
+                if (newValue.length() > 15) {
+                    newUSDRateTextField.setText(oldValue);
+                }
+            }
+        });
+
         accountNumberField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue,
@@ -471,6 +613,31 @@ public class TravelAdvisorController implements Initializable {
                 System.out.println(selectedSalesRecordID);
             }
         });
+
+        recordTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+                //Check whether item is selected and set value of selected item to Label
+                flightIDs = new ArrayList<Integer>();
+                if (recordTableView.getSelectionModel().getSelectedItem() != null) {
+                        recordToChange = (SalesRecord) recordTableView.getSelectionModel().getSelectedItem();
+                        Double currentUSD = recordToChange.getUSDConversionRate();
+                        currentUSD = Math.round(currentUSD * 100.0) / 100.0;
+                        currentUSDRateLabel.setText("Current USD Rate:  $" + currentUSD);
+                }
+                else{
+                    recordToChange = null;
+                    currentUSDRateLabel.setText("Current USD Rate:  $");
+                }
+            }
+        });
+    }
+
+    private Double calculateDiscount(double basePrice) throws SQLException {
+        double discount = FlexibleDiscountSQLHelper.calculateDiscount(currentCustomer.getExpenditure(), basePrice);
+        discount = Math.round(discount * 100.0) / 100.0;
+        discountLabel.setText(String.valueOf(discount));
+        return discount;
     }
 
     private void reassignColumns() {
@@ -558,6 +725,18 @@ public class TravelAdvisorController implements Initializable {
         }
     }
 
+    private void clearCustomerInfo(){
+        customerIDLabel.setText("");
+        customerStatus.setText("");
+        bankNameField.setText("");
+        accountNumberField.setText("");
+        sortCodeField.setText("");
+        FirstNameField.setText("");
+        LastNameField.setText("");
+        customerFound = false;
+        currentCustomer = null;
+    }
+
     private boolean checkForEmptySellBlankFields() {
         if (FirstNameField.getText() != "" && LastNameField.getText() != "" &&
                 checkPaymentInfo() && currentBlank != 0 && priceField.getText() != "") {
@@ -631,6 +810,69 @@ public class TravelAdvisorController implements Initializable {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    private void updateRecordTable() throws SQLException {
+        long recordID;
+        if (recordIDField.equals("")){
+            recordID = Long.parseLong(recordIDField.getText());
+        }
+        else{
+            recordID = -1;
+        }
+        String firstName = firstNameRecordField.getText();
+        String lastName = lastNameRecordField.getText();
+
+        if (recordDate.getValue() != null) {
+            Date date = Date.valueOf(recordDate.getValue());
+            try (Connection connection = DatabaseConnector.connect()) {
+                recordTableView.getItems().clear();
+
+                ResultSet rs = SalesRecordSQLHelper.getResultSet(recordID, date, firstName, lastName, connection);
+                // ----- convert rs to list ----- //
+                ArrayList<SalesRecord> data = new ArrayList<>();
+                if (!(rs == null)) {
+                    while (rs.next()) {
+                        data.add(new SalesRecord(rs));
+                        // ---- turn list into observable list ----- //
+                        ObservableList dataList = FXCollections.observableArrayList(data);
+
+                        // ---- display table view ---- //
+                        recordTableColumns();
+                        recordTableView.setItems(dataList);
+                    }
+                }
+            }
+        }
+        else{
+            System.out.println("You need a date");
+        }
+    }
+
+    private void recordTableColumns(){
+        recordTableView.getColumns().clear();
+        TableColumn column1 = new TableColumn<>();
+        TableColumn column2 = new TableColumn<>();
+        TableColumn column3 = new TableColumn<>();
+        TableColumn column4 = new TableColumn<>();
+        TableColumn column5 = new TableColumn<>();
+
+        column1.setText("RecordID");
+        column1.setCellValueFactory(new PropertyValueFactory<SalesRecord, Long>("RecordID"));
+
+        column2.setText("USD Rate");
+        column2.setCellValueFactory(new PropertyValueFactory<SalesRecord, Double>("USDConversionRate"));
+
+        column3.setText("First Name");
+        column3.setCellValueFactory(new PropertyValueFactory<SalesRecord, String>("CustomerFirstName"));
+
+        column4.setText("Last Name");
+        column4.setCellValueFactory(new PropertyValueFactory<SalesRecord, String>("CustomerLastName"));
+
+        column5.setText("Date");
+        column5.setCellValueFactory(new PropertyValueFactory<SalesRecord, Date>("Date"));
+
+        recordTableView.getColumns().addAll(column1, column2, column3, column4, column5);
     }
 
 }
