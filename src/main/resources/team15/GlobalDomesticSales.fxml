@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team15.controllers.GlobalDomesticController">
+   <children>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="950.0">
+         <children>
+            <ImageView fitHeight="658.0" fitWidth="957.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../Images/PopupBG2.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="reportPeriodLabel" layoutX="217.0" layoutY="142.0" prefHeight="20.0" prefWidth="310.0" text="[dates go here]" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label fx:id="travelAgentLabel" layoutX="797.0" layoutY="142.0" text="XXX" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="703.0" layoutY="142.0" text="Travel Agent:" textFill="#c0e8ff">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="113.0" layoutY="142.0" text="Report Period:" textFill="#c0e8ff">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TableView fx:id="salesTableView" layoutX="87.0" layoutY="184.0" prefHeight="296.0" prefWidth="774.0">
+              <columns>
+                  <TableColumn fx:id="staffIDColumn" prefWidth="50.399993896484375" text="StaffID" />
+                <TableColumn prefWidth="119.19996643066406" text="BlankID" />
+                  <TableColumn prefWidth="87.99993896484375" text="Local Price" />
+                <TableColumn prefWidth="104.800048828125" text="USD Price" />
+                  <TableColumn prefWidth="92.79998779296875" text="Discount ($)" />
+                  <TableColumn prefWidth="61.5999755859375" text="Taxes ($)" />
+                  <TableColumn prefWidth="89.5999755859375" text="Payment Type" />
+                  <TableColumn prefWidth="96.00006103515625" text="Commission ($)" />
+                  <TableColumn prefWidth="69.20001220703125" text="Date" />
+              </columns>
+            </TableView>
+            <Label layoutX="107.0" layoutY="492.0" text="No. Blanks Sold:" textFill="#c0e8ff">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="255.0" layoutY="492.0" text="No. Payments Made:" textFill="#c0e8ff">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="286.0" layoutY="517.0" text="Payment Value:" textFill="#c0e8ff">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="494.0" layoutY="492.0" text="No. Pending Payments:" textFill="#c0e8ff">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="542.0" layoutY="517.0" text="Pending Value:" textFill="#c0e8ff">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="732.0" layoutY="494.0" text="Total Commission:" textFill="#c0e8ff">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="blanksSoldLabel" alignment="CENTER" layoutX="107.0" layoutY="509.0" prefHeight="34.0" prefWidth="96.0" text="XXXXX" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="numPaymentsMadeLabel" layoutX="397.0" layoutY="486.0" prefHeight="34.0" prefWidth="54.0" text="XXXXX" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="paymentsValueLabel" layoutX="396.0" layoutY="510.0" prefHeight="34.0" prefWidth="54.0" text="XXXXX" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="numPaymentsPendingLabel" layoutX="653.0" layoutY="486.0" prefHeight="34.0" prefWidth="54.0" text="XXXXX" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="pendingValueLabel" layoutX="652.0" layoutY="510.0" prefHeight="34.0" prefWidth="54.0" text="XXXXX" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="totalCommissionLabel" alignment="CENTER" layoutX="739.0" layoutY="509.0" prefHeight="34.0" prefWidth="96.0" text="XXXXX" textAlignment="CENTER" textFill="WHITE" />
+            <Label layoutX="379.0" layoutY="113.0" text="Global Domestic Sales Report" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</VBox>
