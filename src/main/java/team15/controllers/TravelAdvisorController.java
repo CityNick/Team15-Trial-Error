@@ -249,7 +249,7 @@ public class TravelAdvisorController implements Initializable {
                             flightsTableView.setItems(dataList);
                         }
                     }
-                } else if (currentBlank == 440) {
+                } else if (currentBlank == 420) {
                     ArrayList<FlightPath440> data = new ArrayList<>();
                     if (rs != null) {
                         while (rs.next()) {

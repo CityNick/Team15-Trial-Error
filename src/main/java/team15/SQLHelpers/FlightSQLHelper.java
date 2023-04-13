@@ -31,7 +31,7 @@ public class FlightSQLHelper {
             stmt.setString(2, "%" + startingAirport + "%");
             stmt.setString(3, "%" + destinationAirport + "%");
             user = stmt.executeQuery();
-        } else if (blankType == 440) {
+        } else if (blankType == 420) {
             PreparedStatement stmt = connection.prepareStatement("SELECT DISTINCTROW\n" +
                     "    f1.StartingAirport AS 'Starting',\n" +
                     "    f1.DepartureTime AS 'Departure',\n" +
@@ -43,8 +43,7 @@ public class FlightSQLHelper {
                     "    Flight f1\n" +
                     "INNER JOIN Flight f2 WHERE\n" +
                     "    (\n" +
-
-                    "        f1.DestinationAirport = f2.StartingAirport AND f1.ArrivalTime < DATE_ADD(f2.DepartureTime, INTERVAL 2 HOUR)\n" +
+                    "        f1.DestinationAirport = f2.StartingAirport AND f1.ArrivalTime < DATE_ADD(f2.DepartureTime, INTERVAL 2 HOUR))\n" +
                     "    AND f1.DepartureTime > ? AND f1.StartingAirport LIKE ? AND f2.DestinationAirport LIKE ? AND f2.FlightType = 'International' ORDER BY f2.ArrivalTime ASC");
             stmt.setTimestamp(1, Timestamp.valueOf(departureDate.atStartOfDay()));
             stmt.setString(2, "%" + startingAirport + "%");
@@ -61,7 +60,7 @@ public class FlightSQLHelper {
                     "FROM\n" +
                     "    Flight f1\n" +
                     "INNER JOIN Flight f2 WHERE\n" +
-                    "        f1.DestinationAirport = f2.StartingAirport AND f1.ArrivalTime < DATE_ADD(f2.DepartureTime, INTERVAL 2 HOUR)\n" +
+                    "        (f1.DestinationAirport = f2.StartingAirport AND f1.ArrivalTime < DATE_ADD(f2.DepartureTime, INTERVAL 2 HOUR))\n" +
                     "    AND f1.DepartureTime > ? AND f1.StartingAirport LIKE ? AND f2.DestinationAirport LIKE ? AND f2.FlightType = 'Domestic' ORDER BY f2.ArrivalTime ASC");
             stmt.setTimestamp(1, Timestamp.valueOf(departureDate.atStartOfDay()));
             stmt.setString(2, "%" + startingAirport + "%");
