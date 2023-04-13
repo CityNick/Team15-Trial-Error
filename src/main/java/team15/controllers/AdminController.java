@@ -93,7 +93,9 @@ public class AdminController implements Initializable {
         fileChooser.setTitle("Select or enter a file");                                                                 // - FileChooser Title
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SQL", "*.sql"));      // - filters for .sql files
         backupFile = fileChooser.showSaveDialog(((Button) e.getSource()).getScene().getWindow());                       // - assigns the file to backup
-        selectFile.setText(backupFile.getName());                                                                       // - updates GUI to show file name
+        if (backupFile != null){
+            selectFile.setText(backupFile.getName());                                                                   // - updates GUI to show file name
+        }
     }
 
     /**
@@ -155,7 +157,9 @@ public class AdminController implements Initializable {
         fileChooser.setTitle("Select or enter a file");                                                                 // - FileChooser Title
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SQL", "*.sql"));      // - filters for .sql files
         restoreFile = fileChooser.showOpenDialog(((Button) e.getSource()).getScene().getWindow());                      // - assigns file to restore
-        restoreFileButton.setText(restoreFile.getName());                                                               // - Update GUI to show file name
+        if (restoreFile != null){
+            restoreFileButton.setText(restoreFile.getName());                                                           // - Update GUI to show file name
+        }
     }
 
     /**
