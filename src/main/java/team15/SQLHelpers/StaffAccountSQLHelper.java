@@ -187,7 +187,7 @@ public class StaffAccountSQLHelper {
     public static ResultSet getStaffIDs(Connection connection, int travelAgentCode) throws SQLException {
         ResultSet rs;
         PreparedStatement stmt = connection.prepareStatement(
-                "SELECT * FROM StaffAccount WHERE TravelAgentCode = ? ORDER BY StaffID ASC");
+                "SELECT * FROM StaffAccount WHERE TravelAgentCode = ?  AND Role = 'Travel Advisor' ORDER BY StaffID ASC");
         stmt.setInt(1, travelAgentCode);
         rs = stmt.executeQuery();
         return rs;
