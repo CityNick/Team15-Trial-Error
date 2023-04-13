@@ -26,32 +26,34 @@ public class LoginController implements Initializable {
     @FXML
     public void on_login_pressed() throws IOException {
 
-        // ---------- Login Successful ---------- //
-        if (StaffAccountSQLHelper.checkAccountLogin(Long.parseLong(staffIDField.getText()), passwordField.getText())) {
+        if (!staffIDField.getText().equals("")) {
+            // ---------- Login Successful ---------- //
+            if (StaffAccountSQLHelper.checkAccountLogin(Long.parseLong(staffIDField.getText()), passwordField.getText())) {
 
-            // ---- Check User's Role ---- //
-            switch (Application.getActiveUser().getRole()) {
-                // - Administrator - //
-                case "Administrator":
-                    Application.changeToScene("Admin.fxml");
-                    break;
+                // ---- Check User's Role ---- //
+                switch (Application.getActiveUser().getRole()) {
+                    // - Administrator - //
+                    case "Administrator":
+                        Application.changeToScene("Admin.fxml");
+                        break;
 
-                // - Travel Advisor - //
-                case "Travel Advisor":
-                    Application.changeToScene("TravelAdvisor.fxml");
-                    break;
+                    // - Travel Advisor - //
+                    case "Travel Advisor":
+                        Application.changeToScene("TravelAdvisor.fxml");
+                        break;
 
-                // - Office Manager - //
-                case "Manager":
-                    Application.changeToScene("OfficeManager.fxml");
-                    break;
+                    // - Office Manager - //
+                    case "Manager":
+                        Application.changeToScene("OfficeManager.fxml");
+                        break;
 
+                }
             }
-        }
 
-        // ---------- Login Unsuccessful ---------- //
-        else {
-            errorField.setText("Error: Could Not Connect");
+            // ---------- Login Unsuccessful ---------- //
+            else {
+                errorField.setText("Error: Could Not Connect");
+            }
         }
     }
 

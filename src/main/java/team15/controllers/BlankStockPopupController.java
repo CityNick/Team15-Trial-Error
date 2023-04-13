@@ -374,7 +374,7 @@ public class BlankStockPopupController implements Initializable {
             public void changed(ObservableValue<? extends String> observable, String oldValue,
                                 String newValue) {
                 if (!newValue.matches("\\d*")) {
-                    travelAgentCodeDisplay.setText(newValue.replaceAll("[^\\d]", ""));
+                    travelAgentCodeField.setText(newValue.replaceAll("[^\\d]", ""));
                 }
                 if (newValue.length() > 3) {
                     travelAgentCodeField.setText(oldValue);

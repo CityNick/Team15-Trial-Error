@@ -1,12 +1,16 @@
 package team15.models;
 
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class TravelAgentContract {
 
     private int TravelAgentCode;
+
+    private Timestamp DateCreated;
 
     private float CommissionRate444;
     private float CommissionRate440;
@@ -19,6 +23,7 @@ public class TravelAgentContract {
 
     public TravelAgentContract(ResultSet rs) throws SQLException {
         this.TravelAgentCode = rs.getInt("TravelAgentCode");
+        this.DateCreated = rs.getTimestamp("DateCreated");
         this.CommissionRate444 = rs.getFloat("CommissionRate444");
         this.CommissionRate440 = rs.getFloat("CommissionRate440");
         this.CommissionRate420 = rs.getFloat("CommissionRate420");
@@ -90,6 +95,14 @@ public class TravelAgentContract {
 
     public void setCommissionRate101(float commissionRate101) {
         CommissionRate101 = commissionRate101;
+    }
+
+    public Timestamp getDateCreated() {
+        return DateCreated;
+    }
+
+    public void setDateCreated(Timestamp dateCreated) {
+        DateCreated = dateCreated;
     }
 
 

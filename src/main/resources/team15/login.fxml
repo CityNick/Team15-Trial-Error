@@ -18,12 +18,12 @@
                <Image url="@../Images/Login.png" />
             </image>
          </ImageView>
-         <TextField fx:id="staffIDField" layoutX="598.0" layoutY="291.0" prefHeight="33.0" prefWidth="213.0" promptText="Enter StaffID">
+         <TextField fx:id="staffIDField" layoutX="598.0" layoutY="291.0" onAction="#on_login_pressed" prefHeight="33.0" prefWidth="213.0" promptText="Enter StaffID">
             <font>
                <Font name="System Italic" size="14.0" />
             </font>
          </TextField>
-         <PasswordField fx:id="passwordField" layoutX="598.0" layoutY="344.0" prefHeight="33.0" prefWidth="213.0" promptText="Enter Password">
+         <PasswordField fx:id="passwordField" layoutX="598.0" layoutY="344.0" onAction="#on_login_pressed" prefHeight="33.0" prefWidth="213.0" promptText="Enter Password">
             <font>
                <Font name="System Italic" size="14.0" />
             </font>

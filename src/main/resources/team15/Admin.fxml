@@ -102,18 +102,26 @@
                                  </font>
                               </Label>
                               <TextField fx:id="searchTravelAgentContractField" layoutX="602.0" layoutY="16.0" onKeyTyped="#searchContractEdited" prefHeight="26.0" prefWidth="127.0" promptText="Search TA Code" />
-                              <Button fx:id="plusButton2" layoutX="633.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="+">
+                              <Button fx:id="plusButton2" layoutX="633.0" layoutY="337.0" mnemonicParsing="false" onAction="#createContractPressed" prefHeight="26.0" prefWidth="29.0" text="+">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="minusButton2" layoutX="668.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="29.0" text="-" />
+                              <Button fx:id="minusButton2" layoutX="668.0" layoutY="337.0" mnemonicParsing="false" onAction="#deleteContractPressed" prefHeight="26.0" prefWidth="29.0" text="-" />
                               <TableView fx:id="travelAgentContractTableView" layoutX="61.0" layoutY="56.0" prefHeight="272.0" prefWidth="639.0">
                                  <columns>
                                     <TableColumn prefWidth="75.0" text="C1" />
                                     <TableColumn prefWidth="75.0" text="C2" />
                                  </columns>
                               </TableView>
+                              <TextField fx:id="travelAgentCodeContractField" layoutX="61.0" layoutY="338.0" prefHeight="26.0" prefWidth="114.0" promptText="Travel Agent Code" />
+                              <TextField fx:id="Field444" layoutX="190.0" layoutY="338.0" prefHeight="26.0" prefWidth="58.0" promptText="444 (%)" />
+                              <TextField fx:id="Field440" layoutX="251.0" layoutY="338.0" prefHeight="26.0" prefWidth="58.0" promptText="440 (%)" />
+                              <TextField fx:id="Field420" layoutX="313.0" layoutY="338.0" prefHeight="26.0" prefWidth="58.0" promptText="420 (%)" />
+                              <TextField fx:id="Field451" layoutX="376.0" layoutY="338.0" prefHeight="26.0" prefWidth="58.0" promptText="451 (%)" />
+                              <TextField fx:id="Field452" layoutX="438.0" layoutY="338.0" prefHeight="26.0" prefWidth="58.0" promptText="452 (%)" />
+                              <TextField fx:id="Field201" layoutX="500.0" layoutY="338.0" prefHeight="26.0" prefWidth="58.0" promptText="201 (%)" />
+                              <TextField fx:id="Field101" layoutX="563.0" layoutY="338.0" prefHeight="26.0" prefWidth="58.0" promptText="101 (%)" />
                            </children></AnchorPane>
                     </content>
                   </Tab>
